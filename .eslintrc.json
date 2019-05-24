@@ -10,7 +10,8 @@
   ],
   "globals": {
     "it": true,
-    "jest": true
+    "jest": true,
+    "fetch": true
   },
   "settings": {
     "flowtype": {
