@@ -1,0 +1,15 @@
+{
+  "editor.formatOnSave": true,
+  "editor.formatOnPaste": true,
+  "eslint.enable": true,
+  "prettier.eslintIntegration": true,
+  "editor.tabSize": 2,
+  "path-intellisense.extensionOnImport": false,
+  "npm-intellisense.importLinebreak": "\r\n",
+  "prettier.semi": false,
+  "prettier.singleQuote": true,
+  "flow.useNPMPackagedFlow": true,
+  "prettier.disableLanguages": [
+    "json"
+  ]
+}
