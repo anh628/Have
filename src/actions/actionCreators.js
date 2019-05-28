@@ -155,6 +155,6 @@ export const logIn = (uid ) => ({
 })
 
 export const logOut = (uid ) => ({
-    type: actionType.LOG_OUT,
+    type: actionType.LOG_,
     uid
 })
