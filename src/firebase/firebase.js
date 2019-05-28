@@ -19,3 +19,9 @@ const firebaseConfig = {
 }
 
 firebase.initializeApp(firebaseConfig)
+
+
+
+export const db = firebase.firestore();
+export const usersCollectionRef = db.collection('users') //need to match this up to firebase
+
