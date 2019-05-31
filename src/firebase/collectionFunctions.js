@@ -149,7 +149,7 @@ export const toggleItem = (uid, collectionId, itemId) => {
 
   return itemRef
     .get()
-    .then(() => itemRef.update({ isComplete: !isComplete }))
+    .then((item) => itemRef.update({ isComplete: !item.data().isComplete }))
     .catch(error => console.log(error));
 }
 
@@ -171,7 +171,5 @@ export const toggleAllItems = (uid, collectionId, listCompleteness) => {
       )}
       );
   };
-=======
-  return editImage(uid, collectionId, null);
-};
->>>>>>> 5175f55df12cfb6ab615749376f079e5c5978f0e
+
+
