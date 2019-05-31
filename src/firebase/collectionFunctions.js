@@ -148,7 +148,7 @@ export const toggleItem = (uid, collectionId, itemId) => {
 
   return itemRef
     .get()
-    .then(() => itemRef.update({ isComplete: !isComplete }))
+    .then((item) => itemRef.update({ isComplete: !item.data().isComplete }))
     .catch(error => console.log(error));
 };
 
@@ -159,11 +159,24 @@ export const toggleAllItems = (uid, collectionId, listCompleteness) => {
     .doc(`${collectionId}`)
     .collection("items");
 
-  currentCollectionRef.get().then(querySnapshot => {
-    querySnapshot.forEach(item =>
-      currentCollectionRef
-        .doc(item.id)
-        .update({ isComplete: !listCompleteness })
-    );
-  });
+  return editImage(uid, collectionId, null);
 };
+=======
+    const currentCollectionRef = usersCollectionRef
+      .doc(`${uid}`)
+      .collection("itemCollections")
+      .doc(`${collectionId}`)
+      .collection("items");
+
+    currentCollectionRef
+      .get()
+      .then(querySnapshot => {
+        querySnapshot.forEach(item =>(
+            currentCollectionRef.doc(item.id).update({isComplete :!listCompleteness})
+          )
+      )}
+      );
+  };
+
+
+>>>>>>> dd4ee5fac1ee653a866e8ae275c90a13837c0b4e
