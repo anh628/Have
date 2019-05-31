@@ -17,7 +17,6 @@ itemRef = itemCollections.collection("item").doc(itemID)
 item field => text, isComplete...
 */
 
-
 export const addCollection = (uid, collectionId, collectionColor) => {
   const collectionInfo = {
     title: null,
@@ -61,12 +60,12 @@ export const addItem = (uid, collectionId, itemId, text) => {
   const itemInfo = {
     itemId,
     text,
-    isComplete: false  
+    isComplete: false
   };
   return usersCollectionRef
     .doc(`${uid}`)
     .collection("itemCollections")
-    .doc(`${collectionId}`) 
+    .doc(`${collectionId}`)
     .collection("items") //the items within a user's collection
     .doc(`${itemId}`) //the ID of the item you want to add
     .set(itemInfo) //see above
@@ -87,7 +86,7 @@ export const editItem = (uid, collectionId, itemId, editedText) => {
     .catch(error => console.log(error));
 };
 
-//IF we want trash/archive we will need to edit this 
+//IF we want trash/archive we will need to edit this
 export const deleteItem = (uid, collectionId, itemId) => {
   return usersCollectionRef
     .doc(`${uid}`)
@@ -100,23 +99,22 @@ export const deleteItem = (uid, collectionId, itemId) => {
 };
 
 export const deleteAllCompleted = (uid, collectionId) => {
-    const batch = db.batch();
+  const batch = db.batch();
 
-    const currentCollectionRef = usersCollectionRef
+  const currentCollectionRef = usersCollectionRef
     .doc(`${uid}`)
     .collection("itemCollections")
     .doc(`${collectionId}`)
     .collection("items");
 
-    currentCollectionRef.where("isComplete", "==", true)
+  currentCollectionRef
+    .where("isComplete", "==", true)
     .get()
     .then(completedItems => {
-        completedItems.forEach(item => {
-            const itemRef = currentCollectionRef.doc(item.itemId);
-            batch.delete(itemRef)
-        
-    } return batch.commit()
-})
-     
-
+      completedItems.forEach(item => {
+        const itemRef = currentCollectionRef.doc(item.itemId);
+        batch.delete(itemRef);
+      });
+      return batch.commit();
+    });
 };
