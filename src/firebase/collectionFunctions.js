@@ -21,7 +21,8 @@ export const addCollection = (uid, collectionId, collectionColor) => {
   const collectionInfo = {
     title: null,
     collaborators: [],
-    collectionColor
+    collectionColor,
+    image: null
   };
   return usersCollectionRef
     .doc(`${uid}`)
@@ -118,3 +119,21 @@ export const deleteAllCompleted = (uid, collectionId) => {
       return batch.commit();
     });
 };
+
+//don't have an add image because we are really just editing the default value we already set for image
+export const editImage = (uid, collectionId, image) => {
+    const itemCollectionRef = usersCollectionRef
+    .doc(`${uid}`)
+    .collection("itemCollections")
+    .doc(`${collectionId}`);
+
+  return itemCollectionRef
+    .get()
+    .then(() => itemCollectionRef.update({ image }))
+    .catch(error => console.log(error));
+}
+
+//if we want to have more than one image we need to adjust this and the one above
+export const deleteImage = (uid, collectionId) => {
+    return editImage(uid, collectionId, null);
+  };
