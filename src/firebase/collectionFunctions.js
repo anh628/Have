@@ -122,7 +122,7 @@ export const deleteAllCompleted = (uid, collectionId) => {
 
 //don't have an add image because we are really just editing the default value we already set for image
 export const editImage = (uid, collectionId, image) => {
-    const itemCollectionRef = usersCollectionRef
+  const itemCollectionRef = usersCollectionRef
     .doc(`${uid}`)
     .collection("itemCollections")
     .doc(`${collectionId}`);
@@ -131,16 +131,15 @@ export const editImage = (uid, collectionId, image) => {
     .get()
     .then(() => itemCollectionRef.update({ image }))
     .catch(error => console.log(error));
-}
+};
 
 //if we want to have more than one image we need to adjust this and the one above
 export const deleteImage = (uid, collectionId) => {
-    return editImage(uid, collectionId, null);
-  };
-
+  return editImage(uid, collectionId, null);
+};
 
 export const toggleItem = (uid, collectionId, itemId) => {
-    const itemRef = usersCollectionRef
+  const itemRef = usersCollectionRef
     .doc(`${uid}`)
     .collection("itemCollections")
     .doc(`${collectionId}`)
@@ -151,27 +150,20 @@ export const toggleItem = (uid, collectionId, itemId) => {
     .get()
     .then(() => itemRef.update({ isComplete: !isComplete }))
     .catch(error => console.log(error));
-}
-
+};
 
 export const toggleAllItems = (uid, collectionId, listCompleteness) => {
+  const currentCollectionRef = usersCollectionRef
+    .doc(`${uid}`)
+    .collection("itemCollections")
+    .doc(`${collectionId}`)
+    .collection("items");
 
-    const currentCollectionRef = usersCollectionRef
-      .doc(`${uid}`)
-      .collection("itemCollections")
-      .doc(`${collectionId}`)
-      .collection("items");
-
-    currentCollectionRef
-      .get()
-      .then(querySnapshot => {
-        querySnapshot.forEach(item =>(
-            currentCollectionRef.doc(item.id).update({isComplete :!listCompleteness})
-          )
-      )}
-      );
-  };
-=======
-  return editImage(uid, collectionId, null);
+  currentCollectionRef.get().then(querySnapshot => {
+    querySnapshot.forEach(item =>
+      currentCollectionRef
+        .doc(item.id)
+        .update({ isComplete: !listCompleteness })
+    );
+  });
 };
->>>>>>> 5175f55df12cfb6ab615749376f079e5c5978f0e
