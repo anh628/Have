@@ -139,4 +139,35 @@ export const deleteImage = (uid, collectionId) => {
   };
 
 
-  
+export const toggleItem = (uid, collectionId, itemId) => {
+    const itemRef = usersCollectionRef
+    .doc(`${uid}`)
+    .collection("itemCollections")
+    .doc(`${collectionId}`)
+    .collection("items")
+    .doc(`${itemId}`);
+
+  return itemRef
+    .get()
+    .then(() => itemRef.update({ isComplete: !isComplete }))
+    .catch(error => console.log(error));
+}
+
+
+export const toggleAllItems = (uid, collectionId, listCompleteness) => {
+
+    const currentCollectionRef = usersCollectionRef
+      .doc(`${uid}`)
+      .collection("itemCollections")
+      .doc(`${collectionId}`)
+      .collection("items");
+
+    currentCollectionRef
+      .get()
+      .then(querySnapshot => {
+        querySnapshot.forEach(item =>(
+            currentCollectionRef.doc(item.id).update({isComplete :!listCompleteness})
+          )
+      )}
+      );
+  };
