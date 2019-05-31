@@ -121,20 +121,15 @@ export const deleteAllCompleted = (uid, collectionId) => {
 };
 
 //don't have an add image because we are really just editing the default value we already set for image
-<<<<<<< HEAD
-export const editImage = (uid, collectionId, collaborator) => {
-    const itemCollectionRef = usersCollectionRef
-=======
 export const editImage = (uid, collectionId, image) => {
   const itemCollectionRef = usersCollectionRef
->>>>>>> 2b6709403af7417ab8ccad1a2ad512c6efd4605d
     .doc(`${uid}`)
     .collection("itemCollections")
     .doc(`${collectionId}`);
 
   return itemCollectionRef
     .get()
-    .then(() => itemCollectionRef.update({ collaborator }))
+    .then(() => itemCollectionRef.update({ image }))
     .catch(error => console.log(error));
 };
 
@@ -153,7 +148,7 @@ export const toggleItem = (uid, collectionId, itemId) => {
 
   return itemRef
     .get()
-    .then((item) => itemRef.update({ isComplete: !item.data().isComplete }))
+    .then(item => itemRef.update({ isComplete: !item.data().isComplete }))
     .catch(error => console.log(error));
 };
 
@@ -164,66 +159,54 @@ export const toggleAllItems = (uid, collectionId, listCompleteness) => {
     .doc(`${collectionId}`)
     .collection("items");
 
-  return editImage(uid, collectionId, null);
+  currentCollectionRef.get().then(querySnapshot => {
+    querySnapshot.forEach(item =>
+      currentCollectionRef
+        .doc(item.id)
+        .update({ isComplete: !listCompleteness })
+    );
+  });
 };
 
-    const currentCollectionRef = usersCollectionRef
-      .doc(`${uid}`)
-      .collection("itemCollections")
-      .doc(`${collectionId}`)
-      .collection("items");
-
-    currentCollectionRef
-      .get()
-      .then(querySnapshot => {
-        querySnapshot.forEach(item =>(
-            currentCollectionRef.doc(item.id).update({isComplete :!listCompleteness})
-          )
-      )}
-      );
-  };
-
 //add and edit color are basically the same thing since we already have a default set to null
-  export const editColor = (uid, collectionId, collectionColor) => {
-    const itemCollectionRef = usersCollectionRef
-      .doc(`${uid}`)
-      .collection("itemCollections")
-      .doc(`${collectionId}`);
-  
-    return itemCollectionRef
-      .get()
-      .then(() => itemCollectionRef.update({ collectionColor }))
-      .catch(error => console.log(error));
-  };
-  
-
-
-  export const addCollaborator = (uid, collectionId, collabUID) => {
-    const itemCollectionRef = usersCollectionRef
-      .doc(`${uid}`)
-      .collection("itemCollections")
-      .doc(`${collectionId}`);
-      
-    const collaborators = itemCollectionRef.doc().collaborators;
-    collaborators.push(collabUID)
-    return itemCollectionRef
-      .get()
-      .then(() => itemCollectionRef.update({ collaborators }))
-      .catch(error => console.log(error));
-  };
-  
-  export const removeCollaborator = (uid, collectionId, collabUID) => {
-    const itemCollectionRef = usersCollectionRef
+export const editColor = (uid, collectionId, collectionColor) => {
+  const itemCollectionRef = usersCollectionRef
     .doc(`${uid}`)
     .collection("itemCollections")
     .doc(`${collectionId}`);
-    
-    const collaborators = itemCollectionRef.doc().collaborators.filter(id => id !== collabUID);
-    return itemCollectionRef
-      .get()
-      .then(() => itemCollectionRef.update({ collaborators }))
-      .catch(error => console.log(error));
-  };
 
+  return itemCollectionRef
+    .get()
+    .then(() => itemCollectionRef.update({ collectionColor }))
+    .catch(error => console.log(error));
+};
 
-  
+export const addCollaborator = (uid, collectionId, collabUID) => {
+  const itemCollectionRef = usersCollectionRef
+    .doc(`${uid}`)
+    .collection("itemCollections")
+    .doc(`${collectionId}`);
+
+  const collaborators = itemCollectionRef.doc().collaborators;
+  collaborators.push(collabUID);
+
+  return itemCollectionRef
+    .get()
+    .then(() => itemCollectionRef.update({ collaborators }))
+    .catch(error => console.log(error));
+};
+
+export const removeCollaborator = (uid, collectionId, collabUID) => {
+  const itemCollectionRef = usersCollectionRef
+    .doc(`${uid}`)
+    .collection("itemCollections")
+    .doc(`${collectionId}`);
+
+  const collaborators = itemCollectionRef
+    .doc()
+    .collaborators.filter(id => id !== collabUID);
+  return itemCollectionRef
+    .get()
+    .then(() => itemCollectionRef.update({ collaborators }))
+    .catch(error => console.log(error));
+};
