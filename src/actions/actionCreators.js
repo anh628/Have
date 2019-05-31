@@ -62,12 +62,12 @@ export const deleteAllCompleted = (uid, collectionId) => ({
   collectionId
 });
 
-export const addImage = (uid, collectionId, image) => ({
-  type: actionType.ADD_IMAGE,
-  uid,
-  collectionId,
-  image
-});
+// export const addImage = (uid, collectionId, image) => ({
+//   type: actionType.ADD_IMAGE,
+//   uid,
+//   collectionId,
+//   image
+// });
 
 export const editImage = (uid, collectionId, editedImage) => ({
   type: actionType.EDIT_IMAGE,
