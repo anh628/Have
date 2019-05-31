@@ -121,8 +121,13 @@ export const deleteAllCompleted = (uid, collectionId) => {
 };
 
 //don't have an add image because we are really just editing the default value we already set for image
+<<<<<<< HEAD
 export const editImage = (uid, collectionId, collaborator) => {
     const itemCollectionRef = usersCollectionRef
+=======
+export const editImage = (uid, collectionId, image) => {
+  const itemCollectionRef = usersCollectionRef
+>>>>>>> 2b6709403af7417ab8ccad1a2ad512c6efd4605d
     .doc(`${uid}`)
     .collection("itemCollections")
     .doc(`${collectionId}`);
@@ -131,16 +136,15 @@ export const editImage = (uid, collectionId, collaborator) => {
     .get()
     .then(() => itemCollectionRef.update({ collaborator }))
     .catch(error => console.log(error));
-}
+};
 
 //if we want to have more than one image we need to adjust this and the one above
 export const deleteImage = (uid, collectionId) => {
-    return editImage(uid, collectionId, null);
-  };
-
+  return editImage(uid, collectionId, null);
+};
 
 export const toggleItem = (uid, collectionId, itemId) => {
-    const itemRef = usersCollectionRef
+  const itemRef = usersCollectionRef
     .doc(`${uid}`)
     .collection("itemCollections")
     .doc(`${collectionId}`)
@@ -151,10 +155,17 @@ export const toggleItem = (uid, collectionId, itemId) => {
     .get()
     .then((item) => itemRef.update({ isComplete: !item.data().isComplete }))
     .catch(error => console.log(error));
-}
-
+};
 
 export const toggleAllItems = (uid, collectionId, listCompleteness) => {
+  const currentCollectionRef = usersCollectionRef
+    .doc(`${uid}`)
+    .collection("itemCollections")
+    .doc(`${collectionId}`)
+    .collection("items");
+
+  return editImage(uid, collectionId, null);
+};
 
     const currentCollectionRef = usersCollectionRef
       .doc(`${uid}`)
