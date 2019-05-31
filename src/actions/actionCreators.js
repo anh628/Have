@@ -110,12 +110,6 @@ export const editColor = (uid, collectionId, collectionColor) => ({
   collectionColor
 });
 
-export const deleteColor = (uid, collectionId, collectionColor) => ({
-  type: actionType.DELETE_COLOR,
-  uid,
-  collectionId,
-  collectionColor
-});
 
 export const addCollaborator = (uid, collectionId, collabUID) => ({
   type: actionType.ADD_COLLABORATOR,

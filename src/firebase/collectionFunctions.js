@@ -172,4 +172,16 @@ export const toggleAllItems = (uid, collectionId, listCompleteness) => {
       );
   };
 
-
+//add and edit color are basically the same thing since we already have a default set to null
+  export const editColor = (uid, collectionId, collectionColor) => {
+    const itemCollectionRef = usersCollectionRef
+      .doc(`${uid}`)
+      .collection("itemCollections")
+      .doc(`${collectionId}`);
+  
+    return itemCollectionRef
+      .get()
+      .then(() => itemCollectionRef.update({ collectionColor }))
+      .catch(error => console.log(error));
+  };
+  
