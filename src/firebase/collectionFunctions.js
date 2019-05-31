@@ -161,7 +161,7 @@ export const toggleAllItems = (uid, collectionId, listCompleteness) => {
 
   return editImage(uid, collectionId, null);
 };
-=======
+
     const currentCollectionRef = usersCollectionRef
       .doc(`${uid}`)
       .collection("itemCollections")
@@ -177,6 +177,3 @@ export const toggleAllItems = (uid, collectionId, listCompleteness) => {
       )}
       );
   };
-
-
->>>>>>> dd4ee5fac1ee653a866e8ae275c90a13837c0b4e
