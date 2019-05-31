@@ -137,3 +137,6 @@ export const editImage = (uid, collectionId, image) => {
 export const deleteImage = (uid, collectionId) => {
     return editImage(uid, collectionId, null);
   };
+
+
+  
