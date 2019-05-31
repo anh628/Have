@@ -210,3 +210,4 @@ export const removeCollaborator = (uid, collectionId, collabUID) => {
     .then(() => itemCollectionRef.update({ collaborators }))
     .catch(error => console.log(error));
 };
+
