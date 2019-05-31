@@ -171,3 +171,7 @@ export const toggleAllItems = (uid, collectionId, listCompleteness) => {
       )}
       );
   };
+=======
+  return editImage(uid, collectionId, null);
+};
+>>>>>>> 5175f55df12cfb6ab615749376f079e5c5978f0e
