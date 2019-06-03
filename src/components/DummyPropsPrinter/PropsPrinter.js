@@ -19,7 +19,19 @@ const PropsPrinter = props => (
 export default compose(
   firestoreConnect(props => [
     {
-      collection: 'users'
+      collection: 'users',
+      doc: 'rKvQ9nM6WXrEZ2xOCgwN', // props.user.uid
+      subcollections: [
+        {
+          collection: 'itemCollections',
+          doc: 'lCHu8ouJOVXyBijkdnZO', // props.collectionId
+          subcollections: [
+            {
+              collection: 'items'
+            }
+          ]
+        }
+      ]
     }
   ]) // going to get todos for a user
 )(PropsPrinter)
