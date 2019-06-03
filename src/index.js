@@ -1,11 +1,12 @@
-import React from "react";
-import ReactDOM from "react-dom";
-import "./index.css";
-import * as serviceWorker from "./serviceWorker";
-import { store } from "./store";
-import Route from "./components/Route";
+import React from 'react'
+import ReactDOM from 'react-dom'
+import './index.css'
+import * as serviceWorker from './serviceWorker'
+import { store } from './store'
+// import PropPrint from './components/DummyPropsPrinter/PropPrint'
+import App from './App'
 
-ReactDOM.render(<Route store={store} />, document.getElementById("root"));
+ReactDOM.render(<App store={store} />, document.getElementById('root'))
 
 // If you want your app to work offline and load faster, you can change
 // unregister() to register() below. Note this comes with some pitfalls.
