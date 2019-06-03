@@ -6,6 +6,8 @@
 import React from 'react'
 import PropPrint from './PropPrint'
 import './PropsPrinter.css'
+import { firestoreConnect } from 'react-redux-firebase'
+import { compose } from 'redux'
 
 const PropsPrinter = props => (
   <div className='props-printer'>
@@ -13,4 +15,10 @@ const PropsPrinter = props => (
   </div>
 )
 
-export default PropsPrinter
+export default compose(
+  firestoreConnect(props => [
+    {
+      collection: 'users'
+    }
+  ]) // going to get todos for a user
+)(PropsPrinter)
