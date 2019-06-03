@@ -8,6 +8,7 @@ import PropPrint from './PropPrint'
 import './PropsPrinter.css'
 import { firestoreConnect } from 'react-redux-firebase'
 import { compose } from 'redux'
+// import { connect } from 'react-redux'
 
 const PropsPrinter = props => (
   <div className='props-printer'>
