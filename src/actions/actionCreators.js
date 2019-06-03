@@ -110,7 +110,6 @@ export const editColor = (uid, collectionId, collectionColor) => ({
   collectionColor
 });
 
-
 export const addCollaborator = (uid, collectionId, collabUID) => ({
   type: actionType.ADD_COLLABORATOR,
   uid,
@@ -131,6 +130,12 @@ export const logIn = uid => ({
 });
 
 export const logOut = uid => ({
-  type: actionType.LOG_,
+  type: actionType.LOG_OUT,
   uid
+});
+
+// redux
+export const changeEditFlag = itemId => ({
+  type: actionType.EDIT_ITEM_FLAG,
+  itemId
 });

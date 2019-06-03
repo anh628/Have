@@ -15,6 +15,8 @@ export const ADD_IMAGE = "ADD_IMAGE";
 export const EDIT_IMAGE = "EDIT_IMAGE";
 export const DELETE_IMAGE = "DELETE_IMAGE";
 
+export const EDIT_ITEM_FLAG = "EDIT_ITEM_FLAG";
+
 export const TOGGLE_ITEM = "TOGGLE_ITEM";
 export const TOGGLE_ALL_ITEMS = "TOGGLE_ALL_ITEMS";
 
