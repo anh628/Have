@@ -8,7 +8,9 @@ import AuthenticationButton from './components/AuthenticationButton'
 function App () {
   return (
     <div className='App'>
-      <AuthenticationButton />
+      <header className='App-header'>
+        <AddBar />
+      </header>
     </div>
   )
 }
