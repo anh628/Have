@@ -8,6 +8,7 @@ import {
   editTitle
 } from '../firebase/collectionFunctions'
 import { v4 } from 'node-uuid'
+// import itemCollection from './itemCollection'  //need anhs component
 
 // addCollection = (uid, collectionId, collectionColor)
 // addItem = (uid, collectionId, itemId, text)
@@ -54,10 +55,12 @@ class AddBar extends React.Component {
                 collectionId,
                 input.value,
                 collectionColor
-              ).then(console.log(collectionId))
+              ) // .then( <itemCollection
+              //     collectionId = {colectionId }
+              //   // >)) //render out anh's component
 
-              // addItem = (uid, collectionId, text)
-            }}
+              // // addItem = (uid, collectionId, text)
+            }}>
             onBlur={this.handleClose}>
             <input type='text' ref={node => (input = node)} />
           </form>
