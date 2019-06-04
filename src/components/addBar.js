@@ -7,6 +7,7 @@ import {
   addCollection,
   editTitle
 } from '../firebase/collectionFunctions'
+import { v4 } from 'node-uuid'
 
 // addCollection = (uid, collectionId, collectionColor)
 // addItem = (uid, collectionId, itemId, text)
@@ -35,21 +36,32 @@ class AddBar extends React.Component {
 
   render () {
     let input
+    let collectionColor = '#FFFFFF'
 
     if (this.state.showingExpandedBar === true) {
       return (
-        <form
-          onSubmit={e => {
-            e.preventDefault()
-            if (!input.value.trim()) {
-              input.value = ' '
-            }
-            // addCollection = (uid,  collectionColor)
-            // addItem = (uid, collectionId, text)
-          }}
-          onBlur={this.handleClose}>
-          <input ref={node => (input = node)} />
-        </form>
+        <div>
+          Add Title
+          <form
+            onSubmit={e => {
+              e.preventDefault()
+              if (!input.value.trim()) {
+                input.value = ' '
+              }
+              let collectionId = v4()
+              addCollection(
+                this.props.users[0].id,
+                collectionId,
+                input.value,
+                collectionColor
+              ).then(console.log(collectionId))
+
+              // addItem = (uid, collectionId, text)
+            }}
+            onBlur={this.handleClose}>
+            <input type='text' ref={node => (input = node)} />
+          </form>
+        </div>
       )
     } else {
       return <div onClick={this.handelClick}> click here</div>

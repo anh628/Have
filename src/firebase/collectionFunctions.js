@@ -17,14 +17,15 @@ itemRef = itemCollections.collection("item").doc(itemID)
 item field => text, isComplete...
 */
 
-export const addCollection = (uid, collectionColor) => {
-  let collectionId = v4()
+// added title to this
+export const addCollection = (uid, collectionId, title, collectionColor) => {
   const collectionInfo = {
-    title: null,
+    title: title,
     collaborators: [],
     collectionColor,
     image: null
   }
+  console.log('added a collection')
   return usersCollectionRef
     .doc(`${uid}`)
     .collection('itemCollections') // collection of items for a given user

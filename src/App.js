@@ -4,6 +4,7 @@ import { firestoreConnect, withFirebase } from 'react-redux-firebase'
 import { compose } from 'redux'
 import { connect } from 'react-redux'
 import AuthenticationButton from './components/AuthenticationButton'
+import AddBar from './components/AddBar'
 
 function App () {
   return (
