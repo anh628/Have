@@ -59,12 +59,12 @@ class AddBar extends React.Component {
 
 function mapStateToProps (state) {
   return {
-    users: state.firestore.ordered.users,
-    itemCollections: state.firestore.ordered.users.itemCollections /// LEFT OFF HERE NEED TO FIGURE THIS OUT
-      ? state.firestore.ordered.itemCollections.filter(
-        item => item.id === 'rKvQ9nM6WXrEZ2xOCgwN'
-      )
-      : []
+    users: state.firestore.ordered.users // have a user
+    // itemCollections: state.firestore.ordered.users.itemCollections /// LEFT OFF HERE NEED TO FIGURE THIS OUT
+    //   ? state.firestore.ordered.itemCollections.filter(
+    //     item => item.id === 'rKvQ9nM6WXrEZ2xOCgwN'
+    //   )
+    //   : []
   }
 }
 
