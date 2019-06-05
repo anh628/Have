@@ -15,14 +15,20 @@ class CollectionView extends React.Component {
   render () {
     if (this.props.items) {
       // if there is a prop items
+      const itemKeys = Object.keys(this.props.items)
       return (
         // map through and get these edit items out
         <div>
           <h1>{this.props.title}</h1>
-          hello
+
+          {itemKeys.map(itemId => (
+            <EditItem
+              key={itemId}
+              collectionId={this.props.collectionId}
+              itemId={itemId}
+              {...this.props.items[itemId]} />
+          ))}
           <NewItem collectionId={this.props.collectionId} />
-          we have items now
-          <EditItem title={this.props.title} />
         </div>
       )
     } else {

@@ -20,8 +20,9 @@ class NewItem extends React.Component {
               this.props.collectionId,
               input.value
             )
+            input.value = ''
           }}>
-          <input type='text' ref={node => (input = node)} />
+          <input type='text' ref={node => (input = node)} autoFocus={true} />
         </form>
       </div>
     )

@@ -61,7 +61,7 @@ class NewCollection extends React.Component {
                 collectionColor
               ).then(() => this.handelViewChange(collectionId, title))
             }}>
-            <input type='text' ref={node => (input = node)} />
+            <input type='text' ref={node => (input = node)} autoFocus={true} />
           </form>
         </div>
       )

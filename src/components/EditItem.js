@@ -14,7 +14,7 @@ class EditItem extends React.Component {
   render () {
     return (
       <div>
-        <p>pretend this is an item</p>
+        <p>{this.props.text}</p>
       </div>
     )
   }
