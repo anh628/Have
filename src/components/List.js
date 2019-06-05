@@ -22,7 +22,7 @@ const List = ({ itemCollections, uid }) => {
   return <div>{itemCollectionList}</div>
 }
 
-function mapStateToProps (state, props) {
+function mapStateToProps (state) {
   const itemCollections = state.firestore.ordered.itemCollections
 
   return {
