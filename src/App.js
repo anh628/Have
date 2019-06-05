@@ -4,13 +4,13 @@ import { firestoreConnect, withFirebase } from 'react-redux-firebase'
 import { compose } from 'redux'
 import { connect } from 'react-redux'
 import AuthenticationButton from './components/AuthenticationButton'
-import AddBar from './components/AddBar'
+import NewCollection from './components/NewCollection'
 
 function App () {
   return (
     <div className='App'>
       <header className='App-header'>
-        <AddBar />
+        <NewCollection />
       </header>
     </div>
   )

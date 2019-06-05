@@ -2,44 +2,47 @@ import { firestoreConnect } from 'react-redux-firebase'
 import { compose } from 'redux'
 import { connect } from 'react-redux'
 import React from 'react'
-import {
-  addItem,
-  addCollection,
-  editTitle
-} from '../firebase/collectionFunctions'
+import { addCollection, editTitle } from '../firebase/collectionFunctions'
 import { v4 } from 'node-uuid'
-// import itemCollection from './itemCollection'  //need anhs component
+import CollectionView from './CollectionView'
 
-// addCollection = (uid, collectionId, collectionColor)
-// addItem = (uid, collectionId, itemId, text)
-// editTitle(uid, collectionId, title)
-
-class AddBar extends React.Component {
+class NewCollection extends React.Component {
   constructor (props) {
     super(props)
     this.state = {
-      showingExpandedBar: false
+      collectionView: false,
+      collectionId: null,
+      title: null
     }
-  }
-
-  handelClick = () => {
-    this.setState({
-      showingExpandedBar: true
-    })
-  }
-  handleClose = () => {
-    this.setState({ showingExpandedBar: false })
   }
 
   handelTitleChange (event) {
     editTitle(event.target.value)
   }
 
+  handelViewChange = (collectionId, title) => {
+    this.setState({
+      collectionView: true,
+      collectionId: collectionId,
+      title: title
+    })
+  }
+
   render () {
     let input
     let collectionColor = '#FFFFFF'
+    let collectionId
+    let title
 
-    if (this.state.showingExpandedBar === true) {
+    if (this.state.collectionView === true) {
+      return (
+        <div>
+          <CollectionView
+            collectionId={this.state.collectionId}
+            title={this.state.title} />
+        </div>
+      )
+    } else {
       return (
         <div>
           Add Title
@@ -49,25 +52,19 @@ class AddBar extends React.Component {
               if (!input.value.trim()) {
                 input.value = ' '
               }
-              let collectionId = v4()
+              title = input.value
+              collectionId = v4()
               addCollection(
                 this.props.users[0].id,
                 collectionId,
-                input.value,
+                title,
                 collectionColor
-              ) // .then( <itemCollection
-              //     collectionId = {colectionId }
-              //   // >)) //render out anh's component
-
-              // // addItem = (uid, collectionId, text)
+              ).then(() => this.handelViewChange(collectionId, title))
             }}>
-            onBlur={this.handleClose}>
             <input type='text' ref={node => (input = node)} />
           </form>
         </div>
       )
-    } else {
-      return <div onClick={this.handelClick}> click here</div>
     }
   }
 }
@@ -102,4 +99,4 @@ export default compose(
       ]
     }
   ]) // going to get todos for a user
-)(AddBar)
+)(NewCollection)
