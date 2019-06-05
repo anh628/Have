@@ -135,7 +135,13 @@ export const logOut = uid => ({
 })
 
 // redux
+
 export const changeEditFlag = item => ({
   type: actionType.EDIT_ITEM_FLAG,
   item
+})
+
+export const changeEditCollectionFlag = collectionId => ({
+  type: actionType.EDIT_COLLECTION,
+  collectionId
 })
