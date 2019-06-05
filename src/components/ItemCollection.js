@@ -13,7 +13,13 @@ image: boolean,
 title: "",
 collectionId
 */
-const ItemCollection = ({ collectionColor, title, items }) => {
+const ItemCollection = ({
+  uid,
+  collectionId,
+  collectionColor,
+  title,
+  items
+}) => {
   const keys = items ? Object.keys(items) : null
 
   const itemsList = !isLoaded(items) ? (
@@ -21,7 +27,14 @@ const ItemCollection = ({ collectionColor, title, items }) => {
   ) : isEmpty(items) ? (
     'Item Collection list is empty'
   ) : keys ? (
-    keys.map(itemId => <Item key={itemId} {...items[itemId]} itemId={itemId} />)
+    keys.map(itemId => (
+      <Item
+        key={itemId}
+        uid={uid}
+        collectionId={collectionId}
+        itemId={itemId}
+        {...items[itemId]} />
+    ))
   ) : null
   return (
     <div
