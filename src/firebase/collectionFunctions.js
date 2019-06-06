@@ -81,11 +81,13 @@ export const deleteItem = (uid, collectionId, itemId) => {
   return itemRef.delete().catch(error => console.log(error))
 }
 
-// TODO come back here later
+// Deletes all completed items in an item collection
 export const deleteAllCompleted = (uid, collectionId) => {
   const batch = db.batch()
 
-  const itemCollectionRef = getItemCollectionRef(uid, collectionId).doc('items')
+  const itemCollectionRef = getItemCollectionRef(uid, collectionId).collection(
+    'items'
+  )
 
   itemCollectionRef
     .where('isComplete', '==', true)
@@ -126,12 +128,15 @@ export const setAllItemsCompleteness = (
   collectionId,
   listCompleteness
 ) => {
-  const itemCollectionRef = getItemCollectionRef(uid, collectionId).doc('items')
+  const itemCollectionRef = getItemCollectionRef(uid, collectionId).collection(
+    'items'
+  )
 
   const batch = db.batch()
 
   const isComplete = !listCompleteness
 
+  // not sure if this is correct
   itemCollectionRef
     .get()
     .then(items => {
