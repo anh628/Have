@@ -101,6 +101,10 @@ export const deleteItem = (uid, collectionId, itemId) => {
     .catch(error => console.log(error))
 }
 
+  return itemRef.delete().catch(error => console.log(error))
+}
+
+// Deletes all completed items in an item collection
 export const deleteAllCompleted = (uid, collectionId) => {
   const batch = db.batch()
 
@@ -149,6 +153,27 @@ export const toggleItem = (uid, collectionId, itemId) => {
     .doc(`${itemId}`)
 
   return itemRef
+    .update({ isComplete: !itemRef.data().isComplete })
+    .catch(error => console.log(error))
+}
+
+// renamed from toggleAllItems to setAllItemsCompleteness
+// if listCompleteness === true, then set all to false, otherwise set all to true
+export const setAllItemsCompleteness = (
+  uid,
+  collectionId,
+  listCompleteness
+) => {
+  const itemCollectionRef = getItemCollectionRef(uid, collectionId).collection(
+    'items'
+  )
+
+  const batch = db.batch()
+
+  const isComplete = !listCompleteness
+
+  // not sure if this is correct
+  itemCollectionRef
     .get()
     .then(item => itemRef.update({ isComplete: !item.data().isComplete }))
     .catch(error => console.log(error))
