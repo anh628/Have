@@ -147,7 +147,7 @@ export const editColor = (uid, collectionId, collectionColor) => {
     .update({ collectionColor })
     .catch(error => console.log(error))
 }
-
+/*
 export const addCollaborator = (uid, collectionId, collabUID) => {
   const itemCollectionRef = getItemCollectionRef(uid, collectionId)
 
@@ -169,3 +169,4 @@ export const removeCollaborator = (uid, collectionId, collabUID) => {
     .update({ collaborators })
     .catch(error => console.log(error))
 }
+*/
