@@ -18,10 +18,12 @@ item field => text, isComplete...
 */
 
 const getItemCollectionRef = (uid, collectionId) => {
-  return `users/${uid}/itemCollections/${collectionId}`
+  return usersCollectionRef.doc(`${uid}/itemCollections/${collectionId}`)
 }
 const getItemRef = (uid, collectionId, itemId) => {
-  return `users/${uid}/itemCollections/${collectionId}/items/${itemId}`
+  return usersCollectionRef.doc(
+    `users/${uid}/itemCollections/${collectionId}/items/${itemId}`
+  )
 }
 
 export const addCollection = (uid, collectionId, collectionColor) => {
@@ -34,7 +36,7 @@ export const addCollection = (uid, collectionId, collectionColor) => {
 
   const itemCollectionRef = getItemCollectionRef(uid, collectionId)
 
-  return itemCollectionRef // this will pick amongst collections that an individual user will have
+  return itemCollectionRef
     .set(collectionInfo) // will be the fields above
     .catch(error => console.log(error))
 }
