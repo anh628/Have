@@ -16,10 +16,6 @@ class NewCollection extends React.Component {
     }
   }
 
-  handelTitleChange (event) {
-    editTitle(event.target.value)
-  }
-
   handelViewChange = (collectionId, title) => {
     this.setState({
       collectionView: true,
@@ -62,6 +58,7 @@ class NewCollection extends React.Component {
               ).then(() => this.handelViewChange(collectionId, title))
             }}>
             <input
+              className='addItem'
               type='text'
               ref={node => (input = node)}
               autoFocus={true}
@@ -75,12 +72,7 @@ class NewCollection extends React.Component {
 
 function mapStateToProps (state) {
   return {
-    users: state.firestore.ordered.users // have a user
-    // itemCollections: state.firestore.ordered.users.itemCollections /// LEFT OFF HERE NEED TO FIGURE THIS OUT
-    //   ? state.firestore.ordered.itemCollections.filter(
-    //     item => item.id === 'rKvQ9nM6WXrEZ2xOCgwN'
-    //   )
-    //   : []
+    users: state.firestore.ordered.users
   }
 }
 

@@ -58,6 +58,7 @@ class EditItem extends React.Component {
     let EditableItem = (
       <div>
         <input
+          className='addItem'
           onBlur={this.handelendEdit}
           type='text'
           name='todo'
@@ -77,6 +78,7 @@ class EditItem extends React.Component {
           {' '}
           delete{' '}
         </button>
+        {/* still have to fix the delete button here so the buttons go away when needed  */}
       </div>
     )
 

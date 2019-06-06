@@ -22,7 +22,11 @@ class NewItem extends React.Component {
             )
             input.value = ''
           }}>
-          <input type='text' ref={node => (input = node)} autoFocus={true} />
+          <input
+            className='addItem'
+            type='text'
+            ref={node => (input = node)}
+            autoFocus={true} />
         </form>
       </div>
     )

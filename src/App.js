@@ -23,7 +23,6 @@ export default compose(
       doc: props.uid
     }
   ]),
-  withFirebase,
   connect(state => {
     return {
       uid: state.firebase.auth.uid // uid passed as props.uid
