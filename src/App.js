@@ -1,28 +1,42 @@
-import React from "react";
-import logo from "./logo.svg";
-import "./App.css";
-import AuthenticationButton from "./components/AuthenticationButton";
+import React from 'react'
+import './App.css'
+import { firestoreConnect, withFirebase } from 'react-redux-firebase'
+import { compose } from 'redux'
+import { connect } from 'react-redux'
+import AuthenticationButton from './components/AuthenticationButton'
 
 function App () {
   return (
-    // <div className="App">
-    //   <header className="App-header">
-    //     <img src={logo} className="App-logo" alt="logo" />
-    //     <p>
-    //       Edit <code>src/App.js</code> and save to reload.
-    //     </p>
-    //     <a
-    //       className="App-link"
-    //       href="https://reactjs.org"
-    //       target="_blank"
-    //       rel="noopener noreferrer"
-    //     >
-    //       Learn React
-    //     </a>
-    //   </header>
-    // </div>
-    <AuthenticationButton />
-  );
+    <div className='App'>
+      <header className='App-header'>
+        <AddBar />
+      </header>
+    </div>
+  )
 }
 
-export default App
+export default compose(
+  firestoreConnect(props => [
+    {
+      collection: 'users',
+      doc: props.uid
+      // subcollections: [
+      //   {
+      //     collection: 'itemCollections',
+      //     doc: , // props.collectionId
+      //     subcollections: [
+      //       {
+      //         collection: 'items'
+      //       }
+      //     ]
+      //   }
+      // ]
+    }
+  ]),
+  withFirebase,
+  connect(state => {
+    return {
+      uid: state.firebase.auth.uid // uid passed as props.uid
+    }
+  })
+)(App)
