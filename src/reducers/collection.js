@@ -6,7 +6,7 @@ const collection = (state = [], action) => {
     case actionType.ADD_COLLECTION:
       collection = {
         collectionId: action.collectionId,
-        editCollectionFlag: true
+        editCollectionFlag: true // starts out true because you will be editing the collection when adding a new collection
       }
       return [...state, collection]
     case actionType.EDIT_COLLECTION:
