@@ -120,6 +120,7 @@ export const toggleItem = (uid, collectionId, itemId) => {
 }
 
 // renamed from toggleAllItems to setAllItemsCompleteness
+// if listCompleteness === true, then set all to false, otherwise set all to true
 export const setAllItemsCompleteness = (
   uid,
   collectionId,
@@ -127,18 +128,20 @@ export const setAllItemsCompleteness = (
 ) => {
   const itemCollectionRef = getItemCollectionRef(uid, collectionId).doc('items')
 
-  db.runTransaction(transaction => {
-    return transaction
-      .get(itemCollectionRef)
-      .then(items => {
-        items.forEach(item =>
-          itemCollectionRef
-            .doc(item.id)
-            .update({ isComplete: !listCompleteness })
-        )
+  const batch = db.batch()
+
+  const isComplete = !listCompleteness
+
+  itemCollectionRef
+    .get()
+    .then(items => {
+      items.forEach(item => {
+        const itemRef = item.doc(item.id).update({ isComplete })
+        batch.update(itemRef)
       })
-      .catch(error => console.log(error))
-  })
+      return batch.commit()
+    })
+    .catch(error => console.log(error))
 }
 
 // add and edit color are basically the same thing since we already have a default set to null
