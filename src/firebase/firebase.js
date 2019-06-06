@@ -19,3 +19,11 @@ const firebaseConfig = {
 }
 
 firebase.initializeApp(firebaseConfig)
+
+// reference to firebase firestore
+export const db = firebase.firestore()
+
+// reference to user collection in firestore
+export const usersCollectionRef = db.collection('users') // need to match this up to firebase
+
+export { firebase }
