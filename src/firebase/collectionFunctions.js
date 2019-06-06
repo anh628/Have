@@ -40,7 +40,7 @@ export const addCollection = (uid, collectionId, collectionColor) => {
 }
 
 export const deleteCollection = (uid, collectionId) => {
-  const collectionRef = getCollectionRef(uid, collectionId)
+  const collectionRef = getItemCollectionRef(uid, collectionId)
   return collectionRef.delete().catch(error => console.log(error))
 }
 
