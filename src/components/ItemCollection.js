@@ -25,25 +25,24 @@ const ItemCollection = ({
   editCollectionFlag,
   changeEditCollectionFlag
 }) => {
-  const keys = items ? Object.keys(items) : null
-  const itemsList = !isLoaded(items)
-    ? 'loading'
-    : isEmpty(items)
-      ? 'Item Collection list is empty'
-      : keys
-        ? keys.map(itemId => (
-          <Item
-            key={itemId}
-            uid={uid}
-            collectionId={collectionId}
-            itemId={itemId}
-            {...items[itemId]} />
-        ))
-        : null
-
   if (editCollectionFlag) {
     return <CollectionView collectionId={collectionId} />
   } else {
+    const keys = items ? Object.keys(items) : null
+    const itemsList = !isLoaded(items)
+      ? 'loading'
+      : isEmpty(items)
+        ? 'Item Collection list is empty'
+        : keys
+          ? keys.map(itemId => (
+            <Item
+              key={itemId}
+              uid={uid}
+              collectionId={collectionId}
+              itemId={itemId}
+              {...items[itemId]} />
+          ))
+          : null
     return (
       <div
         style={{ backgroundColor: collectionColor }}
