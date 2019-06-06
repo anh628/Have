@@ -129,6 +129,12 @@ export const logIn = uid => ({
 })
 
 export const logOut = uid => ({
-  type: actionType.LOG_,
+  type: actionType.LOG_OUT,
   uid
+})
+
+// redux
+export const changeEditFlag = item => ({
+  type: actionType.EDIT_ITEM_FLAG,
+  item
 })
