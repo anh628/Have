@@ -1,26 +1,28 @@
-import React from 'react'
-import logo from './logo.svg'
-import './App.css'
-import PropsPrinter from './components/DummyPropsPrinter/PropsPrinter'
+import React from "react";
+import logo from "./logo.svg";
+import "./App.css";
+import AuthenticationButton from "./components/AuthenticationButton";
 
 function App () {
   return (
-    <div className='App'>
-      <header className='App-header'>
-        <img src={logo} className='App-logo' alt='logo' />
-        <p>
-          <PropsPrinter />
-        </p>
-        <a
-          className='App-link'
-          href='https://reactjs.org'
-          target='_blank'
-          rel='noopener noreferrer'>
-          Learn React
-        </a>
-      </header>
-    </div>
-  )
+    // <div className="App">
+    //   <header className="App-header">
+    //     <img src={logo} className="App-logo" alt="logo" />
+    //     <p>
+    //       Edit <code>src/App.js</code> and save to reload.
+    //     </p>
+    //     <a
+    //       className="App-link"
+    //       href="https://reactjs.org"
+    //       target="_blank"
+    //       rel="noopener noreferrer"
+    //     >
+    //       Learn React
+    //     </a>
+    //   </header>
+    // </div>
+    <AuthenticationButton />
+  );
 }
 
 export default App

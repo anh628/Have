@@ -76,11 +76,10 @@ export const editImage = (uid, collectionId, editedImage) => ({
   editedImage
 })
 
-export const deleteImage = (uid, collectionId, image) => ({
+export const deleteImage = (uid, collectionId) => ({
   type: actionType.DELETE_IMAGE,
   uid,
-  collectionId,
-  image
+  collectionId
 })
 
 export const toggleItem = (uid, collectionId, itemId) => ({
