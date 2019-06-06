@@ -1,5 +1,6 @@
 import { usersCollectionRef, db } from './firebase'
-
+import { v4 } from 'node-uuid'
+import { _addCollection } from '../actions/actionCreators'
 /*
 db = firebase.firestore();
 usersCollectionRef = db.collection("users");
@@ -26,7 +27,8 @@ const getItemRef = (uid, collectionId, itemId) => {
   )
 }
 
-export const addCollection = (uid, collectionId, collectionColor) => {
+export const addCollection = (uid, collectionColor) => {
+  let collectionId = v4()
   const collectionInfo = {
     title: null,
     collaborators: [],
@@ -39,6 +41,7 @@ export const addCollection = (uid, collectionId, collectionColor) => {
   return itemCollectionRef
     .set(collectionInfo) // will be the fields above
     .catch(error => console.log(error))
+    .then(dispatch => dispatch(_addCollection(collectionId)))
 }
 
 export const deleteCollection = (uid, collectionId) => {
@@ -56,7 +59,8 @@ export const deleteTitle = (uid, collectionId) => {
   return editTitle(uid, collectionId, null)
 }
 
-export const addItem = (uid, collectionId, itemId, text) => {
+export const addItem = (uid, collectionId, text) => {
+  let itemId = v4()
   const itemInfo = {
     itemId,
     text,
