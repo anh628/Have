@@ -27,8 +27,6 @@ function AuthenticationButton ({ firebase, auth }) {
             {' '}
             Logout
           </button>
-          <h3>Auth Data</h3>
-          <pre>{JSON.stringify(auth, null, 2)}</pre>
         </div>
       )}
     </div>

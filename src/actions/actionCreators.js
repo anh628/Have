@@ -1,10 +1,8 @@
 import * as actionType from '../constants/constants'
 
-export const addCollection = (uid, collectionId, collectionColor) => ({
+export const _addCollection = collectionId => ({
   type: actionType.ADD_COLLECTION,
-  uid,
-  collectionId,
-  collectionColor
+  collectionId
 })
 
 export const deleteCollection = (uid, collectionId) => ({
@@ -76,11 +74,10 @@ export const editImage = (uid, collectionId, editedImage) => ({
   editedImage
 })
 
-export const deleteImage = (uid, collectionId, image) => ({
+export const deleteImage = (uid, collectionId) => ({
   type: actionType.DELETE_IMAGE,
   uid,
-  collectionId,
-  image
+  collectionId
 })
 
 export const toggleItem = (uid, collectionId, itemId) => ({
@@ -135,7 +132,13 @@ export const logOut = uid => ({
 })
 
 // redux
+
 export const changeEditFlag = item => ({
   type: actionType.EDIT_ITEM_FLAG,
   item
+})
+
+export const changeEditCollectionFlag = collectionId => ({
+  type: actionType.EDIT_COLLECTION,
+  collectionId
 })
