@@ -85,7 +85,7 @@ export const deleteItem = (uid, collectionId, itemId) => {
 export const deleteAllCompleted = (uid, collectionId) => {
   const batch = db.batch()
 
-  const itemCollectionRef = getItemCollectionRef(uid, collectionId)
+  const itemCollectionRef = getItemCollectionRef(uid, collectionId).doc('items')
 
   itemCollectionRef
     .where('isComplete', '==', true)
@@ -125,7 +125,7 @@ export const setAllItemsCompleteness = (
   collectionId,
   listCompleteness
 ) => {
-  const itemCollectionRef = getItemCollectionRef(uid, collectionId)
+  const itemCollectionRef = getItemCollectionRef(uid, collectionId).doc('items')
 
   db.runTransaction(transaction => {
     return transaction
