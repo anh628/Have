@@ -1,6 +1,5 @@
 import { usersCollectionRef, db } from './firebase'
 import { v4 } from 'node-uuid'
-import { addCollection } from '../actions/actionCreators'
 /*
 db = firebase.firestore();
 usersCollectionRef = db.collection("users");
@@ -17,6 +16,15 @@ itemRef = itemCollections.collection("item").doc(itemID)
 
 item field => text, isComplete...
 */
+
+const getItemCollectionRef = (uid, collectionId) => {
+  return usersCollectionRef.doc(`${uid}/itemCollections/${collectionId}`)
+}
+const getItemRef = (uid, collectionId, itemId) => {
+  return usersCollectionRef.doc(
+    `users/${uid}/itemCollections/${collectionId}/items/${itemId}`
+  )
+}
 
 export const addCollection = (uid, collectionColor) => {
   let collectionId = v4()
