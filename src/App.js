@@ -15,5 +15,5 @@ const App = ({ uid }) => {
 }
 
 export default connect(state => ({
-  uid: state.firebase.auth.uid
+  uid: state.firebase.auth.uid // uid passed as props.uid
 }))(App)
