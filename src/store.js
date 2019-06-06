@@ -9,15 +9,8 @@ import logger from 'redux-logger'
 
 // const composeEnhancers = window.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__ || compose
 
-// react-redux-firebase options
-const rrfConfig = {
-  userProfile: 'users', // firebase root where user profiles are stored
-  attachAuthIsReady: true, // attaches auth is ready promise to store
-  useFirestoreForProfile: true // use firestore instead of firebase
-}
-
 const createStoreWithFirebase = compose(
-  reactReduxFirebase(firebase, rrfConfig), // firebase instance as first argument, {} is for the react-redux-firebase config
+  reactReduxFirebase(firebase, {}), // firebase instance as first argument, {} is for the react-redux-firebase config
   reduxFirestore(firebase) // <- needed if using firestore
 )(createStore)
 
@@ -29,8 +22,3 @@ export const store = createStoreWithFirebase(
   //  composeEnhancers(applyMiddleware(thunk)) // <- for redux dev tools
   composeWithDevTools(middleware)
 )
-
-// Listen for auth ready (promise available on store thanks to attachAuthIsReady: true config option)
-store.firebaseAuthIsReady.then(() => {
-  console.log('Auth has loaded') // eslint-disable-line no-console
-})

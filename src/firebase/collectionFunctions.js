@@ -1,5 +1,5 @@
 import { usersCollectionRef, db } from './firebase'
-import { v4 } from 'node-uuid'
+
 /*
 db = firebase.firestore();
 usersCollectionRef = db.collection("users");
@@ -17,89 +17,66 @@ itemRef = itemCollections.collection("item").doc(itemID)
 item field => text, isComplete...
 */
 
-export const addCollection = (uid, collectionColor) => {
-  let collectionId = v4()
+const getItemCollectionRef = (uid, collectionId) => {
+  return usersCollectionRef.doc(`${uid}/itemCollections/${collectionId}`)
+}
+const getItemRef = (uid, collectionId, itemId) => {
+  return usersCollectionRef.doc(
+    `users/${uid}/itemCollections/${collectionId}/items/${itemId}`
+  )
+}
+
+export const addCollection = (uid, collectionId, collectionColor) => {
   const collectionInfo = {
     title: null,
     collaborators: [],
     collectionColor,
     image: null
   }
-  return usersCollectionRef
-    .doc(`${uid}`)
-    .collection('itemCollections') // collection of items for a given user
-    .doc(`${collectionId}`) // this will pick amongst collections that an individual user will have
+
+  const itemCollectionRef = getItemCollectionRef(uid, collectionId)
+
+  return itemCollectionRef
     .set(collectionInfo) // will be the fields above
     .catch(error => console.log(error))
 }
 
 export const deleteCollection = (uid, collectionId) => {
-  return usersCollectionRef
-    .doc(`${uid}`)
-    .collection('itemCollections')
-    .doc(`${collectionId}`)
-    .delete()
-    .catch(error => console.log(error))
+  const collectionRef = getItemCollectionRef(uid, collectionId)
+  return collectionRef.delete().catch(error => console.log(error))
 }
 
 export const editTitle = (uid, collectionId, title) => {
-  const itemCollectionRef = usersCollectionRef
-    .doc(`${uid}`)
-    .collection('itemCollections')
-    .doc(`${collectionId}`)
+  const itemCollectionRef = getItemCollectionRef(uid, collectionId)
 
-  return itemCollectionRef
-    .get()
-    .then(() => itemCollectionRef.update({ title }))
-    .catch(error => console.log(error))
+  return itemCollectionRef.update({ title }).catch(error => console.log(error))
 }
 
 export const deleteTitle = (uid, collectionId) => {
   return editTitle(uid, collectionId, null)
 }
 
-export const addItem = (uid, collectionId, text) => {
-  let itemId = v4()
+export const addItem = (uid, collectionId, itemId, text) => {
   const itemInfo = {
     itemId,
     text,
     isComplete: false
   }
-  return usersCollectionRef
-    .doc(`${uid}`)
-    .collection('itemCollections')
-    .doc(`${collectionId}`)
-    .collection('items') // the items within a user's collection
-    .doc(`${itemId}`) // the ID of the item you want to add
-    .set(itemInfo) // see above
-    .catch(error => console.log(error))
+
+  const itemRef = getItemRef(uid, collectionId, itemId)
+
+  return itemRef.set(itemInfo).catch(error => console.log(error))
 }
 
 export const editItem = (uid, collectionId, itemId, editedText) => {
-  const itemRef = usersCollectionRef
-    .doc(`${uid}`)
-    .collection('itemCollections')
-    .doc(`${collectionId}`)
-    .collection('items')
-    .doc(`${itemId}`)
+  const itemRef = getItemRef(uid, collectionId, itemId)
 
-  return itemRef
-    .get()
-    .then(() => itemRef.update({ text: editedText }))
-    .catch(error => console.log(error))
+  return itemRef.update({ text: editedText }).catch(error => console.log(error))
 }
 
 // IF we want trash/archive we will need to edit this
 export const deleteItem = (uid, collectionId, itemId) => {
-  return usersCollectionRef
-    .doc(`${uid}`)
-    .collection('itemCollections')
-    .doc(`${collectionId}`)
-    .collection('items')
-    .doc(`${itemId}`)
-    .delete()
-    .catch(error => console.log(error))
-}
+  const itemRef = getItemRef(uid, collectionId, itemId)
 
   return itemRef.delete().catch(error => console.log(error))
 }
@@ -108,18 +85,16 @@ export const deleteItem = (uid, collectionId, itemId) => {
 export const deleteAllCompleted = (uid, collectionId) => {
   const batch = db.batch()
 
-  const currentCollectionRef = usersCollectionRef
-    .doc(`${uid}`)
-    .collection('itemCollections')
-    .doc(`${collectionId}`)
-    .collection('items')
+  const itemCollectionRef = getItemCollectionRef(uid, collectionId).collection(
+    'items'
+  )
 
-  currentCollectionRef
+  itemCollectionRef
     .where('isComplete', '==', true)
     .get()
     .then(completedItems => {
       completedItems.forEach(item => {
-        const itemRef = currentCollectionRef.doc(item.itemId)
+        const itemRef = itemCollectionRef.doc(item.itemId)
         batch.delete(itemRef)
       })
       return batch.commit()
@@ -128,15 +103,9 @@ export const deleteAllCompleted = (uid, collectionId) => {
 
 // don't have an add image because we are really just editing the default value we already set for image
 export const editImage = (uid, collectionId, image) => {
-  const itemCollectionRef = usersCollectionRef
-    .doc(`${uid}`)
-    .collection('itemCollections')
-    .doc(`${collectionId}`)
+  const itemCollectionRef = getItemCollectionRef(uid, collectionId)
 
-  return itemCollectionRef
-    .get()
-    .then(() => itemCollectionRef.update({ image }))
-    .catch(error => console.log(error))
+  return itemCollectionRef.update({ image }).catch(error => console.log(error))
 }
 
 // if we want to have more than one image we need to adjust this and the one above
@@ -145,12 +114,7 @@ export const deleteImage = (uid, collectionId) => {
 }
 
 export const toggleItem = (uid, collectionId, itemId) => {
-  const itemRef = usersCollectionRef
-    .doc(`${uid}`)
-    .collection('itemCollections')
-    .doc(`${collectionId}`)
-    .collection('items')
-    .doc(`${itemId}`)
+  const itemRef = getItemRef(uid, collectionId, itemId)
 
   return itemRef
     .update({ isComplete: !itemRef.data().isComplete })
@@ -175,65 +139,44 @@ export const setAllItemsCompleteness = (
   // not sure if this is correct
   itemCollectionRef
     .get()
-    .then(item => itemRef.update({ isComplete: !item.data().isComplete }))
+    .then(items => {
+      items.forEach(item => {
+        const itemRef = item.doc(item.id).update({ isComplete })
+        batch.update(itemRef)
+      })
+      return batch.commit()
+    })
     .catch(error => console.log(error))
-}
-
-export const toggleAllItems = (uid, collectionId, listCompleteness) => {
-  const currentCollectionRef = usersCollectionRef
-    .doc(`${uid}`)
-    .collection('itemCollections')
-    .doc(`${collectionId}`)
-    .collection('items')
-
-  currentCollectionRef.get().then(querySnapshot => {
-    querySnapshot.forEach(item =>
-      currentCollectionRef
-        .doc(item.id)
-        .update({ isComplete: !listCompleteness })
-    )
-  })
 }
 
 // add and edit color are basically the same thing since we already have a default set to null
 export const editColor = (uid, collectionId, collectionColor) => {
-  const itemCollectionRef = usersCollectionRef
-    .doc(`${uid}`)
-    .collection('itemCollections')
-    .doc(`${collectionId}`)
+  const itemCollectionRef = getItemCollectionRef(uid, collectionId)
 
   return itemCollectionRef
-    .get()
-    .then(() => itemCollectionRef.update({ collectionColor }))
+    .update({ collectionColor })
     .catch(error => console.log(error))
 }
-
+/*
 export const addCollaborator = (uid, collectionId, collabUID) => {
-  const itemCollectionRef = usersCollectionRef
-    .doc(`${uid}`)
-    .collection('itemCollections')
-    .doc(`${collectionId}`)
+  const itemCollectionRef = getItemCollectionRef(uid, collectionId)
 
   const collaborators = itemCollectionRef.doc().collaborators
   collaborators.push(collabUID)
 
   return itemCollectionRef
-    .get()
-    .then(() => itemCollectionRef.update({ collaborators }))
+    .update({ collaborators })
     .catch(error => console.log(error))
 }
 
 export const removeCollaborator = (uid, collectionId, collabUID) => {
-  const itemCollectionRef = usersCollectionRef
-    .doc(`${uid}`)
-    .collection('itemCollections')
-    .doc(`${collectionId}`)
+  const itemCollectionRef = getItemCollectionRef(uid, collectionId)
 
   const collaborators = itemCollectionRef
     .doc()
     .collaborators.filter(id => id !== collabUID)
   return itemCollectionRef
-    .get()
-    .then(() => itemCollectionRef.update({ collaborators }))
+    .update({ collaborators })
     .catch(error => console.log(error))
 }
+*/
