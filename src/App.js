@@ -21,17 +21,6 @@ export default compose(
     {
       collection: 'users',
       doc: props.uid
-      // subcollections: [
-      //   {
-      //     collection: 'itemCollections',
-      //     doc: , // props.collectionId
-      //     subcollections: [
-      //       {
-      //         collection: 'items'
-      //       }
-      //     ]
-      //   }
-      // ]
     }
   ]),
   withFirebase,

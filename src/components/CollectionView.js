@@ -2,24 +2,22 @@ import { firestoreConnect } from 'react-redux-firebase'
 import { compose } from 'redux'
 import { connect } from 'react-redux'
 import React from 'react'
-import {
-  addItem,
-  addCollection,
-  editTitle
-} from '../firebase/collectionFunctions'
-import { v4 } from 'node-uuid'
+// import {
+
+//   editTitle
+// } from '../firebase/collectionFunctions' may need edit title here
+
 import EditItem from './EditItem'
 import NewItem from './NewItem'
 
 class CollectionView extends React.Component {
   render () {
     if (this.props.items) {
-      // if there is a prop items
       const itemKeys = Object.keys(this.props.items)
       return (
-        // map through and get these edit items out
         <div>
-          <h1>{this.props.title}</h1>
+          <h1 className='titleCollectionViewBlur'>HAVE</h1>
+          <h1 className='titleCollectionView'>{this.props.title}</h1>
 
           {itemKeys.map(itemId => (
             <EditItem
@@ -34,7 +32,8 @@ class CollectionView extends React.Component {
     } else {
       return (
         <div>
-          <h1>{this.props.title}</h1>
+          <h1 className='titleCollectionViewBlur'>HAVE</h1>
+          <h1 className='titleCollectionView'>{this.props.title}</h1>
           <NewItem collectionId={this.props.collectionId} />
         </div>
       )

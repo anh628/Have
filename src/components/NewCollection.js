@@ -45,7 +45,7 @@ class NewCollection extends React.Component {
     } else {
       return (
         <div>
-          Add Title
+          <h1 className='titleCollectionView'>HAVE</h1>
           <form
             onSubmit={e => {
               e.preventDefault()
@@ -61,7 +61,11 @@ class NewCollection extends React.Component {
                 collectionColor
               ).then(() => this.handelViewChange(collectionId, title))
             }}>
-            <input type='text' ref={node => (input = node)} autoFocus={true} />
+            <input
+              type='text'
+              ref={node => (input = node)}
+              autoFocus={true}
+              defaultValue='add a collection title' />
           </form>
         </div>
       )
