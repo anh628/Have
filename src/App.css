@@ -14,6 +14,7 @@
   background-color: #282c34;
   min-height: 100vh;
   display: flex;
+
   flex-direction: column;
   align-items: center;
   justify-content: center;
@@ -33,6 +34,7 @@
     transform: rotate(360deg);
   }
 }
+
 /* TODO: CHANGE WIDTH to be the same size as list */
 div.footer-bar {
   display: inline-flex;
@@ -141,4 +143,72 @@ div.item-collection img {
   max-width: 100%;
   border-radius: 10px;
   object-fit: contain;
+
+
+.ItemCollectionView {
+  padding: 12px 20px;
+  margin: 8px 0;
+  border-width: 2px;
+  border-bottom-width: 2px;
+  /* border-top-width: 2px; */
+  border-bottom-color: White;
+  border-bottom-style: solid;
+  width: 100%;
+}
+
+.titleCollectionView {
+  top: 0px;
+  margin: 0px;
+  padding: 0px 2px 2px 3px;
+  border-width: 2px;
+  width: 100%;
+  border: 5px solid #8a8585;
+}
+
+.titleCollectionViewBlur {
+  top: 0px;
+  margin: 0px;
+  padding: 0px 2px 2px 3px;
+
+  color: #554f4f;
+}
+
+.buttonStyling {
+  border-radius: 100%;
+  background-color: #70b9da;
+  border-width: 0px;
+}
+
+.deleteButton {
+  border-radius: 100%;
+  background-color: #d2868d;
+  border-width: 0px;
+}
+
+.compeltedItem {
+  text-decoration: line-through;
+}
+
+.collectionsTemp {
+  padding: 100px;
+  border-width: 1px;
+  border: 5px solid #ffffff;
+  margin: 50px;
+}
+
+.addItem {
+  padding: 12px 20px;
+  margin: 8px 0;
+  box-sizing: border-box;
+  border: 3px solid #ccc;
+  -webkit-transition: 0.5s;
+  transition: 0.5s;
+  outline: none;
+  background-color: #282c34;
+  color: white;
+  margin-left: 10px;
+}
+
+.addItem:focus {
+  border: 3px solid #555;
 }
