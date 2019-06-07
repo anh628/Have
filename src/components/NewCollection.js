@@ -1,8 +1,5 @@
-import { firestoreConnect } from 'react-redux-firebase'
-import { compose } from 'redux'
-import { connect } from 'react-redux'
 import React from 'react'
-import { addCollection, editTitle } from '../firebase/collectionFunctions' // still need to get this edit title working
+import { addCollection } from '../firebase/collectionFunctions'
 import { v4 } from 'node-uuid'
 import CollectionView from './CollectionView'
 
@@ -19,8 +16,8 @@ class NewCollection extends React.Component {
   handelViewChange = (collectionId, title) => {
     this.setState({
       collectionView: true,
-      collectionId: collectionId,
-      title: title
+      collectionId,
+      title
     })
   }
 
@@ -51,7 +48,7 @@ class NewCollection extends React.Component {
               title = input.value
               collectionId = v4()
               addCollection(
-                this.props.users[0].id,
+                this.props.uid,
                 collectionId,
                 title,
                 collectionColor
@@ -70,29 +67,4 @@ class NewCollection extends React.Component {
   }
 }
 
-function mapStateToProps (state) {
-  return {
-    users: state.firestore.ordered.users
-  }
-}
-
-export default compose(
-  connect(mapStateToProps),
-  firestoreConnect(props => [
-    {
-      collection: 'users',
-      doc: 'JofY9DCsywfgVtSOBxd2BZ7OBDn1', // props.user.uid
-      subcollections: [
-        {
-          collection: 'itemCollections',
-          doc: 'lCHu8ouJOVXyBijkdnZO', // props.collectionId
-          subcollections: [
-            {
-              collection: 'items'
-            }
-          ]
-        }
-      ]
-    }
-  ]) // going to get todos for a user
-)(NewCollection)
+export default NewCollection
