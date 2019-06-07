@@ -5,11 +5,13 @@ import { connect } from 'react-redux'
 import React from 'react'
 import EditItem from './EditItem'
 import NewItem from './NewItem'
+import { changeEditCollectionFlag } from '../actions/actionCreators'
 
 // TODO: edit collection title here
 // props passed are uid, collectionID, title
 class CollectionView extends React.Component {
   render () {
+    // TODO: this.props.items not updating when we add in a new item
     if (this.props.items) {
       const itemKeys = Object.keys(this.props.items)
       return (
@@ -36,24 +38,32 @@ class CollectionView extends React.Component {
           <h1 className='titleCollectionViewBlur'>HAVE</h1>
           <h1 className='titleCollectionView'>{this.props.title}</h1>
           <NewItem collectionId={this.props.collectionId} />
+          {/* TODO: DOUBLE CHECK THIS */}
+          <label
+            onClick={() => changeEditCollectionFlag(this.props.collectionId)}>
+            Done
+          </label>
         </div>
       )
     }
   }
 }
 
-function mapStateToProps (state, props) {
+const mapStateToProps = (state, props) => {
   const items =
     state.firestore.data.users &&
-    state.firestore.data.users[this.props.uid] &&
-    state.firestore.data.users[this.props.uid].itemCollections &&
-    state.firestore.data.users[this.props.uid].itemCollections[
-      props.collectionId
-    ] &&
-    state.firestore.data.users[this.props.uid].itemCollections[
-      props.collectionId
-    ].items
-  return { items }
+    state.firestore.data.users[props.uid] &&
+    state.firestore.data.users[props.uid].itemCollections &&
+    state.firestore.data.users[props.uid].itemCollections[props.collectionId] &&
+    state.firestore.data.users[props.uid].itemCollections[props.collectionId]
+      .items
+  return {
+    items
+  }
+}
+
+const mapDispatchToProps = {
+  changeEditCollectionFlag
 }
 export default compose(
   firestoreConnect(props => [
@@ -61,6 +71,6 @@ export default compose(
   ]),
   connect(
     mapStateToProps,
-    null
+    mapDispatchToProps
   )
 )(CollectionView)

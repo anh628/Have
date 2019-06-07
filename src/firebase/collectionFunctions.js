@@ -29,6 +29,7 @@ const getItemRef = (uid, collectionId, itemId) => {
   )
 }
 
+// this is now a thunk and not a regular function! because of the dispatching thing
 export const addCollection = (
   uid,
   collectionId,
@@ -36,7 +37,7 @@ export const addCollection = (
   collectionColor
 ) => dispatch => {
   const collectionInfo = {
-    title: title,
+    title,
     collaborators: [],
     collectionColor,
     image: null

@@ -2,6 +2,7 @@ import React from 'react'
 import { addCollection } from '../firebase/collectionFunctions'
 import { v4 } from 'node-uuid'
 import CollectionView from './CollectionView'
+import { connect } from 'react-redux'
 
 // TODO: come back to addCollection error!
 class NewCollection extends React.Component {
@@ -49,12 +50,14 @@ class NewCollection extends React.Component {
               }
               title = input.value
               collectionId = v4()
-              addCollection(
-                this.props.uid,
-                collectionId,
-                title,
-                collectionColor
-              ).then(() => this.handleViewChange(collectionId, title))
+              this.props
+                .addCollection(
+                  this.props.uid,
+                  collectionId,
+                  title,
+                  collectionColor
+                )
+                .then(() => this.handleViewChange(collectionId, title))
             }}>
             <input
               className='addItem'
@@ -69,4 +72,10 @@ class NewCollection extends React.Component {
   }
 }
 
-export default NewCollection
+const mapDispatchToProps = {
+  addCollection
+}
+export default connect(
+  null,
+  mapDispatchToProps
+)(NewCollection)
