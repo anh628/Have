@@ -134,7 +134,7 @@ div.footer-bar div.footer-button p.description {
 }
 
 .item-collection img {
-  width: 100%;
+  max-width: 100%;
   border-radius: 10px;
   object-fit: contain;
 }
