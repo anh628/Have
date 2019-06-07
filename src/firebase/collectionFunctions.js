@@ -23,7 +23,7 @@ const getItemCollectionRef = (uid, collectionId) => {
 }
 const getItemRef = (uid, collectionId, itemId) => {
   return usersCollectionRef.doc(
-    `users/${uid}/itemCollections/${collectionId}/items/${itemId}`
+    `${uid}/itemCollections/${collectionId}/items/${itemId}`
   )
 }
 
