@@ -55,8 +55,10 @@ TODO: get dispatch to work
 */
 export const deleteCollection = (uid, collectionId) => dispatch => {
   const collectionRef = getItemCollectionRef(uid, collectionId)
-  return collectionRef.delete().catch(error => console.log(error))
-  // .then(() => dispatch(_deleteCollection(collectionId)))
+  return collectionRef
+    .delete()
+    .catch(error => console.log(error))
+    .then(() => dispatch(_deleteCollection(collectionId)))
 }
 
 export const editTitle = (uid, collectionId, title) => {

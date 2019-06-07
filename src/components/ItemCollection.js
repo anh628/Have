@@ -38,7 +38,6 @@ const ItemCollection = ({
           ))
           : null
 
-    // TODO: create status upload bar
     const displayImage = image ? <img src={image} alt='cover-art' /> : null
 
     return (

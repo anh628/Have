@@ -7,8 +7,9 @@ import {
   deleteAllCompleted,
   setAllItemsCompleteness
 } from '../firebase/collectionFunctions'
-// import PropTypes from "prop-types";
+import { connect } from 'react-redux'
 
+// TODO: have it so only the relevant add more buttons are shown
 class Footer extends React.Component {
   state = {
     showMenu: false
@@ -65,10 +66,25 @@ class Footer extends React.Component {
           }`}
           id={`more-dropdown ${this.props.collectionId}`}
           onMouseLeave={() => this.toggleShow()}>
-          {/* TODO: THIS DOES NOT SEEM TO WORK - DELETE COLLECTION */}
           <label
-            onClick={deleteCollection(this.props.uid, this.props.collectionId)}>
+            onClick={() =>
+              this.props.deleteCollection(
+                this.props.uid,
+                this.props.collectionId
+              )
+            }>
             Delete collection
+          </label>
+          <br />
+          <label
+            onClick={() =>
+              setAllItemsCompleteness(
+                this.props.uid,
+                this.props.collectionId,
+                true
+              )
+            }>
+            Check all items
           </label>
           <br />
           <label
@@ -86,7 +102,7 @@ class Footer extends React.Component {
             onClick={() =>
               deleteAllCompleted(this.props.uid, this.props.collectionId)
             }>
-            Delete check items
+            Delete checked items
           </label>
         </div>
       </div>
@@ -112,4 +128,10 @@ class Footer extends React.Component {
   }
 }
 
-export default Footer
+const mapDispatchToProps = {
+  deleteCollection
+}
+export default connect(
+  null,
+  mapDispatchToProps
+)(Footer)
