@@ -28,13 +28,16 @@ const getItemRef = (uid, collectionId, itemId) => {
   )
 }
 
-
-export const addCollection = (uid, collectionId, title, collectionColor) => {
-
+export const addCollection = (
+  uid,
+  collectionId,
+  title,
+  collectionColor
+) => dispatch => {
   const collectionInfo = {
     title: title,
     collaborators: [],
-    collectionColor: '#282c34',
+    collectionColor,
     image: null
   }
 
@@ -43,7 +46,6 @@ export const addCollection = (uid, collectionId, title, collectionColor) => {
     .set(collectionInfo) // will be the fields above
     .catch(error => console.log(error))
     .then(() => dispatch(_addCollection(collectionId)))
-
 }
 
 /*
