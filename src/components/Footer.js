@@ -46,10 +46,9 @@ const Footer = ({ uid, collectionId }) => {
   */
   const moreButton = (
     <div className='footer-button' onClick={() => toggleMenuName()}>
-      <div className='dropdown' id='more'>
-        <Emoji symbol='⋮' label='more' />
-        <p className='description'>More</p>
-      </div>
+      <Emoji symbol='⋮' label='more' className='dropdown' id='more' />
+      <p className='description'>More</p>
+
       <div
         className='dropdown-content-more'
         id={`more-dropdown ${collectionId}`}>
