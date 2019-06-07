@@ -23,7 +23,7 @@ const getItemCollectionRef = (uid, collectionId) => {
 }
 const getItemRef = (uid, collectionId, itemId) => {
   return usersCollectionRef.doc(
-    `users/${uid}/itemCollections/${collectionId}/items/${itemId}`
+    `${uid}/itemCollections/${collectionId}/items/${itemId}`
   )
 }
 
@@ -34,11 +34,10 @@ export const addCollection = (uid, collectionId, title, collectionColor) => {
     collectionColor,
     image: null
   }
+
+  const itemCollectionRef = getItemCollectionRef(uid, collectionId)
   console.log('added a collection')
-  return usersCollectionRef
-    .doc(`${uid}`)
-    .collection('itemCollections') // collection of items for a given user
-    .doc(`${collectionId}`) // this will pick amongst collections that an individual user will have
+  return itemCollectionRef // this will pick amongst collections that an individual user will have
     .set(collectionInfo) // will be the fields above
     .catch(error => console.log(error))
 }
@@ -120,7 +119,7 @@ export const toggleItem = (uid, collectionId, itemId) => {
   const itemRef = getItemRef(uid, collectionId, itemId)
 
   return itemRef
-    .update({ isComplete: !itemRef.data().isComplete })
+    .update({ isComplete: !itemRef.get().isComplete })
     .catch(error => console.log(error))
 }
 

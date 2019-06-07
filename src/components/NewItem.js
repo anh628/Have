@@ -20,6 +20,7 @@ class NewItem extends React.Component {
               this.props.collectionId,
               input.value
             )
+            console.log('added an item')
             input.value = ''
           }}>
           <input
@@ -44,7 +45,7 @@ export default compose(
   firestoreConnect(props => [
     {
       collection: 'users',
-      doc: 'rKvQ9nM6WXrEZ2xOCgwN', // props.user.uid
+      doc: 'JofY9DCsywfgVtSOBxd2BZ7OBDn1', // props.user.uid
       subcollections: [
         {
           collection: 'itemCollections',

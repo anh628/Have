@@ -81,7 +81,7 @@ export default compose(
   firestoreConnect(props => [
     {
       collection: 'users',
-      doc: 'rKvQ9nM6WXrEZ2xOCgwN', // props.user.uid
+      doc: 'JofY9DCsywfgVtSOBxd2BZ7OBDn1', // props.user.uid
       subcollections: [
         {
           collection: 'itemCollections',
