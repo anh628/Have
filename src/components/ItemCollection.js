@@ -5,7 +5,7 @@ import { connect } from 'react-redux'
 import { compose } from 'redux'
 import { firestoreConnect, isLoaded, isEmpty } from 'react-redux-firebase'
 import { changeEditCollectionFlag } from '../actions/actionCreators'
-import CollectionView from './CollectionView'
+import NewCollection from './NewCollection'
 import Footer from './Footer'
 
 const ItemCollection = ({
@@ -19,7 +19,7 @@ const ItemCollection = ({
   image
 }) => {
   if (editCollectionFlag) {
-    return <CollectionView collectionId={collectionId} />
+    return <NewCollection collectionId={collectionId} />
   } else {
     const keys = items ? Object.keys(items) : null
 
