@@ -26,7 +26,7 @@ class NewCollection extends React.Component {
 
   render () {
     let input
-    let collectionColor = '#FFFFFF'
+    let collectionColor = '#282c34;'
     let collectionId
     let title
 
@@ -62,7 +62,7 @@ class NewCollection extends React.Component {
               type='text'
               ref={node => (input = node)}
               autoFocus={true}
-              defaultValue='add a collection title' />
+              placeholder='add a collection title' />
           </form>
         </div>
       )
