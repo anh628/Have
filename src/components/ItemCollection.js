@@ -6,15 +6,7 @@ import { compose } from 'redux'
 import { firestoreConnect, isLoaded, isEmpty } from 'react-redux-firebase'
 import { changeEditCollectionFlag } from '../actions/actionCreators'
 import CollectionView from './CollectionView'
-
-/*
-Props passing in from List
-collaborators: [],
-collectionColor: "",
-image: boolean,
-title: "",
-collectionId
-*/
+import Footer from './Footer'
 
 const ItemCollection = ({
   uid,
@@ -23,12 +15,14 @@ const ItemCollection = ({
   title,
   items,
   editCollectionFlag,
-  changeEditCollectionFlag
+  changeEditCollectionFlag,
+  image
 }) => {
   if (editCollectionFlag) {
     return <CollectionView collectionId={collectionId} />
   } else {
     const keys = items ? Object.keys(items) : null
+
     const itemsList = !isLoaded(items)
       ? 'loading'
       : isEmpty(items)
@@ -43,13 +37,20 @@ const ItemCollection = ({
               {...items[itemId]} />
           ))
           : null
+
+    // TODO: create status upload bar
+    const displayImage = image ? <img src={image} alt='cover-art' /> : null
+
     return (
       <div
         style={{ backgroundColor: collectionColor }}
-        className='item-collection'
-        onClick={() => changeEditCollectionFlag(collectionId)}>
-        <h2 className='item-collection-title'>{title}</h2>
-        {itemsList}
+        className='item-collection'>
+        <div onClick={() => changeEditCollectionFlag(collectionId)}>
+          {displayImage}
+          <h2 className='item-collection-title'>{title}</h2>
+          <div>{itemsList}</div>
+        </div>
+        <Footer uid={uid} collectionId={collectionId} />
       </div>
     )
   }

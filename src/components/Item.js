@@ -3,7 +3,7 @@ import React from 'react'
 const Item = ({ text, isComplete }) => (
   <div id='flex' className='item-row'>
     <label className={isComplete ? 'checkbox-completed' : 'checkbox'}>
-      <input type='checkbox' defaultChecked={isComplete} />
+      <input type='checkbox' defaultChecked={isComplete} disabled={true} />
     </label>
     <label
       style={{

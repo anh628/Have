@@ -5,9 +5,8 @@ export const _addCollection = collectionId => ({
   collectionId
 })
 
-export const deleteCollection = (uid, collectionId) => ({
+export const _deleteCollection = collectionId => ({
   type: actionType.DELETE_COLLECTION,
-  uid,
   collectionId
 })
 
@@ -132,11 +131,6 @@ export const logOut = uid => ({
 })
 
 // redux
-
-export const changeEditFlag = item => ({
-  type: actionType.EDIT_ITEM_FLAG,
-  item
-})
 
 export const changeEditCollectionFlag = collectionId => ({
   type: actionType.EDIT_COLLECTION,

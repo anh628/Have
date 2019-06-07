@@ -26,4 +26,8 @@ export const db = firebase.firestore()
 // reference to user collection in firestore
 export const usersCollectionRef = db.collection('users') // need to match this up to firebase
 
+const storage = firebase.storage()
+
+export const storageRef = storage.ref()
+
 export { firebase }
