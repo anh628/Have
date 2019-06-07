@@ -1,3 +1,4 @@
+/* eslint-disable no-console */
 import { usersCollectionRef, db } from './firebase'
 import { v4 } from 'node-uuid'
 import { _addCollection, _deleteCollection } from '../actions/actionCreators'
@@ -44,13 +45,13 @@ export const addCollection = (uid, collectionColor) => dispatch => {
     .then(() => dispatch(_addCollection(collectionId)))
 }
 
+/*
+TODO: get dispatch to work
+*/
 export const deleteCollection = (uid, collectionId) => dispatch => {
   const collectionRef = getItemCollectionRef(uid, collectionId)
-
-  return collectionRef
-    .delete()
-    .catch(error => console.log(error))
-    .then(() => dispatch(_deleteCollection(collectionId)))
+  return collectionRef.delete().catch(error => console.log(error))
+  // .then(() => dispatch(_deleteCollection(collectionId)))
 }
 
 export const editTitle = (uid, collectionId, title) => {

@@ -51,9 +51,10 @@ const Footer = ({ uid, collectionId }) => {
 
       <div
         className='dropdown-content-more'
-        id={`more-dropdown ${collectionId}`}>
-        {/* TODO: THIS DOES NOT SEEM TO WORK DELETE COLLECTION */}
-        <label onClick={() => deleteCollection(uid, collectionId)}>
+        id={`more-dropdown ${collectionId}`}
+        onMouseLeave={() => toggleMenuName()}>
+        {/* TODO: THIS DOES NOT SEEM TO WORK - DELETE COLLECTION */}
+        <label onClick={deleteCollection(uid, collectionId)}>
           Delete collection
         </label>
         <br />
@@ -79,20 +80,9 @@ const Footer = ({ uid, collectionId }) => {
       .classList.toggle('show')
   }
 
-  // TODO: this doesn't work, need to place elsewhere
-  // Close the dropdown menu if the user clicks outside of it
-  // window.onclick = function (event) {
-  //   if (!event.target.matches('more-dropdown')) {
-  //     const dropdowns = document.getElementsByClassName('dropdown-content')
-  //     for (let i = 0; i < dropdowns.length; i++) {
-  //       const openDropdown = dropdowns[i]
-  //       if (openDropdown.classList.contains('show')) {
-  //         openDropdown.classList.remove('show')
-  //       }
-  //     }
-  //   }
-  // }
-
+  /*
+  TODO: create color picker, ask Alexis for this one
+  */
   const changeColorButton = (
     <div className='footer-button'>
       <Emoji symbol='🎨' label='colorChanger' />
