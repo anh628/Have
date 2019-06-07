@@ -33,7 +33,7 @@ export const addCollection = (uid, collectionColor) => dispatch => {
   const collectionInfo = {
     title: null,
     collaborators: [],
-    collectionColor,
+    collectionColor: '#282c34',
     image: null
   }
 
@@ -125,7 +125,7 @@ export const toggleItem = (uid, collectionId, itemId) => {
   const itemRef = getItemRef(uid, collectionId, itemId)
 
   return itemRef
-    .update({ isComplete: !itemRef.get().isComplete })
+    .update({ isComplete: !itemRef.data().isComplete })
     .catch(error => console.log(error))
 }
 
