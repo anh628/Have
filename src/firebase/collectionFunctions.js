@@ -28,21 +28,22 @@ const getItemRef = (uid, collectionId, itemId) => {
   )
 }
 
-export const addCollection = (uid, collectionColor) => dispatch => {
-  let collectionId = v4()
+
+export const addCollection = (uid, collectionId, title, collectionColor) => {
+
   const collectionInfo = {
-    title: null,
+    title: title,
     collaborators: [],
     collectionColor: '#282c34',
     image: null
   }
 
   const itemCollectionRef = getItemCollectionRef(uid, collectionId)
-
-  return itemCollectionRef
+  return itemCollectionRef // this will pick amongst collections that an individual user will have
     .set(collectionInfo) // will be the fields above
     .catch(error => console.log(error))
     .then(() => dispatch(_addCollection(collectionId)))
+
 }
 
 /*
@@ -125,7 +126,7 @@ export const toggleItem = (uid, collectionId, itemId) => {
   const itemRef = getItemRef(uid, collectionId, itemId)
 
   return itemRef
-    .update({ isComplete: !itemRef.data().isComplete })
+    .update({ isComplete: !itemRef.get().isComplete })
     .catch(error => console.log(error))
 }
 
