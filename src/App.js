@@ -2,17 +2,14 @@ import React from 'react'
 import './App.css'
 import { connect } from 'react-redux'
 import AuthenticationButton from './components/AuthenticationButton'
-import AddBar from './components/addBar'
-import List from './components/List'
+import NewCollection from './components/NewCollection'
 
 const App = ({ uid }) => {
   return (
     <div className='App'>
-      <AuthenticationButton />
       <header className='App-header'>
-        <AddBar />
+        <NewCollection />
       </header>
-      <List uid={uid} />
     </div>
   )
 }
