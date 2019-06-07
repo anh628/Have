@@ -5,50 +5,40 @@ import { connect } from 'react-redux'
 import React from 'react'
 import EditItem from './EditItem'
 import NewItem from './NewItem'
+import Footer from './Footer'
 import { changeEditCollectionFlag } from '../actions/actionCreators'
 
 // TODO: edit collection title here
-// props passed are uid, collectionID, title
-class CollectionView extends React.Component {
-  render () {
-    // TODO: this.props.items not updating when we add in a new item
-    if (this.props.items) {
-      const itemKeys = Object.keys(this.props.items)
-      return (
-        <div>
-          <h1 className='titleCollectionViewBlur'>HAVE</h1>
-          <h1 className='titleCollectionView'>{this.props.title}</h1>
-
-          {itemKeys.map(itemId => (
-            <EditItem
-              key={itemId}
-              collectionId={this.props.collectionId}
-              itemId={itemId}
-              {...this.props.items[itemId]}
-              uid={this.props.uid} />
-          ))}
-          <NewItem
-            collectionId={this.props.collectionId}
-            uid={this.props.uid} />
-        </div>
-      )
-    } else {
-      return (
-        <div>
-          <h1 className='titleCollectionViewBlur'>HAVE</h1>
-          <h1 className='titleCollectionView'>{this.props.title}</h1>
-          <NewItem collectionId={this.props.collectionId} />
-          {/* TODO: DOUBLE CHECK THIS */}
-          <label
-            onClick={() => changeEditCollectionFlag(this.props.collectionId)}>
-            Done
-          </label>
-        </div>
-      )
-    }
-  }
+const CollectionView = ({
+  uid,
+  collectionId,
+  changeEditCollectionFlag,
+  title,
+  items
+}) => {
+  const itemKeys = items ? Object.keys(items) : null
+  const editItem = items
+    ? itemKeys.map(itemId => (
+      <EditItem
+        key={itemId}
+        collectionId={collectionId}
+        itemId={itemId}
+        {...items[itemId]}
+        uid={uid} />
+    ))
+    : null
+  return (
+    <div>
+      <h1 className='titleCollectionViewBlur'>HAVE</h1>
+      <h1 className='titleCollectionView'>{title}</h1>
+      {editItem}
+      <NewItem collectionId={collectionId} uid={uid} />
+      {/* TODO: DOUBLE CHECK THIS */}
+      {/* <label onClick={() => changeEditCollectionFlag(collectionId)}>Done</label> */}
+      {items ? <Footer uid={uid} collectionId={collectionId} /> : null}
+    </div>
+  )
 }
-
 const mapStateToProps = (state, props) => {
   const items =
     state.firestore.data.users &&
@@ -57,6 +47,7 @@ const mapStateToProps = (state, props) => {
     state.firestore.data.users[props.uid].itemCollections[props.collectionId] &&
     state.firestore.data.users[props.uid].itemCollections[props.collectionId]
       .items
+
   return {
     items
   }

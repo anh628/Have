@@ -1,4 +1,3 @@
-/* eslint-disable no-console */
 import React from 'react'
 import Item from './Item'
 import { connect } from 'react-redux'
