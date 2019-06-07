@@ -2,7 +2,7 @@ import { firestoreConnect } from 'react-redux-firebase'
 import { compose } from 'redux'
 import { connect } from 'react-redux'
 import React from 'react'
-import { addCollection, editTitle } from '../firebase/collectionFunctions'
+import { addCollection, editTitle } from '../firebase/collectionFunctions' // still need to get this edit title working
 import { v4 } from 'node-uuid'
 import CollectionView from './CollectionView'
 

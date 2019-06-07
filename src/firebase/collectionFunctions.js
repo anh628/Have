@@ -36,10 +36,10 @@ export const addCollection = (uid, collectionId, title, collectionColor) => {
   }
 
   const itemCollectionRef = getItemCollectionRef(uid, collectionId)
-  console.log('added a collection')
   return itemCollectionRef // this will pick amongst collections that an individual user will have
     .set(collectionInfo) // will be the fields above
     .catch(error => console.log(error))
+    .then(dispatch => _addCollection(collectionId))
 }
 
 export const deleteCollection = (uid, collectionId) => {
