@@ -3,6 +3,7 @@ import { addCollection } from '../firebase/collectionFunctions'
 import { v4 } from 'node-uuid'
 import CollectionView from './CollectionView'
 
+// TODO: come back to addCollection error!
 class NewCollection extends React.Component {
   constructor (props) {
     super(props)
@@ -13,7 +14,7 @@ class NewCollection extends React.Component {
     }
   }
 
-  handelViewChange = (collectionId, title) => {
+  handleViewChange = (collectionId, title) => {
     this.setState({
       collectionView: true,
       collectionId,
@@ -23,14 +24,15 @@ class NewCollection extends React.Component {
 
   render () {
     let input
-    let collectionColor = '#282c34;'
+    let collectionColor = '#282c34'
     let collectionId
     let title
 
-    if (this.state.collectionView === true) {
+    if (this.state.collectionView) {
       return (
         <div>
           <CollectionView
+            uid={this.props.uid}
             collectionId={this.state.collectionId}
             title={this.state.title} />
         </div>
@@ -52,7 +54,7 @@ class NewCollection extends React.Component {
                 collectionId,
                 title,
                 collectionColor
-              ).then(() => this.handelViewChange(collectionId, title))
+              ).then(() => this.handleViewChange(collectionId, title))
             }}>
             <input
               className='addItem'

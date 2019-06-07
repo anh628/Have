@@ -1,3 +1,4 @@
+/* eslint-disable no-unused-vars */
 /* eslint-disable no-console */
 import { usersCollectionRef, db } from './firebase'
 import { v4 } from 'node-uuid'
