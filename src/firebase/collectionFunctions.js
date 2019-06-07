@@ -27,21 +27,20 @@ const getItemRef = (uid, collectionId, itemId) => {
   )
 }
 
-export const addCollection = (uid, collectionColor) => {
-  let collectionId = v4()
+export const addCollection = (uid, collectionId, title, collectionColor) => {
   const collectionInfo = {
     title: title,
     collaborators: [],
     collectionColor,
     image: null
   }
-
-  const itemCollectionRef = getItemCollectionRef(uid, collectionId)
-
-  return itemCollectionRef
+  console.log('added a collection')
+  return usersCollectionRef
+    .doc(`${uid}`)
+    .collection('itemCollections') // collection of items for a given user
+    .doc(`${collectionId}`) // this will pick amongst collections that an individual user will have
     .set(collectionInfo) // will be the fields above
     .catch(error => console.log(error))
-    .then(dispatch => dispatch(_addCollection(collectionId)))
 }
 
 export const deleteCollection = (uid, collectionId) => {
