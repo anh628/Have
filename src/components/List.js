@@ -11,7 +11,7 @@ const List = ({ itemCollections, uid }) => {
   const itemCollectionList = !isLoaded(itemCollections)
     ? 'loading'
     : isEmpty(itemCollections)
-      ? 'Item Collection list is empty'
+      ? null
       : itemCollections.map(item => (
         <ItemCollection
           key={item.id}

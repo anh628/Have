@@ -1,6 +1,7 @@
+/* eslint-disable no-console */
 import { usersCollectionRef, db } from './firebase'
 import { v4 } from 'node-uuid'
-import { _addCollection } from '../actions/actionCreators'
+import { _addCollection, _deleteCollection } from '../actions/actionCreators'
 /*
 db = firebase.firestore();
 usersCollectionRef = db.collection("users");
@@ -27,7 +28,12 @@ const getItemRef = (uid, collectionId, itemId) => {
   )
 }
 
-export const addCollection = (uid, collectionId, title, collectionColor) => {
+export const addCollection = (
+  uid,
+  collectionId,
+  title,
+  collectionColor
+) => dispatch => {
   const collectionInfo = {
     title: title,
     collaborators: [],
@@ -39,12 +45,16 @@ export const addCollection = (uid, collectionId, title, collectionColor) => {
   return itemCollectionRef // this will pick amongst collections that an individual user will have
     .set(collectionInfo) // will be the fields above
     .catch(error => console.log(error))
-    .then(dispatch => _addCollection(collectionId))
+    .then(() => dispatch(_addCollection(collectionId)))
 }
 
-export const deleteCollection = (uid, collectionId) => {
+/*
+TODO: get dispatch to work
+*/
+export const deleteCollection = (uid, collectionId) => dispatch => {
   const collectionRef = getItemCollectionRef(uid, collectionId)
   return collectionRef.delete().catch(error => console.log(error))
+  // .then(() => dispatch(_deleteCollection(collectionId)))
 }
 
 export const editTitle = (uid, collectionId, title) => {
@@ -96,8 +106,7 @@ export const deleteAllCompleted = (uid, collectionId) => {
     .get()
     .then(completedItems => {
       completedItems.forEach(item => {
-        const itemRef = itemCollectionRef.doc(item.itemId)
-        batch.delete(itemRef)
+        batch.delete(item.ref)
       })
       return batch.commit()
     })
@@ -124,7 +133,7 @@ export const toggleItem = (uid, collectionId, itemId) => {
 }
 
 // renamed from toggleAllItems to setAllItemsCompleteness
-// if listCompleteness === true, then set all to false, otherwise set all to true
+// listCompleteness, boolean, what you want the isComplete to be
 export const setAllItemsCompleteness = (
   uid,
   collectionId,
@@ -136,15 +145,13 @@ export const setAllItemsCompleteness = (
 
   const batch = db.batch()
 
-  const isComplete = !listCompleteness
-
-  // not sure if this is correct
-  itemCollectionRef
+  // perform query to get documents where the isComplete is opposite of listCompleteness
+  return itemCollectionRef
+    .where('isComplete', '==', !listCompleteness)
     .get()
     .then(items => {
       items.forEach(item => {
-        const itemRef = item.doc(item.id).update({ isComplete })
-        batch.update(itemRef)
+        batch.update(item.ref, { isComplete: listCompleteness })
       })
       return batch.commit()
     })

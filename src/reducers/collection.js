@@ -1,6 +1,12 @@
 import * as actionType from '../constants/constants'
 
-const collection = (state = [], action) => {
+const dummyState = [
+  {
+    collectionId: 'p2274cBhsPDkM6GhlBJc',
+    editCollectionFlag: false
+  }
+]
+const collection = (state = dummyState, action) => {
   let collection
   switch (action.type) {
     case actionType.ADD_COLLECTION:
@@ -17,6 +23,10 @@ const collection = (state = [], action) => {
             editCollectionFlag: !collection.editCollectionFlag
           }
           : collection
+      )
+    case actionType.DELETE_COLLECTION:
+      return state.filter(
+        collection => collection.collectedId !== action.collectionId
       )
     default:
       return state

@@ -1,6 +1,7 @@
 .App {
   text-align: center;
   background-color: #282c34;
+  align-items: center;
 }
 
 .App-logo {
@@ -32,6 +33,116 @@
   to {
     transform: rotate(360deg);
   }
+}
+
+/* TODO: CHANGE WIDTH to be the same size as list */
+div.footer-bar {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 100%;
+  background-color: rgb(71, 71, 72);
+  overflow: auto; /* Overflow due to float */
+  border-bottom-left-radius: 5px;
+  border-bottom-right-radius: 5px;
+  max-height: 50px;
+  padding-top: 6px;
+}
+
+/* TODO: CHANGE WIDTH of footer buttons */
+div.footer-bar div.footer-button {
+  text-align: center; /* Center-align text */
+  color: white; /* White text color */
+  float: left; /* Float links side by side */
+  width: 20%; /* Equal width (5 icons with 20% width each = 100%) */
+  padding: 12px 0; /* Some top and bottom padding */
+  transition: all 0.3s ease; /* Add transition for hover effects */
+  color: white; /* White text color */
+  overflow: hidden;
+}
+
+div.footer-bar div.footer-button:hover p.description {
+  display: block;
+  -webkit-animation: fadeIn 1s;
+  animation: fadeIn 1s;
+  z-index: 1;
+  overflow: auto;
+}
+
+/* Add animation (fade in the popup) */
+@-webkit-keyframes fadeIn {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+}
+
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+}
+
+div.footer-bar div.footer-button p.description {
+  background-color: rgb(167, 164, 164);
+  border-radius: 5px;
+  font-size: 10px;
+  padding: 2px;
+  display: none;
+}
+
+div.dropdown {
+  position: relative;
+  display: inline-block;
+}
+
+div.dropdown-content-more {
+  display: none;
+  position: absolute;
+  background-color: rgb(224, 221, 221);
+  min-width: 160px;
+  box-shadow: 2px 4px 7px 8px rgba(0, 0, 0, 0.3);
+  z-index: 1;
+  padding: 5px;
+  border-radius: 10px;
+}
+
+div.dropdown-content-more label {
+  color: black;
+  text-decoration: none;
+  display: block;
+  text-align: left;
+}
+
+div.dropdown-content-more label:hover {
+  background-color: rgb(201, 198, 198);
+  border-radius: 5px;
+}
+
+div.show {
+  display: block;
+}
+
+div.item-collection {
+  width: 30%;
+  border: gray;
+  background-color: black;
+  color: white;
+  display: inline-block; /*change later */
+  border-radius: 10px;
+  margin: 2px;
+  vertical-align: top;
+}
+
+div.item-collection img {
+  max-width: 100%;
+  border-radius: 10px;
+  object-fit: contain;
 }
 
 .ItemCollectionView {

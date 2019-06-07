@@ -21,6 +21,7 @@ const createStoreWithFirebase = compose(
   reduxFirestore(firebase) // <- needed if using firestore
 )(createStore)
 
+// logger prints to the console
 const middleware = applyMiddleware(thunk, logger)
 // Add reactReduxFirebase enhancer when making store creator
 export const store = createStoreWithFirebase(
