@@ -50,7 +50,8 @@ const ItemCollection = ({
       <div
         style={{ backgroundColor: collectionColor }}
         className='item-collection'>
-        <div onClick={() => changeEditCollectionFlag(collectionId)}>
+        {/* <div onClick={() => changeEditCollectionFlag(collectionId)}> */}
+        <div>
           {displayImage}
           <h2 className='item-collection-title'>{title}</h2>
           <div>{itemsList}</div>
