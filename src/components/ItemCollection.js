@@ -38,6 +38,12 @@ const ItemCollection = ({
           ))
           : null
 
+    const uncheckedItems = keys
+      ? keys.filter(itemId => items[itemId].isComplete === false).length > 0
+      : null
+    const checkItems = keys
+      ? keys.filter(itemId => items[itemId].isComplete === true).length > 0
+      : null
     const displayImage = image ? <img src={image} alt='cover-art' /> : null
 
     return (
@@ -49,7 +55,12 @@ const ItemCollection = ({
           <h2 className='item-collection-title'>{title}</h2>
           <div>{itemsList}</div>
         </div>
-        <Footer uid={uid} collectionId={collectionId} />
+        <Footer
+          uid={uid}
+          collectionId={collectionId}
+          areItems={!!items}
+          uncheckedItems={uncheckedItems}
+          checkItems={checkItems} />
       </div>
     )
   }
