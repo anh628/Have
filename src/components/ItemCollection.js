@@ -57,6 +57,7 @@ class ItemCollection extends React.Component {
 
     const modal = (
       <Modal
+        closeOnEsc={true}
         open={this.state.open}
         styles={{
           modal: {
@@ -104,28 +105,17 @@ const mapStateToProps = (state, props) => {
     state.firestore.data.users[props.uid].itemCollections[props.collectionId] &&
     state.firestore.data.users[props.uid].itemCollections[props.collectionId]
       .items
-
-  const editCollectionFlag =
-    state.collection.filter(list => list.collectionId === props.collectionId)
-      .length > 0 &&
-    state.collection.filter(list => list.collectionId === props.collectionId)[0]
-      .editCollectionFlag
-
   return {
-    items,
-    editCollectionFlag
+    items
   }
 }
 
-const mapDispatchToProps = {
-  changeEditCollectionFlag
-}
 export default compose(
   firestoreConnect(props => [
     `users/${props.uid}/itemCollections/${props.collectionId}/items/`
   ]),
   connect(
     mapStateToProps,
-    mapDispatchToProps
+    null
   )
 )(ItemCollection)
