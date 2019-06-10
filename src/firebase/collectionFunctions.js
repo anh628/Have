@@ -1,24 +1,6 @@
-/* eslint-disable no-unused-vars */
-/* eslint-disable no-console */
 import { usersCollectionRef, db } from './firebase'
 import { v4 } from 'node-uuid'
 import { _addCollection, _deleteCollection } from '../actions/actionCreators'
-/*
-db = firebase.firestore();
-usersCollectionRef = db.collection("users");
-
-userRef = usersRef.doc(uid);
-
-user field => userInformation
-
-itemCollectionsRef = usersRef.doc(uid).collection("itemCollections").doc(collectionUID)
-
-itemCollections field => color, collaborators...
-
-itemRef = itemCollections.collection("item").doc(itemID)
-
-item field => text, isComplete...
-*/
 
 const getItemCollectionRef = (uid, collectionId) => {
   return usersCollectionRef.doc(`${uid}/itemCollections/${collectionId}`)
@@ -132,7 +114,8 @@ export const toggleItem = (uid, collectionId, itemId) => {
   const itemRef = getItemRef(uid, collectionId, itemId)
 
   return itemRef
-    .update({ isComplete: !itemRef.get().isComplete })
+    .get()
+    .then(item => item.ref.update({ isComplete: !item.data().isComplete }))
     .catch(error => console.log(error))
 }
 
