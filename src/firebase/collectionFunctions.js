@@ -12,12 +12,7 @@ const getItemRef = (uid, collectionId, itemId) => {
 }
 
 // this is now a thunk and not a regular function! because of the dispatching thing
-export const addCollection = (
-  uid,
-  collectionId,
-  title,
-  collectionColor
-) => dispatch => {
+export const addCollection = (uid, collectionId, title, collectionColor) => {
   const collectionInfo = {
     title,
     collaborators: [],
@@ -29,18 +24,14 @@ export const addCollection = (
   return itemCollectionRef // this will pick amongst collections that an individual user will have
     .set(collectionInfo) // will be the fields above
     .catch(error => console.log(error))
-    .then(() => dispatch(_addCollection(collectionId)))
 }
 
 /*
 TODO: get dispatch to work
 */
-export const deleteCollection = (uid, collectionId) => dispatch => {
+export const deleteCollection = (uid, collectionId) => {
   const collectionRef = getItemCollectionRef(uid, collectionId)
-  return collectionRef
-    .delete()
-    .catch(error => console.log(error))
-    .then(() => dispatch(_deleteCollection(collectionId)))
+  return collectionRef.delete().catch(error => console.log(error))
 }
 
 export const editTitle = (uid, collectionId, title) => {
