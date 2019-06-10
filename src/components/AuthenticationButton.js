@@ -5,6 +5,12 @@ import { compose } from 'redux'
 import { withFirebase, isLoaded, isEmpty } from 'react-redux-firebase'
 // import GoogleButton from 'react-google-button' // optional
 
+/*
+if using the google button instead
+ https://developers.google.com/identity/branding-guidelines
+ guideline for using google's login button
+ (can't use image on it's own and have to be either white or blue backgorund)
+ */
 // http://react-redux-firebase.com/docs/recipes/auth.html
 
 function AuthenticationButton ({ firebase, auth }) {
