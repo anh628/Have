@@ -1,6 +1,6 @@
 import React from 'react'
 import Emoji from './Emoji'
-import { uploadFile } from '../firebase/storageFunctions'
+import { uploadFile, deleteFile } from '../firebase/storageFunctions'
 import {
   editImage,
   deleteCollection,
@@ -27,6 +27,7 @@ class Footer extends React.Component {
           <input
             type='file'
             onChange={async () => {
+              if (this.props.image) deleteFile(this.props.image)
               const imageUrl = await uploadFile(
                 collectionImageInputId,
                 this.props.uid,

@@ -6,7 +6,10 @@ import React from 'react'
 import EditItem from './EditItem'
 import NewItem from './NewItem'
 import Footer from './Footer'
+import Emoji from './Emoji'
 import { changeEditCollectionFlag } from '../actions/actionCreators'
+import { deleteImage } from '../firebase/collectionFunctions'
+import { deleteFile } from '../firebase/storageFunctions'
 
 // TODO: edit collection title here
 const CollectionView = ({
@@ -14,9 +17,11 @@ const CollectionView = ({
   collectionId,
   changeEditCollectionFlag,
   title,
-  items
+  items,
+  image
 }) => {
   const itemKeys = items ? Object.keys(items) : null
+
   const editItem = items
     ? itemKeys.map(itemId => (
       <EditItem
@@ -27,9 +32,26 @@ const CollectionView = ({
         uid={uid} />
     ))
     : null
+
+    // TODO: THIS IS NOT WORKING PROPERLY
+  const displayImage = image ? (
+    <div className='coverart'>
+      <img src={image} alt='cover-art' />
+      <label
+        className='deleteImage'
+        onClick={() => {
+          deleteFile(image)
+          deleteImage(uid, collectionId)
+        }}>
+        <Emoji symbol='🗑' label='delete' />
+      </label>
+    </div>
+  ) : null
+
   return (
     <div>
-      <h1 className='titleCollectionViewBlur'>HAVE</h1>
+      {/* <h1 className='titleCollectionViewBlur'>HAVE</h1> */}
+      {displayImage}
       <h1 className='titleCollectionView'>{title}</h1>
       {editItem}
       <NewItem collectionId={collectionId} uid={uid} />

@@ -48,7 +48,8 @@ const ItemCollection = ({
     return (
       <div
         style={{ backgroundColor: collectionColor }}
-        className='item-collection'>
+        className='item-collection'
+        onClick={() => changeEditCollectionFlag(collectionId)}>
         {/* <div onClick={() => changeEditCollectionFlag(collectionId)}> */}
         <div>
           {displayImage}
@@ -60,7 +61,8 @@ const ItemCollection = ({
           collectionId={collectionId}
           areItems={!!items}
           uncheckedItems={uncheckedItems}
-          checkItems={checkItems} />
+          checkItems={checkItems}
+          image={image} />
       </div>
     )
   }
