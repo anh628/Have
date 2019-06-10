@@ -31,14 +31,6 @@ class NewCollection extends React.Component {
     })
   }
 
-  // handleViewChange = (collectionId, title) => {
-  //   this.setState({
-  //     collectionView: true,
-  //     collectionId,
-  //     title
-  //   })
-  // }
-
   render () {
     let input
     let collectionColor = '#8a8c90'
