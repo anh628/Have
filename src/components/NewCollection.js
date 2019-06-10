@@ -3,17 +3,17 @@ import { addCollection } from '../firebase/collectionFunctions'
 import { v4 } from 'node-uuid'
 import CollectionView from './CollectionView'
 import Modal from 'react-responsive-modal'
+import { COLLECTION_COLOR } from '../constants/constants'
+import ModalView from './ModalView'
 
 class NewCollection extends React.Component {
-  constructor (props) {
-    super(props)
-    this.state = {
-      collectionView: false,
-      collectionId: null,
-      title: null,
-      open: false
-    }
+  state = {
+    collectionView: false,
+    collectionId: null,
+    title: null,
+    open: false
   }
+
   openModal (collectionId, title) {
     this.setState({
       open: true,
@@ -31,7 +31,6 @@ class NewCollection extends React.Component {
 
   render () {
     let input
-    let collectionColor = '#8a8c90'
     let collectionId
     let title
 
@@ -50,7 +49,7 @@ class NewCollection extends React.Component {
               this.props.uid,
               collectionId,
               title,
-              collectionColor
+              COLLECTION_COLOR
             ).then(() => this.openModal(collectionId, title))
             input.value = ''
           }}>
@@ -61,22 +60,25 @@ class NewCollection extends React.Component {
             autoFocus={true}
             placeholder='add a collection title' />
         </form>
-        <Modal
+        {/* <Modal
           open={this.state.open}
           styles={{
             modal: {
-              backgroundColor: collectionColor
+              backgroundColor: COLLECTION_COLOR
             }
           }}
-          width='400'
-          height='300'
-          effect='fadeInUp'
           onClose={() => this.closeModal()}>
           <CollectionView
             uid={this.props.uid}
             collectionId={this.state.collectionId}
             title={this.state.title} />
-        </Modal>
+        </Modal> */}
+        <ModalView
+          uid={this.props.uid}
+          collectionId={this.state.collectionId}
+          title={this.state.title}
+          open={this.state.open}
+          collectionColor={this.props.collectionColor} />
       </div>
     )
   }

@@ -30,3 +30,5 @@ export const REMOVE_COLLABORATOR = 'REMOVE_COLLABORATOR'
 
 export const LOG_IN = 'LOG_IN'
 export const LOG_OUT = 'LOG_OUT'
+
+export const COLLECTION_COLOR = '#8a8c90'

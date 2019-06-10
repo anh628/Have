@@ -3,10 +3,9 @@ import Item from './Item'
 import { connect } from 'react-redux'
 import { compose } from 'redux'
 import { firestoreConnect, isLoaded, isEmpty } from 'react-redux-firebase'
-import { changeEditCollectionFlag } from '../actions/actionCreators'
 import CollectionView from './CollectionView'
-import Footer from './Footer'
 import Modal from 'react-responsive-modal'
+import Footer from './Footer'
 
 class ItemCollection extends React.Component {
   state = {
@@ -61,12 +60,10 @@ class ItemCollection extends React.Component {
         open={this.state.open}
         styles={{
           modal: {
-            backgroundColor: this.props.collectionColor
+            backgroundColor: this.props.collectionColor,
+            width: '400px'
           }
         }}
-        width='400'
-        height='300'
-        effect='fadeInUp'
         onClose={() => this.closeModal()}>
         <CollectionView
           uid={this.props.uid}
@@ -74,7 +71,6 @@ class ItemCollection extends React.Component {
           title={this.props.title} />
       </Modal>
     )
-
     return (
       <div
         style={{ backgroundColor: this.props.collectionColor }}
