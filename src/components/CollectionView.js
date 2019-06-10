@@ -15,10 +15,11 @@ import { deleteFile } from '../firebase/storageFunctions'
 const CollectionView = ({
   uid,
   collectionId,
-  changeEditCollectionFlag,
   title,
   items,
-  image
+  image,
+  collectionColor,
+  changeEditCollectionFlag
 }) => {
   const itemKeys = items ? Object.keys(items) : null
 
@@ -33,7 +34,7 @@ const CollectionView = ({
     ))
     : null
 
-    // TODO: THIS IS NOT WORKING PROPERLY
+  // TODO: THIS IS NOT WORKING PROPERLY
   const displayImage = image ? (
     <div className='coverart'>
       <img src={image} alt='cover-art' />
@@ -49,7 +50,7 @@ const CollectionView = ({
   ) : null
 
   return (
-    <div>
+    <div style={{ backgroundColor: collectionColor }}>
       {/* <h1 className='titleCollectionViewBlur'>HAVE</h1> */}
       {displayImage}
       <h1 className='titleCollectionView'>{title}</h1>
@@ -70,8 +71,20 @@ const mapStateToProps = (state, props) => {
     state.firestore.data.users[props.uid].itemCollections[props.collectionId]
       .items
 
+  const collectionColor =
+    state.firestore.data.itemCollections &&
+    state.firestore.data.itemCollections[props.collectionId] &&
+    state.firestore.data.itemCollections[props.collectionId].collectionColor
+
+  const image =
+    state.firestore.data.itemCollections &&
+    state.firestore.data.itemCollections[props.collectionId] &&
+    state.firestore.data.itemCollections[props.collectionId].image
+
   return {
-    items
+    items,
+    collectionColor,
+    image
   }
 }
 

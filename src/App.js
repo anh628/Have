@@ -2,7 +2,7 @@ import React from 'react'
 import './App.css'
 import { connect } from 'react-redux'
 import AuthenticationButton from './components/AuthenticationButton'
-import NewCollection from './components/NewCollection'
+// import NewCollection from './components/NewCollection'
 import List from './components/List'
 
 const App = ({ uid }) => {

@@ -18,7 +18,13 @@ const ItemCollection = ({
   image
 }) => {
   if (editCollectionFlag) {
-    return <CollectionView collectionId={collectionId} />
+    return (
+      <CollectionView
+        collectionId={collectionId}
+        uid={uid}
+        image={image}
+        title={title} />
+    )
   } else {
     const keys = items ? Object.keys(items) : null
 
