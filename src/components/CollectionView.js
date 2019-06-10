@@ -14,7 +14,8 @@ const CollectionView = ({
   collectionId,
   changeEditCollectionFlag,
   title,
-  items
+  items,
+  collectionColor
 }) => {
   const itemKeys = items ? Object.keys(items) : null
   const editItem = items
@@ -28,7 +29,7 @@ const CollectionView = ({
     ))
     : null
   return (
-    <div>
+    <div style={{ backgroundColor: collectionColor }}>
       <h1 className='titleCollectionViewBlur'>HAVE</h1>
       <h1 className='titleCollectionView'>{title}</h1>
       {editItem}
@@ -48,8 +49,13 @@ const mapStateToProps = (state, props) => {
     state.firestore.data.users[props.uid].itemCollections[props.collectionId]
       .items
 
+  const collectionColor =
+    state.firestore.data.itemCollections &&
+    state.firestore.data.itemCollections[props.collectionId] &&
+    state.firestore.data.itemCollections[props.collectionId].collectionColor
   return {
-    items
+    items,
+    collectionColor
   }
 }
 
