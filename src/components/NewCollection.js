@@ -2,10 +2,8 @@ import React from 'react'
 import { addCollection } from '../firebase/collectionFunctions'
 import { v4 } from 'node-uuid'
 import CollectionView from './CollectionView'
-import { connect } from 'react-redux'
 import Modal from 'react-responsive-modal'
 
-// TODO: come back to addCollection error!
 class NewCollection extends React.Component {
   constructor (props) {
     super(props)
@@ -48,14 +46,12 @@ class NewCollection extends React.Component {
             }
             title = input.value
             collectionId = v4()
-            this.props
-              .addCollection(
-                this.props.uid,
-                collectionId,
-                title,
-                collectionColor
-              )
-              .then(() => this.openModal(collectionId, title))
+            addCollection(
+              this.props.uid,
+              collectionId,
+              title,
+              collectionColor
+            ).then(() => this.openModal(collectionId, title))
             input.value = ''
           }}>
           <input
@@ -86,10 +82,4 @@ class NewCollection extends React.Component {
   }
 }
 
-const mapDispatchToProps = {
-  addCollection
-}
-export default connect(
-  null,
-  mapDispatchToProps
-)(NewCollection)
+export default NewCollection

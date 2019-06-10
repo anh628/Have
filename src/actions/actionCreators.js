@@ -1,14 +1,14 @@
 import * as actionType from '../constants/constants'
 
-export const _addCollection = collectionId => ({
-  type: actionType.ADD_COLLECTION,
-  collectionId
-})
+// export const _addCollection = collectionId => ({
+//   type: actionType.ADD_COLLECTION,
+//   collectionId
+// })
 
-export const _deleteCollection = collectionId => ({
-  type: actionType.DELETE_COLLECTION,
-  collectionId
-})
+// export const _deleteCollection = collectionId => ({
+//   type: actionType.DELETE_COLLECTION,
+//   collectionId
+// })
 
 // export const addTitle = (uid, collectionId, title) => ({
 //     type: actionType.ADD_TITLE,
