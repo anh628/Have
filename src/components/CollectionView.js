@@ -6,13 +6,11 @@ import React from 'react'
 import EditItem from './EditItem'
 import NewItem from './NewItem'
 import Footer from './Footer'
-import { changeEditCollectionFlag } from '../actions/actionCreators'
 
 // TODO: edit collection title here
 const CollectionView = ({
   uid,
   collectionId,
-  changeEditCollectionFlag,
   title,
   items,
   collectionColor
@@ -59,15 +57,12 @@ const mapStateToProps = (state, props) => {
   }
 }
 
-const mapDispatchToProps = {
-  changeEditCollectionFlag
-}
 export default compose(
   firestoreConnect(props => [
     `users/${props.uid}/itemCollections/${props.collectionId}/items/`
   ]),
   connect(
     mapStateToProps,
-    mapDispatchToProps
+    null
   )
 )(CollectionView)

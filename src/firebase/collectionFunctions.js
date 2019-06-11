@@ -1,6 +1,5 @@
 import { usersCollectionRef, db } from './firebase'
 import { v4 } from 'node-uuid'
-import { _addCollection, _deleteCollection } from '../actions/actionCreators'
 
 const getItemCollectionRef = (uid, collectionId) => {
   return usersCollectionRef.doc(`${uid}/itemCollections/${collectionId}`)

@@ -13,7 +13,9 @@ class App extends Component {
         <header className='App-header'>
           <NewCollection uid={this.props.uid} />
         </header>
-        <List uid={this.props.uid} />
+        <body className='list'>
+          <List uid={this.props.uid} />
+        </body>
       </div>
     )
   }
