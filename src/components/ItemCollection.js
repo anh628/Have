@@ -6,24 +6,9 @@ import { firestoreConnect, isLoaded, isEmpty } from 'react-redux-firebase'
 import CollectionView from './CollectionView'
 import ModalView from './ModalView'
 import Footer from './Footer'
+import { toggleModalStatus } from '../actions/actionCreator'
 
 class ItemCollection extends React.Component {
-  state = {
-    open: false
-  }
-
-  openModal () {
-    this.setState({
-      open: true
-    })
-  }
-
-  closeModal () {
-    this.setState({
-      open: false
-    })
-  }
-
   render () {
     const keys = this.props.items ? Object.keys(this.props.items) : null
 
@@ -47,7 +32,7 @@ class ItemCollection extends React.Component {
       <img
         src={this.props.image}
         alt='cover-art'
-        onClick={() => this.openModal()} />
+        onClick={() => this.props.toggleModalStatus()} />
     ) : null
 
     const uncheckedItems = keys
@@ -67,7 +52,7 @@ class ItemCollection extends React.Component {
           {displayImage}
           <h2
             className='item-collection-title'
-            onClick={() => this.openModal()}>
+            onClick={() => this.props.toggleModalStatus()}>
             {this.props.title}
           </h2>
           <div>{itemsList}</div>
@@ -79,12 +64,13 @@ class ItemCollection extends React.Component {
           uncheckedItems={uncheckedItems}
           checkItems={checkItems} />
         <ModalView
-          open={this.state.open}
+          modalId={this.state.collectionId}
+          open={this.props.open}
           collectionColor={this.props.collectionColor}
           componentDisplay={
             <CollectionView
               uid={this.props.uid}
-              collectionId={this.state.collectionId} />
+              collectionId={this.props.collectionId} />
           } />
       </div>
     )
@@ -100,8 +86,13 @@ const mapStateToProps = (state, props) => {
     state.firestore.data.users[props.uid].itemCollections[props.collectionId]
       .items
   return {
-    items
+    items,
+    open: state.modal.open
   }
+}
+
+const mapDispatchToProps = {
+  toggleModalStatus
 }
 
 export default compose(
@@ -110,6 +101,6 @@ export default compose(
   ]),
   connect(
     mapStateToProps,
-    null
+    mapDispatchToProps
   )
 )(ItemCollection)

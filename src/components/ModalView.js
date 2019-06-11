@@ -1,27 +1,13 @@
 import React from 'react'
 import Modal from 'react-responsive-modal'
-
+import { connect } from 'react-redux'
+import { toggleModalStatus } from '../actions/actionCreator'
 // pass in props of the children element we want
 class ModalView extends React.Component {
-  state = {
-    open: this.props.open
-  }
-
-  openModal () {
-    this.setState({
-      open: true
-    })
-  }
-
-  closeModal () {
-    this.setState({
-      open: false
-    })
-  }
-
   render () {
     return (
       <Modal
+        modalId={this.props.modalId}
         closeOnOverlayClick
         closeOnEsc
         center
@@ -32,11 +18,22 @@ class ModalView extends React.Component {
             width: '400px'
           }
         }}
-        on={this.state.open}
-        onClose={this.state.open}>
+        on={this.props.open}
+        onClose={() => toggleModalStatus()}>
         {this.props.componentDisplay}
       </Modal>
     )
   }
 }
-export default ModalView
+
+const mapStateToProps = state => ({
+  open: state.modal.open
+})
+
+const mapDispatchToProps = {
+  toggleModalStatus
+}
+export default connect(
+  mapStateToProps,
+  mapDispatchToProps
+)(ModalView)

@@ -4,27 +4,16 @@ import { v4 } from 'node-uuid'
 import CollectionView from './CollectionView'
 import { COLLECTION_COLOR } from '../constants/constants'
 import ModalView from './ModalView'
-
+import { toggleModalStatus } from '../actions/actionCreator'
+import { connect } from 'react-redux'
 class NewCollection extends React.Component {
   state = {
-    collectionView: false,
-    collectionId: null,
-    title: null,
-    open: false
+    collectionId: null
   }
 
-  openModal (collectionId, title) {
+  setCollectionId (collectionId) {
     this.setState({
-      open: true,
-      collectionView: true,
-      collectionId,
-      title
-    })
-  }
-
-  closeModal () {
-    this.setState({
-      open: false
+      collectionId
     })
   }
 
@@ -49,7 +38,10 @@ class NewCollection extends React.Component {
               collectionId,
               title,
               COLLECTION_COLOR
-            ).then(() => this.openModal(collectionId, title))
+            ).then(() => {
+              this.setCollectionId(collectionId)
+              this.props.toggleModalStatus()
+            })
             input.value = ''
           }}>
           <input
@@ -60,8 +52,9 @@ class NewCollection extends React.Component {
             placeholder='add a collection title' />
         </form>
         <ModalView
-          open={this.state.open}
+          open={this.props.open}
           collectionColor={COLLECTION_COLOR}
+          modalId={this.state.collectionId}
           componentDisplay={
             <CollectionView
               uid={this.props.uid}
@@ -72,4 +65,15 @@ class NewCollection extends React.Component {
   }
 }
 
-export default NewCollection
+const mapStateToProps = state => ({
+  open: state.modal.open
+})
+
+const mapDispatchToProps = {
+  toggleModalStatus
+}
+
+export default connect(
+  mapStateToProps,
+  mapDispatchToProps
+)(NewCollection)
