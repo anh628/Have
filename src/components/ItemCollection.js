@@ -3,7 +3,6 @@ import Item from './Item'
 import { connect } from 'react-redux'
 import { compose } from 'redux'
 import { firestoreConnect, isLoaded, isEmpty } from 'react-redux-firebase'
-import { changeEditCollectionFlag } from '../actions/actionCreators'
 import CollectionView from './CollectionView'
 import Footer from './Footer'
 import Modal from 'react-responsive-modal'
@@ -78,9 +77,8 @@ class ItemCollection extends React.Component {
     return (
       <div
         style={{ backgroundColor: this.props.collectionColor }}
-        className='item-collection'
-        onClick={() => this.openModal()}>
-        <div>
+        className='item-collection'>
+        <div onClick={() => this.openModal()}>
           {displayImage}
           <h2 className='item-collection-title'>{this.props.title}</h2>
           <div>{itemsList}</div>
