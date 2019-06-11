@@ -7,7 +7,6 @@ import {
   deleteAllCompleted,
   setAllItemsCompleteness
 } from '../firebase/collectionFunctions'
-// import PropTypes from "prop-types";
 
 class Footer extends React.Component {
   state = {
@@ -21,8 +20,6 @@ class Footer extends React.Component {
   render () {
     const collectionImageInputId = `${this.props.collectionId}-image`
 
-    // should only add image or if existing image, would change it
-    // TODO added in a hover label later
     const imageButton = (
       <div className='footer-button'>
         <label>
@@ -50,44 +47,70 @@ class Footer extends React.Component {
 
     /*
   Delete Note,
+  Check all items
   Uncheck all items
-  Delete check items
+  Delete checked items
   */
 
     const moreButton = (
       <div className='footer-button' onClick={() => this.toggleShow()}>
         <Emoji symbol='⋮' label='more' className='dropdown' id='more' />
         <p className='description'>More</p>
-
         <div
           className={`dropdown-content-more  ${
             this.state.showMenu ? 'show' : ''
           }`}
           id={`more-dropdown ${this.props.collectionId}`}
           onMouseLeave={() => this.toggleShow()}>
-          {/* TODO: THIS DOES NOT SEEM TO WORK - DELETE COLLECTION */}
           <label
-            onClick={deleteCollection(this.props.uid, this.props.collectionId)}>
+            onClick={() =>
+              deleteCollection(this.props.uid, this.props.collectionId)
+            }>
             Delete collection
           </label>
-          <br />
-          <label
-            onClick={() =>
-              setAllItemsCompleteness(
-                this.props.uid,
-                this.props.collectionId,
-                false
-              )
-            }>
-            Uncheck all items
-          </label>
-          <br />
-          <label
-            onClick={() =>
-              deleteAllCompleted(this.props.uid, this.props.collectionId)
-            }>
-            Delete check items
-          </label>
+          {/* Only display the rest of the options if there are items in the collection */}
+          {this.props.areItems ? (
+            <div>
+              {/* Only display if there are uncheck items */}
+              {this.props.uncheckedItems ? (
+                <label
+                  onClick={() =>
+                    setAllItemsCompleteness(
+                      this.props.uid,
+                      this.props.collectionId,
+                      true
+                    )
+                  }>
+                  Check all items
+                </label>
+              ) : null}
+
+              {/* display if there are checked items */}
+              {this.props.checkItems ? (
+                <div>
+                  <label
+                    onClick={() =>
+                      setAllItemsCompleteness(
+                        this.props.uid,
+                        this.props.collectionId,
+                        false
+                      )
+                    }>
+                    Uncheck all items
+                  </label>
+                  <label
+                    onClick={() =>
+                      deleteAllCompleted(
+                        this.props.uid,
+                        this.props.collectionId
+                      )
+                    }>
+                    Delete checked items
+                  </label>
+                </div>
+              ) : null}
+            </div>
+          ) : null}
         </div>
       </div>
     )

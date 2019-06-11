@@ -1,9 +1,13 @@
 import React from 'react'
+import { toggleItem } from '../firebase/collectionFunctions'
 
-const Item = ({ text, isComplete }) => (
+const Item = ({ uid, collectionId, itemId, text, isComplete }) => (
   <div id='flex' className='item-row'>
     <label className={isComplete ? 'checkbox-completed' : 'checkbox'}>
-      <input type='checkbox' defaultChecked={isComplete} disabled={true} />
+      <input
+        type='checkbox'
+        checked={isComplete}
+        onChange={() => toggleItem(uid, collectionId, itemId)} />
     </label>
     <label
       style={{

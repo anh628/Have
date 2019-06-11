@@ -1,9 +1,7 @@
 import React from 'react'
 import { addItem } from '../firebase/collectionFunctions'
-import { firestoreConnect } from 'react-redux-firebase'
-import { compose } from 'redux'
-import { connect } from 'react-redux'
 
+// props passed in: uid, collectionId
 class NewItem extends React.Component {
   render () {
     let input
@@ -15,12 +13,7 @@ class NewItem extends React.Component {
             if (!input.value.trim()) {
               input.value = ' '
             }
-            addItem(
-              this.props.users[0].id,
-              this.props.collectionId,
-              input.value
-            )
-            console.log('added an item')
+            addItem(this.props.uid, this.props.collectionId, input.value)
             input.value = ''
           }}>
           <input
@@ -34,29 +27,4 @@ class NewItem extends React.Component {
   }
 }
 
-function mapStateToProps (state) {
-  return {
-    users: state.firestore.ordered.users
-  }
-}
-
-export default compose(
-  connect(mapStateToProps),
-  firestoreConnect(props => [
-    {
-      collection: 'users',
-      doc: 'JofY9DCsywfgVtSOBxd2BZ7OBDn1', // props.user.uid
-      subcollections: [
-        {
-          collection: 'itemCollections',
-          doc: 'lCHu8ouJOVXyBijkdnZO', // props.collectionId
-          subcollections: [
-            {
-              collection: 'items'
-            }
-          ]
-        }
-      ]
-    }
-  ]) // going to get todos for a user
-)(NewItem)
+export default NewItem
