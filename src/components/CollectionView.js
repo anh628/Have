@@ -7,7 +7,6 @@ import EditItem from './EditItem'
 import NewItem from './NewItem'
 import Footer from './Footer'
 import Emoji from './Emoji'
-import { changeEditCollectionFlag } from '../actions/actionCreators'
 import { deleteImage } from '../firebase/collectionFunctions'
 import { deleteFile } from '../firebase/storageFunctions'
 
@@ -19,7 +18,6 @@ const CollectionView = ({
   items,
   image,
   collectionColor
-
 }) => {
   const itemKeys = items ? Object.keys(items) : null
 
@@ -86,15 +84,12 @@ const mapStateToProps = (state, props) => {
   }
 }
 
-const mapDispatchToProps = {
-  changeEditCollectionFlag
-}
 export default compose(
   firestoreConnect(props => [
     `users/${props.uid}/itemCollections/${props.collectionId}/items/`
   ]),
   connect(
     mapStateToProps,
-    mapDispatchToProps
+    null
   )
 )(CollectionView)
