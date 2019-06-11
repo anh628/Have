@@ -10,11 +10,11 @@ const modal = (state = [], action) => {
     case ADD_MODAL_ID:
       modals = [...state]
       modals.push({ modalId: action.modalId, open: true })
-      return { modals }
+      return modals
     case DELETE_MODAL_ID:
       modals = [...state]
       modals = modals.filter(modal => modal.modalId !== action.modalId)
-      return { modals }
+      return modals
     case MODAL_STATUS:
       modals = [...state]
       modals = modals.map(modal =>
@@ -22,7 +22,7 @@ const modal = (state = [], action) => {
           ? { ...modal, open: !modal.open }
           : modal
       )
-      return { modals }
+      return modals
     default:
       return state
   }

@@ -30,7 +30,7 @@ const Item = ({
       {text}
     </label>
     <ModalView
-      modalId={this.state.collectionId}
+      modalId={this.props.collectionId}
       open={open}
       collectionColor={color}
       componentDisplay={
