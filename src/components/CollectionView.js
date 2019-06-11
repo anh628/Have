@@ -32,7 +32,6 @@ const CollectionView = ({
     ))
     : null
 
-  // TODO: THIS IS NOT WORKING PROPERLY
   const displayImage = image ? (
     <div className='coverart'>
       <img src={image} alt='cover-art' />
@@ -47,14 +46,26 @@ const CollectionView = ({
     </div>
   ) : null
 
+  const uncheckedItems = itemKeys
+    ? itemKeys.filter(itemId => items[itemId].isComplete === false).length > 0
+    : null
+  const checkItems = itemKeys
+    ? itemKeys.filter(itemId => items[itemId].isComplete === true).length > 0
+    : null
+
   return (
     <div style={{ backgroundColor: collectionColor }}>
-      {/* <h1 className='titleCollectionViewBlur'>HAVE</h1> */}
       {displayImage}
       <h1 className='titleCollectionView'>{title}</h1>
       {editItem}
       <NewItem collectionId={collectionId} uid={uid} />
-      {items ? <Footer uid={uid} collectionId={collectionId} /> : null}
+      <Footer
+        uid={uid}
+        collectionId={collectionId}
+        areItems={!!items}
+        uncheckedItems={uncheckedItems}
+        checkItems={checkItems}
+        collectionView={true} />
     </div>
   )
 }

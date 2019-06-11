@@ -15,6 +15,7 @@ export const uploadFile = (collectionImageInputId, uid, collectionId) => {
   return imageRef
     .put(file, metadata)
     .then(snapshot => snapshot.ref.getDownloadURL())
+    .catch(error => console.log(error))
 }
 
 export const deleteFile = imageUrl => {

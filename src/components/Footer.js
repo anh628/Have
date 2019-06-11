@@ -18,7 +18,9 @@ class Footer extends React.Component {
   }
 
   render () {
-    const collectionImageInputId = `${this.props.collectionId}-image`
+    const collectionImageInputId = this.props.collectionView
+      ? `${this.props.collectionId}-imageCV`
+      : `${this.props.collectionId}-image`
 
     const imageButton = (
       <div className='footer-button'>
