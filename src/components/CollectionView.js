@@ -6,14 +6,9 @@ import React from 'react'
 import EditItem from './EditItem'
 import NewItem from './NewItem'
 import Footer from './Footer'
-<<<<<<< HEAD
-||||||| merged common ancestors
-import { changeEditCollectionFlag } from '../actions/actionCreators'
-=======
 import Emoji from './Emoji'
 import { deleteImage } from '../firebase/collectionFunctions'
 import { deleteFile } from '../firebase/storageFunctions'
->>>>>>> dev1
 
 // TODO: edit collection title here
 const CollectionView = ({
@@ -64,13 +59,6 @@ const CollectionView = ({
       <h1 className='titleCollectionView'>{title}</h1>
       {editItem}
       <NewItem collectionId={collectionId} uid={uid} />
-<<<<<<< HEAD
-      {items ? <Footer uid={uid} collectionId={collectionId} /> : null}
-||||||| merged common ancestors
-      {/* TODO: DOUBLE CHECK THIS */}
-      {/* <label onClick={() => changeEditCollectionFlag(collectionId)}>Done</label> */}
-      {items ? <Footer uid={uid} collectionId={collectionId} /> : null}
-=======
       <Footer
         uid={uid}
         collectionId={collectionId}
@@ -78,7 +66,6 @@ const CollectionView = ({
         uncheckedItems={uncheckedItems}
         checkItems={checkItems}
         collectionView={true} />
->>>>>>> dev1
     </div>
   )
 }
