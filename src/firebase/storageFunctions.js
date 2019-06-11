@@ -1,4 +1,5 @@
-import { storageRef } from './firebase'
+/* eslint-disable no-console */
+import { storage, storageRef } from './firebase'
 
 export const uploadFile = (collectionImageInputId, uid, collectionId) => {
   // get file
@@ -14,4 +15,10 @@ export const uploadFile = (collectionImageInputId, uid, collectionId) => {
   return imageRef
     .put(file, metadata)
     .then(snapshot => snapshot.ref.getDownloadURL())
+    .catch(error => console.log(error))
+}
+
+export const deleteFile = imageUrl => {
+  const httpsRef = storage.refFromURL(imageUrl)
+  return httpsRef.delete().catch(error => console.log(error))
 }

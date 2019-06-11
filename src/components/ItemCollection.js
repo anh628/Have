@@ -74,9 +74,8 @@ class ItemCollection extends React.Component {
     return (
       <div
         style={{ backgroundColor: this.props.collectionColor }}
-        className='item-collection'
-        onClick={() => this.openModal()}>
-        <div>
+        className='item-collection'>
+        <div onClick={() => this.openModal()}>
           {displayImage}
           <h2 className='item-collection-title'>{this.props.title}</h2>
           <div>{itemsList}</div>
