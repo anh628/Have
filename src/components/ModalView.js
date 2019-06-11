@@ -25,7 +25,6 @@ class ModalView extends React.Component {
         closeOnOverlayClick
         closeOnEsc
         center
-        focusTrapped
         open={this.props.open}
         styles={{
           modal: {
