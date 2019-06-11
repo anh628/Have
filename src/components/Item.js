@@ -26,7 +26,7 @@ const Item = ({
       style={{
         textDecoration: isComplete ? 'line-through' : 'none'
       }}
-      onClick={() => toggleModalStatus()}>
+      onClick={() => toggleModalStatus(collectionId)}>
       {text}
     </label>
     <ModalView
@@ -39,8 +39,11 @@ const Item = ({
   </div>
 )
 
-const mapStateToProps = state => ({
-  open: state.modal.open
+const mapStateToProps = (state, props) => ({
+  open:
+    state.modal.length > 0
+      ? state.modal.filter(modal => modal.modalId !== props.collectionId)
+      : false
 })
 
 const mapDispatchToProps = {

@@ -32,7 +32,7 @@ class ItemCollection extends React.Component {
       <img
         src={this.props.image}
         alt='cover-art'
-        onClick={() => this.props.toggleModalStatus()} />
+        onClick={() => this.props.toggleModalStatus(this.props.collectionId)} />
     ) : null
 
     const uncheckedItems = keys
@@ -52,7 +52,9 @@ class ItemCollection extends React.Component {
           {displayImage}
           <h2
             className='item-collection-title'
-            onClick={() => this.props.toggleModalStatus()}>
+            onClick={() =>
+              this.props.toggleModalStatus(this.props.collectionId)
+            }>
             {this.props.title}
           </h2>
           <div>{itemsList}</div>
@@ -87,7 +89,10 @@ const mapStateToProps = (state, props) => {
       .items
   return {
     items,
-    open: state.modal.open
+    open:
+      state.modal.length > 0
+        ? state.modal.filter(modal => modal.modalId !== props.collectionId)
+        : false
   }
 }
 

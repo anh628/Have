@@ -19,15 +19,18 @@ class ModalView extends React.Component {
           }
         }}
         on={this.props.open}
-        onClose={() => toggleModalStatus()}>
+        onClose={() => toggleModalStatus(this.props.collectionId)}>
         {this.props.componentDisplay}
       </Modal>
     )
   }
 }
 
-const mapStateToProps = state => ({
-  open: state.modal.open
+const mapStateToProps = (state, props) => ({
+  open:
+    state.modal.length > 0
+      ? state.modal.filter(modal => modal.modalId !== props.collectionId)
+      : false
 })
 
 const mapDispatchToProps = {

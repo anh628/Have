@@ -42,7 +42,6 @@ class NewCollection extends React.Component {
               )
               .then(() => {
                 this.setCollectionId(collectionId)
-                this.props.toggleModalStatus()
               })
             input.value = ''
           }}>
@@ -67,8 +66,11 @@ class NewCollection extends React.Component {
   }
 }
 
-const mapStateToProps = state => ({
-  open: state.modal.open
+const mapStateToProps = (state, props) => ({
+  open:
+    state.modal.length > 0
+      ? state.modal.filter(modal => modal.modalId !== props.collectionId)
+      : false
 })
 
 const mapDispatchToProps = {
