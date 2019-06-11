@@ -33,15 +33,17 @@ class NewCollection extends React.Component {
             }
             title = input.value
             collectionId = v4()
-            addCollection(
-              this.props.uid,
-              collectionId,
-              title,
-              COLLECTION_COLOR
-            ).then(() => {
-              this.setCollectionId(collectionId)
-              this.props.toggleModalStatus()
-            })
+            this.props
+              .addCollection(
+                this.props.uid,
+                collectionId,
+                title,
+                COLLECTION_COLOR
+              )
+              .then(() => {
+                this.setCollectionId(collectionId)
+                this.props.toggleModalStatus()
+              })
             input.value = ''
           }}>
           <input
@@ -70,7 +72,8 @@ const mapStateToProps = state => ({
 })
 
 const mapDispatchToProps = {
-  toggleModalStatus
+  toggleModalStatus,
+  addCollection
 }
 
 export default connect(

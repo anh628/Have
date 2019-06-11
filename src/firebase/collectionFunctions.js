@@ -1,5 +1,6 @@
 import { usersCollectionRef, db } from './firebase'
 import { v4 } from 'node-uuid'
+import { addModalId, deleteModalId } from '../actions/actionCreator'
 
 const getItemCollectionRef = (uid, collectionId) => {
   return usersCollectionRef.doc(`${uid}/itemCollections/${collectionId}`)
@@ -10,7 +11,13 @@ const getItemRef = (uid, collectionId, itemId) => {
   )
 }
 
-export const addCollection = (uid, collectionId, title, collectionColor) => {
+// because modal id will be collection id
+export const addCollection = (
+  uid,
+  collectionId,
+  title,
+  collectionColor
+) => dispatch => {
   const collectionInfo = {
     title,
     collaborators: [],
@@ -22,11 +29,15 @@ export const addCollection = (uid, collectionId, title, collectionColor) => {
   return itemCollectionRef // this will pick amongst collections that an individual user will have
     .set(collectionInfo) // will be the fields above
     .catch(error => console.log(error))
+    .then(() => addModalId(collectionId))
 }
 
-export const deleteCollection = (uid, collectionId) => {
+export const deleteCollection = (uid, collectionId) => dispatch => {
   const collectionRef = getItemCollectionRef(uid, collectionId)
-  return collectionRef.delete().catch(error => console.log(error))
+  return collectionRef
+    .delete()
+    .catch(error => console.log(error))
+    .then(() => deleteModalId(collectionId))
 }
 
 export const editTitle = (uid, collectionId, title) => {

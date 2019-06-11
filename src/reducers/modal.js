@@ -1,9 +1,28 @@
-import { MODAL_STATUS } from '../constants/constants'
+import {
+  MODAL_STATUS,
+  ADD_MODAL_ID,
+  DELETE_MODAL_ID
+} from '../constants/constants'
 
-const modal = (state = { open: false }, action) => {
+const modal = (state = [], action) => {
+  let modals
   switch (action.type) {
+    case ADD_MODAL_ID:
+      modals = [...state]
+      modals.push({ modalId: action.modalId, open: true })
+      return { modals }
+    case DELETE_MODAL_ID:
+      modals = [...state]
+      modals = modals.filter(modal => modal.modalId !== action.modalId)
+      return { modals }
     case MODAL_STATUS:
-      return (state = { open: !state.open })
+      modals = [...state]
+      modals = modals.map(modal =>
+        modal.modalId === action.modalId
+          ? { ...modal, open: !modal.open }
+          : modal
+      )
+      return { modals }
     default:
       return state
   }
