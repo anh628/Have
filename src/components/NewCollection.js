@@ -2,7 +2,6 @@ import React from 'react'
 import { addCollection } from '../firebase/collectionFunctions'
 import { v4 } from 'node-uuid'
 import CollectionView from './CollectionView'
-import Modal from 'react-responsive-modal'
 import { COLLECTION_COLOR } from '../constants/constants'
 import ModalView from './ModalView'
 
@@ -60,25 +59,14 @@ class NewCollection extends React.Component {
             autoFocus={true}
             placeholder='add a collection title' />
         </form>
-        {/* <Modal
-          open={this.state.open}
-          styles={{
-            modal: {
-              backgroundColor: COLLECTION_COLOR
-            }
-          }}
-          onClose={() => this.closeModal()}>
-          <CollectionView
-            uid={this.props.uid}
-            collectionId={this.state.collectionId}
-            title={this.state.title} />
-        </Modal> */}
         <ModalView
-          uid={this.props.uid}
-          collectionId={this.state.collectionId}
-          title={this.state.title}
           open={this.state.open}
-          collectionColor={this.props.collectionColor} />
+          collectionColor={COLLECTION_COLOR}
+          componentDisplay={
+            <CollectionView
+              uid={this.props.uid}
+              collectionId={this.state.collectionId} />
+          } />
       </div>
     )
   }

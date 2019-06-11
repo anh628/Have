@@ -1,7 +1,7 @@
 import React from 'react'
 import Modal from 'react-responsive-modal'
-import CollectionView from './CollectionView'
 
+// pass in props of the children element we want
 class ModalView extends React.Component {
   state = {
     open: this.props.open
@@ -22,7 +22,10 @@ class ModalView extends React.Component {
   render () {
     return (
       <Modal
-        closeOnEsc={true}
+        closeOnOverlayClick
+        closeOnEsc
+        center
+        focusTrapped
         open={this.props.open}
         styles={{
           modal: {
@@ -30,11 +33,9 @@ class ModalView extends React.Component {
             width: '400px'
           }
         }}
-        onClose={(()=>!this.props.open}>
-        <CollectionView
-          uid={this.props.uid}
-          collectionId={this.props.collectionId}
-          title={this.props.title} />
+        on={this.state.open}
+        onClose={this.state.open}>
+        {this.props.componentDisplay}
       </Modal>
     )
   }
