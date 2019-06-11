@@ -18,8 +18,8 @@ const CollectionView = ({
   title,
   items,
   image,
-  collectionColor,
-  changeEditCollectionFlag
+  collectionColor
+
 }) => {
   const itemKeys = items ? Object.keys(items) : null
 
@@ -56,8 +56,6 @@ const CollectionView = ({
       <h1 className='titleCollectionView'>{title}</h1>
       {editItem}
       <NewItem collectionId={collectionId} uid={uid} />
-      {/* TODO: DOUBLE CHECK THIS */}
-      {/* <label onClick={() => changeEditCollectionFlag(collectionId)}>Done</label> */}
       {items ? <Footer uid={uid} collectionId={collectionId} /> : null}
     </div>
   )

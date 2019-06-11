@@ -7,7 +7,6 @@ import {
   deleteAllCompleted,
   setAllItemsCompleteness
 } from '../firebase/collectionFunctions'
-import { connect } from 'react-redux'
 
 class Footer extends React.Component {
   state = {
@@ -66,10 +65,7 @@ class Footer extends React.Component {
           onMouseLeave={() => this.toggleShow()}>
           <label
             onClick={() =>
-              this.props.deleteCollection(
-                this.props.uid,
-                this.props.collectionId
-              )
+              deleteCollection(this.props.uid, this.props.collectionId)
             }>
             Delete collection
           </label>
@@ -140,10 +136,4 @@ class Footer extends React.Component {
   }
 }
 
-const mapDispatchToProps = {
-  deleteCollection
-}
-export default connect(
-  null,
-  mapDispatchToProps
-)(Footer)
+export default Footer
