@@ -35,9 +35,8 @@
   }
 }
 
-/* TODO: CHANGE WIDTH to be the same size as list */
 div.footer-bar {
-  display: inline-flex;
+  display: none;
   align-items: center;
   justify-content: center;
   width: 100%;
@@ -49,15 +48,13 @@ div.footer-bar {
   padding-top: 6px;
 }
 
-/* TODO: CHANGE WIDTH of footer buttons */
 div.footer-bar div.footer-button {
-  text-align: center; /* Center-align text */
-  color: white; /* White text color */
-  float: left; /* Float links side by side */
-  width: 20%; /* Equal width (5 icons with 20% width each = 100%) */
-  padding: 12px 0; /* Some top and bottom padding */
-  transition: all 0.3s ease; /* Add transition for hover effects */
-  color: white; /* White text color */
+  text-align: center;
+  color: white;
+  float: left;
+  width: 20%;
+  padding: 12px 0;
+  transition: all 0.3s ease;
   overflow: hidden;
 }
 
@@ -137,6 +134,10 @@ div.item-collection {
   border-radius: 10px;
   margin: 2px;
   vertical-align: top;
+}
+
+div.item-collection:hover div.footer-bar {
+  display: inline-flex;
 }
 
 img {

@@ -49,10 +49,7 @@ class Footer extends React.Component {
     )
 
     /*
-  Delete Note,
-  Check all items
-  Uncheck all items
-  Delete checked items
+  TODO: EDIT the delete collection, to close modal when in collection view
   */
 
     const moreButton = (
