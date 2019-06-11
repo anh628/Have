@@ -29,7 +29,7 @@ export const addCollection = (
   return itemCollectionRef // this will pick amongst collections that an individual user will have
     .set(collectionInfo) // will be the fields above
     .catch(error => console.log(error))
-    .then(() => addModalId(collectionId))
+    .then(() => dispatch(addModalId(collectionId)))
 }
 
 export const deleteCollection = (uid, collectionId) => dispatch => {
@@ -37,7 +37,7 @@ export const deleteCollection = (uid, collectionId) => dispatch => {
   return collectionRef
     .delete()
     .catch(error => console.log(error))
-    .then(() => deleteModalId(collectionId))
+    .then(() => dispatch(deleteModalId(collectionId)))
 }
 
 export const editTitle = (uid, collectionId, title) => {
