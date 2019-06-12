@@ -42,6 +42,9 @@ class NewCollection extends React.Component {
               )
               .then(() => {
                 this.setCollectionId(collectionId)
+                console.log(
+                  `printing the colleciton ID from new collection ${collectionId}`
+                )
               })
             input.value = ''
           }}>
@@ -55,11 +58,11 @@ class NewCollection extends React.Component {
         <ModalView
           open={this.props.open}
           collectionColor={COLLECTION_COLOR}
-          modalId={this.state.collectionId}
+          modalId={this.props.collectionId}
           componentDisplay={
             <CollectionView
               uid={this.props.uid}
-              collectionId={this.state.collectionId} />
+              collectionId={this.props.collectionId} />
           } />
       </div>
     )
