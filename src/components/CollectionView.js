@@ -19,7 +19,9 @@ const CollectionView = ({
   image,
   collectionColor
 }) => {
-  const itemKeys = items ? Object.keys(items) : null
+  const itemKeys = items
+    ? Object.keys(items).filter(key => items[key] !== null)
+    : null
 
   const editItem = items
     ? itemKeys.map(itemId => (

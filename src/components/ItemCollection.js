@@ -25,7 +25,11 @@ class ItemCollection extends React.Component {
   }
 
   render () {
-    const keys = this.props.items ? Object.keys(this.props.items) : null
+    const keys = this.props.items
+      ? Object.keys(this.props.items).filter(
+        key => this.props.items[key] !== null
+      )
+      : null
 
     const itemsList = !isLoaded(this.props.items)
       ? 'loading'
