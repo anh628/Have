@@ -9,7 +9,7 @@ const modal = (state = [], action) => {
   switch (action.type) {
     case ADD_MODAL_ID:
       modals = [...state]
-      modals.push({ modalId: action.modalId, open: true })
+      modals.push({ modalId: action.modalId, open: false })
       return modals
     case DELETE_MODAL_ID:
       modals = [...state]

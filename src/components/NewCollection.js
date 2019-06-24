@@ -17,6 +17,7 @@ class NewCollection extends React.Component {
     this.setState({
       collectionId
     })
+    this.props.toggleModalStatus(collectionId)
   }
 
   render () {
