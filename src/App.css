@@ -149,19 +149,17 @@ img {
   margin: 8px 0;
   border-width: 2px;
   border-bottom-width: 2px;
-  /* border-top-width: 2px; */
   border-bottom-color: White;
   border-bottom-style: solid;
-  width: 100%;
 }
 
 .titleCollectionView {
   top: 0px;
-  margin: 0px;
+  margin: 5px;
   padding: 0px 2px 2px 3px;
   border-width: 2px;
-  width: 100%;
   border: 5px solid #8a8585;
+  text-align: center;
 }
 
 .title {
@@ -191,6 +189,13 @@ img {
   border-radius: 100%;
   background-color: #d2868d;
   border-width: 0px;
+  position: absolute;
+  right: 10px;
+  opacity: 0.1;
+}
+
+.deleteButton:hover {
+  opacity: 1;
 }
 
 .compeltedItem {
@@ -215,6 +220,7 @@ img {
   background-color: #282c34;
   color: white;
   margin-left: 10px;
+  width: 95%;
 }
 
 .addItem:focus {

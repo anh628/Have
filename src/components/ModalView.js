@@ -25,7 +25,7 @@ const ModalView = ({
         }
       }}
       onClose={() => toggleModalStatus(collectionId)}
-      showCloseIcon>
+      showCloseIcon={false}>
       {componentDisplay}
     </Modal>
   )
