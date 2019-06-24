@@ -64,11 +64,15 @@ class EditItem extends React.Component {
           type='checkbox'
           checked={this.props.isComplete}
           onChange={this.handleToggle} />
-        <span onClick={this.handleBeginEdit}> {this.props.text} </span>
-        {/* TODO: for way later, trash can? */}
+        <span
+          onClick={this.handleBeginEdit}
+          style={{
+            textDecoration: this.props.isComplete ? 'line-through' : 'none'
+          }}>
+          {this.props.text}
+        </span>
         <button className='deleteButton' onClick={this.handleDelete}>
-          {' '}
-          delete{' '}
+          delete
         </button>
         {/* still have to fix the delete button here so the buttons go away when needed  */}
       </div>
