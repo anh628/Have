@@ -227,6 +227,24 @@ img {
   border: 3px solid #555;
 }
 
+.addCollection {
+  padding: 12px 20px;
+  margin: 8px 0;
+  box-sizing: border-box;
+  border: 3px solid #ccc;
+  -webkit-transition: 0.5s;
+  transition: 0.5s;
+  outline: none;
+  background-color: #282c34;
+  color: white;
+  margin-left: 10px;
+  width: 95%;
+}
+
+.addCollection:focus {
+  border: 3px solid #555;
+}
+
 .deleteImage {
   border-radius: 2px;
   bottom: 5px;

@@ -48,15 +48,13 @@ class EditItem extends React.Component {
 
   render () {
     let editableItem = (
-      <div>
-        <input
-          className='addItem'
-          onBlur={this.handleEndEdit}
-          type='text'
-          onChange={this.handleChange}
-          value={this.props.text}
-          autoFocus />{' '}
-      </div>
+      <input
+        className='addItem'
+        onBlur={this.handleEndEdit}
+        type='text'
+        onChange={this.handleChange}
+        value={this.props.text}
+        autoFocus />
     )
     let itemDisplay = (
       <div className='ItemCollectionView'>

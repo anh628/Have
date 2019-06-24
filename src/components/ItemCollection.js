@@ -72,6 +72,7 @@ class ItemCollection extends React.Component {
         <ModalView
           collectionId={this.props.collectionId}
           collectionColor={this.props.collectionColor}
+          onClose={() => this.props.toggleModalStatus(this.props.collectionId)}
           componentDisplay={
             <CollectionView
               uid={this.props.uid}

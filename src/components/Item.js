@@ -31,6 +31,7 @@ const Item = ({
     <ModalView
       collectionId={collectionId}
       collectionColor={collectionColor}
+      onClose={() => toggleModalStatus(collectionId)}
       componentDisplay={
         <CollectionView uid={uid} collectionId={collectionId} />
       } />
