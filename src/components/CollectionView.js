@@ -90,10 +90,16 @@ const mapStateToProps = (state, props) => {
     state.firestore.data.itemCollections[props.collectionId] &&
     state.firestore.data.itemCollections[props.collectionId].image
 
+  const title =
+    state.firestore.data.itemCollections &&
+    state.firestore.data.itemCollections[props.collectionId] &&
+    state.firestore.data.itemCollections[props.collectionId].title
+
   return {
     items,
     collectionColor,
-    image
+    image,
+    title
   }
 }
 

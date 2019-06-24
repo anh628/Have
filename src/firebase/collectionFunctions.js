@@ -1,5 +1,6 @@
 import { usersCollectionRef, db } from './firebase'
 import { v4 } from 'node-uuid'
+import { addModalId, deleteModalId } from '../actions/actionCreator'
 
 const getItemCollectionRef = (uid, collectionId) => {
   return usersCollectionRef.doc(`${uid}/itemCollections/${collectionId}`)
@@ -10,6 +11,7 @@ const getItemRef = (uid, collectionId, itemId) => {
   )
 }
 
+// because modal id will be collection id
 export const addCollection = (uid, collectionId, title, collectionColor) => {
   const collectionInfo = {
     title,
@@ -162,3 +164,21 @@ export const removeCollaborator = (uid, collectionId, collabUID) => {
     .catch(error => console.log(error))
 }
 */
+
+export const fetchCollectionIds = uid => dispatch => {
+  return usersCollectionRef
+    .doc(uid)
+    .collection('itemCollections')
+    .onSnapshot(querySnapshot => {
+      querySnapshot.docChanges().forEach(change => {
+        const collectionId = change.doc.id
+
+        if (change.type === 'added') {
+          dispatch(addModalId(collectionId))
+        }
+        if (change.type === 'removed') {
+          dispatch(deleteModalId(collectionId))
+        }
+      })
+    })
+}

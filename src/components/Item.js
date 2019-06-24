@@ -1,7 +1,20 @@
 import React from 'react'
 import { toggleItem } from '../firebase/collectionFunctions'
+import ModalView from './ModalView'
+import CollectionView from './CollectionView'
+import { connect } from 'react-redux'
+import { toggleModalStatus } from '../actions/actionCreator'
 
-const Item = ({ uid, collectionId, itemId, text, isComplete }) => (
+const Item = ({
+  uid,
+  collectionId,
+  itemId,
+  text,
+  isComplete,
+  color,
+  open,
+  toggleModalStatus
+}) => (
   <div id='flex' className='item-row'>
     <label className={isComplete ? 'checkbox-completed' : 'checkbox'}>
       <input
@@ -12,10 +25,24 @@ const Item = ({ uid, collectionId, itemId, text, isComplete }) => (
     <label
       style={{
         textDecoration: isComplete ? 'line-through' : 'none'
-      }}>
+      }}
+      onClick={() => toggleModalStatus(collectionId)}>
       {text}
     </label>
+    <ModalView
+      collectionId={collectionId}
+      collectionColor={color}
+      componentDisplay={
+        <CollectionView uid={uid} collectionId={collectionId} />
+      } />
   </div>
 )
 
-export default Item
+const mapDispatchToProps = {
+  toggleModalStatus
+}
+
+export default connect(
+  null,
+  mapDispatchToProps
+)(Item)
