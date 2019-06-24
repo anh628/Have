@@ -4,28 +4,17 @@ import { connect } from 'react-redux'
 import { compose } from 'redux'
 import { firestoreConnect, isLoaded, isEmpty } from 'react-redux-firebase'
 import CollectionView from './CollectionView'
+import ModalView from './ModalView'
 import Footer from './Footer'
-import Modal from 'react-responsive-modal'
+import { toggleModalStatus } from '../actions/actionCreator'
 
 class ItemCollection extends React.Component {
-  state = {
-    open: false
-  }
-
-  openModal () {
-    this.setState({
-      open: true
-    })
-  }
-
-  closeModal () {
-    this.setState({
-      open: false
-    })
-  }
-
   render () {
-    const keys = this.props.items ? Object.keys(this.props.items) : null
+    const keys = this.props.items
+      ? Object.keys(this.props.items).filter(
+        key => this.props.items[key] !== null
+      )
+      : null
 
     const itemsList = !isLoaded(this.props.items)
       ? 'loading'
@@ -38,9 +27,17 @@ class ItemCollection extends React.Component {
               uid={this.props.uid}
               collectionId={this.props.collectionId}
               itemId={this.props.itemId}
+              color={this.props.color}
               {...this.props.items[itemId]} />
           ))
           : null
+
+    const displayImage = this.props.image ? (
+      <img
+        src={this.props.image}
+        alt='cover-art'
+        onClick={() => this.props.toggleModalStatus(this.props.collectionId)} />
+    ) : null
 
     const uncheckedItems = keys
       ? keys.filter(itemId => this.props.items[itemId].isComplete === false)
@@ -50,37 +47,20 @@ class ItemCollection extends React.Component {
       ? keys.filter(itemId => this.props.items[itemId].isComplete === true)
         .length > 0
       : null
-    const displayImage = this.props.image ? (
-      <img src={this.props.image} alt='cover-art' />
-    ) : null
-
-    const modal = (
-      <Modal
-        closeOnEsc={true}
-        open={this.state.open}
-        styles={{
-          modal: {
-            backgroundColor: this.props.collectionColor
-          }
-        }}
-        width='400'
-        height='300'
-        effect='fadeInUp'
-        onClose={() => this.closeModal()}>
-        <CollectionView
-          uid={this.props.uid}
-          collectionId={this.props.collectionId}
-          title={this.props.title} />
-      </Modal>
-    )
 
     return (
       <div
         style={{ backgroundColor: this.props.collectionColor }}
         className='item-collection'>
-        <div onClick={() => this.openModal()}>
+        <div>
           {displayImage}
-          <h2 className='item-collection-title'>{this.props.title}</h2>
+          <h2
+            className='item-collection-title'
+            onClick={() =>
+              this.props.toggleModalStatus(this.props.collectionId)
+            }>
+            {this.props.title}
+          </h2>
           <div>{itemsList}</div>
         </div>
         <Footer
@@ -89,7 +69,14 @@ class ItemCollection extends React.Component {
           areItems={!!this.props.items}
           uncheckedItems={uncheckedItems}
           checkItems={checkItems} />
-        {modal}
+        <ModalView
+          collectionId={this.props.collectionId}
+          collectionColor={this.props.collectionColor}
+          componentDisplay={
+            <CollectionView
+              uid={this.props.uid}
+              collectionId={this.props.collectionId} />
+          } />
       </div>
     )
   }
@@ -104,8 +91,16 @@ const mapStateToProps = (state, props) => {
     state.firestore.data.users[props.uid].itemCollections[props.collectionId]
       .items
   return {
-    items
+    items,
+    open:
+      state.modal.length > 0
+        ? state.modal.filter(modal => modal.modalId !== props.collectionId)
+        : false
   }
+}
+
+const mapDispatchToProps = {
+  toggleModalStatus
 }
 
 export default compose(
@@ -114,6 +109,6 @@ export default compose(
   ]),
   connect(
     mapStateToProps,
-    null
+    mapDispatchToProps
   )
 )(ItemCollection)

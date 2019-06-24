@@ -19,7 +19,9 @@ const CollectionView = ({
   image,
   collectionColor
 }) => {
-  const itemKeys = items ? Object.keys(items) : null
+  const itemKeys = items
+    ? Object.keys(items).filter(key => items[key] !== null)
+    : null
 
   const editItem = items
     ? itemKeys.map(itemId => (
@@ -88,10 +90,16 @@ const mapStateToProps = (state, props) => {
     state.firestore.data.itemCollections[props.collectionId] &&
     state.firestore.data.itemCollections[props.collectionId].image
 
+  const title =
+    state.firestore.data.itemCollections &&
+    state.firestore.data.itemCollections[props.collectionId] &&
+    state.firestore.data.itemCollections[props.collectionId].title
+
   return {
     items,
     collectionColor,
-    image
+    image,
+    title
   }
 }
 

@@ -2,42 +2,32 @@ import React from 'react'
 import { addCollection } from '../firebase/collectionFunctions'
 import { v4 } from 'node-uuid'
 import CollectionView from './CollectionView'
-import Modal from 'react-responsive-modal'
+import { COLLECTION_COLOR } from '../constants/constants'
+import ModalView from './ModalView'
+import { toggleModalStatus } from '../actions/actionCreator'
+import { connect } from 'react-redux'
 
+// uid is passed in as a prop
 class NewCollection extends React.Component {
-  constructor (props) {
-    super(props)
-    this.state = {
-      collectionView: false,
-      collectionId: null,
-      title: null,
-      open: false
-    }
-  }
-  openModal (collectionId, title) {
-    this.setState({
-      open: true,
-      collectionView: true,
-      collectionId,
-      title
-    })
+  state = {
+    collectionId: null
   }
 
-  closeModal () {
+  setCollectionId (collectionId) {
     this.setState({
-      open: false
+      collectionId
     })
+    this.props.toggleModalStatus(collectionId)
   }
 
   render () {
     let input
-    let collectionColor = '#8a8c90'
     let collectionId
     let title
-
     return (
       <div>
         <h1 className='titleCollectionView'>HAVE</h1>
+
         <form
           onSubmit={e => {
             e.preventDefault()
@@ -50,8 +40,10 @@ class NewCollection extends React.Component {
               this.props.uid,
               collectionId,
               title,
-              collectionColor
-            ).then(() => this.openModal(collectionId, title))
+              COLLECTION_COLOR
+            ).then(() => {
+              this.setCollectionId(collectionId)
+            })
             input.value = ''
           }}>
           <input
@@ -61,25 +53,26 @@ class NewCollection extends React.Component {
             autoFocus={true}
             placeholder='add a collection title' />
         </form>
-        <Modal
-          open={this.state.open}
-          styles={{
-            modal: {
-              backgroundColor: collectionColor
-            }
-          }}
-          width='400'
-          height='300'
-          effect='fadeInUp'
-          onClose={() => this.closeModal()}>
-          <CollectionView
-            uid={this.props.uid}
-            collectionId={this.state.collectionId}
-            title={this.state.title} />
-        </Modal>
+
+        <ModalView
+          collectionColor={COLLECTION_COLOR}
+          collectionId={this.state.collectionId}
+          componentDisplay={
+            <CollectionView
+              uid={this.props.uid}
+              collectionId={this.state.collectionId} />
+          } />
       </div>
     )
   }
 }
 
-export default NewCollection
+const mapDispatchToProps = {
+  toggleModalStatus,
+  addCollection
+}
+
+export default connect(
+  null,
+  mapDispatchToProps
+)(NewCollection)

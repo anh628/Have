@@ -8,6 +8,7 @@ import {
   setAllItemsCompleteness
 } from '../firebase/collectionFunctions'
 
+
 class Footer extends React.Component {
   state = {
     showMenu: false
