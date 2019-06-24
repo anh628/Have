@@ -30,8 +30,7 @@ const Item = ({
       {text}
     </label>
     <ModalView
-      modalId={collectionId}
-      open={open}
+      collectionId={collectionId}
       collectionColor={color}
       componentDisplay={
         <CollectionView uid={uid} collectionId={collectionId} />
@@ -39,18 +38,11 @@ const Item = ({
   </div>
 )
 
-const mapStateToProps = (state, props) => ({
-  open:
-    state.modal.length > 0
-      ? state.modal.filter(modal => modal.modalId !== props.collectionId)
-      : false
-})
-
 const mapDispatchToProps = {
   toggleModalStatus
 }
 
 export default connect(
-  mapStateToProps,
+  null,
   mapDispatchToProps
 )(Item)

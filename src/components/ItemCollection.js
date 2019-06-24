@@ -70,8 +70,7 @@ class ItemCollection extends React.Component {
           uncheckedItems={uncheckedItems}
           checkItems={checkItems} />
         <ModalView
-          modalId={this.props.collectionId}
-          open={this.props.open}
+          collectionId={this.props.collectionId}
           collectionColor={this.props.collectionColor}
           componentDisplay={
             <CollectionView

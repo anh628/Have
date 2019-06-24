@@ -1,11 +1,11 @@
 import {
-  MODAL_STATUS,
+  TOGGLE_MODAL_STATUS,
   ADD_MODAL_ID,
   DELETE_MODAL_ID
 } from '../constants/constants'
 
 export const toggleModalStatus = modalId => ({
-  type: MODAL_STATUS,
+  type: TOGGLE_MODAL_STATUS,
   modalId
 })
 

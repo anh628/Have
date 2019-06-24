@@ -1,5 +1,5 @@
 import {
-  MODAL_STATUS,
+  TOGGLE_MODAL_STATUS,
   ADD_MODAL_ID,
   DELETE_MODAL_ID
 } from '../constants/constants'
@@ -15,7 +15,7 @@ const modal = (state = [], action) => {
       modals = [...state]
       modals = modals.filter(modal => modal.modalId !== action.modalId)
       return modals
-    case MODAL_STATUS:
+    case TOGGLE_MODAL_STATUS:
       modals = [...state]
       modals = modals.map(modal =>
         modal.modalId === action.modalId

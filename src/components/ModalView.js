@@ -2,36 +2,41 @@ import React from 'react'
 import Modal from 'react-responsive-modal'
 import { connect } from 'react-redux'
 import { toggleModalStatus } from '../actions/actionCreator'
-// pass in props of the children element we want
-class ModalView extends React.Component {
-  render () {
-    return (
-      <Modal
-        modalId={this.props.modalId}
-        closeOnOverlayClick
-        closeOnEsc
-        center
-        open={this.props.open}
-        styles={{
-          modal: {
-            backgroundColor: this.props.collectionColor,
-            width: '400px'
-          }
-        }}
-        on={this.props.open}
-        onClose={() => toggleModalStatus(this.props.collectionId)}>
-        {this.props.componentDisplay}
-      </Modal>
-    )
-  }
+
+const ModalView = ({
+  open,
+  collectionColor,
+  collectionId,
+  toggleModalStatus,
+  componentDisplay
+}) => {
+  return (
+    <Modal
+      closeOnOverlayClick
+      closeOnEsc
+      center
+      open={open}
+      styles={{
+        modal: {
+          backgroundColor: collectionColor,
+          width: '400px'
+        }
+      }}
+      onClose={() => toggleModalStatus(collectionId)}
+      showCloseIcon>
+      {componentDisplay}
+    </Modal>
+  )
 }
 
-const mapStateToProps = (state, props) => ({
-  open:
-    state.modal.length > 0
-      ? state.modal.filter(modal => modal.modalId !== props.collectionId)
-      : false
-})
+const mapStateToProps = (state, props) => {
+  const open =
+    state.modal.filter(modal => modal.modalId === props.collectionId) &&
+    state.modal.filter(modal => modal.modalId === props.collectionId)[0] &&
+    state.modal.filter(modal => modal.modalId === props.collectionId)[0].open
+
+  return { open: open || false }
+}
 
 const mapDispatchToProps = {
   toggleModalStatus

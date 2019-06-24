@@ -6,6 +6,8 @@ import { COLLECTION_COLOR } from '../constants/constants'
 import ModalView from './ModalView'
 import { toggleModalStatus } from '../actions/actionCreator'
 import { connect } from 'react-redux'
+
+// uid is passed in as a prop
 class NewCollection extends React.Component {
   state = {
     collectionId: null
@@ -21,10 +23,10 @@ class NewCollection extends React.Component {
     let input
     let collectionId
     let title
-
     return (
       <div>
         <h1 className='titleCollectionView'>HAVE</h1>
+
         <form
           onSubmit={e => {
             e.preventDefault()
@@ -42,9 +44,6 @@ class NewCollection extends React.Component {
               )
               .then(() => {
                 this.setCollectionId(collectionId)
-                console.log(
-                  `printing the colleciton ID from new collection ${collectionId}`
-                )
               })
             input.value = ''
           }}>
@@ -55,26 +54,19 @@ class NewCollection extends React.Component {
             autoFocus={true}
             placeholder='add a collection title' />
         </form>
+
         <ModalView
-          open={this.props.open}
           collectionColor={COLLECTION_COLOR}
-          modalId={this.props.collectionId}
+          collectionId={this.state.collectionId}
           componentDisplay={
             <CollectionView
               uid={this.props.uid}
-              collectionId={this.props.collectionId} />
+              collectionId={this.state.collectionId} />
           } />
       </div>
     )
   }
 }
-
-const mapStateToProps = (state, props) => ({
-  open:
-    state.modal.length > 0
-      ? state.modal.filter(modal => modal.modalId !== props.collectionId)
-      : false
-})
 
 const mapDispatchToProps = {
   toggleModalStatus,
@@ -82,6 +74,6 @@ const mapDispatchToProps = {
 }
 
 export default connect(
-  mapStateToProps,
+  null,
   mapDispatchToProps
 )(NewCollection)
