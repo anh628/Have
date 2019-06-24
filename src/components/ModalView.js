@@ -19,12 +19,7 @@ const ModalView = ({ open, collectionColor, onClose, componentDisplay }) => {
       }}
       onClose={onClose}
       showCloseIcon={false}
-      focusTrapped={true}
-      // edit this
-      focusTrapOptions={{
-        initialFocus: document.querySelector('.addItem'),
-        returnFocusOnDeactivate: true
-      }}>
+      focusTrapped={false}>
       {componentDisplay}
     </Modal>
   )
