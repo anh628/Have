@@ -35,16 +35,14 @@ class NewCollection extends React.Component {
             }
             title = input.value
             collectionId = v4()
-            this.props
-              .addCollection(
-                this.props.uid,
-                collectionId,
-                title,
-                COLLECTION_COLOR
-              )
-              .then(() => {
-                this.setCollectionId(collectionId)
-              })
+            addCollection(
+              this.props.uid,
+              collectionId,
+              title,
+              COLLECTION_COLOR
+            ).then(() => {
+              this.setCollectionId(collectionId)
+            })
             input.value = ''
           }}>
           <input

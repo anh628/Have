@@ -12,12 +12,7 @@ const getItemRef = (uid, collectionId, itemId) => {
 }
 
 // because modal id will be collection id
-export const addCollection = (
-  uid,
-  collectionId,
-  title,
-  collectionColor
-) => dispatch => {
+export const addCollection = (uid, collectionId, title, collectionColor) => {
   const collectionInfo = {
     title,
     collaborators: [],
@@ -29,15 +24,11 @@ export const addCollection = (
   return itemCollectionRef // this will pick amongst collections that an individual user will have
     .set(collectionInfo) // will be the fields above
     .catch(error => console.log(error))
-    .then(() => dispatch(addModalId(collectionId)))
 }
 
-export const deleteCollection = (uid, collectionId) => dispatch => {
+export const deleteCollection = (uid, collectionId) => {
   const collectionRef = getItemCollectionRef(uid, collectionId)
-  return collectionRef
-    .delete()
-    .catch(error => console.log(error))
-    .then(() => dispatch(deleteModalId(collectionId)))
+  return collectionRef.delete().catch(error => console.log(error))
 }
 
 export const editTitle = (uid, collectionId, title) => {
@@ -173,3 +164,21 @@ export const removeCollaborator = (uid, collectionId, collabUID) => {
     .catch(error => console.log(error))
 }
 */
+
+export const fetchCollectionIds = uid => dispatch => {
+  return usersCollectionRef
+    .doc(uid)
+    .collection('itemCollections')
+    .onSnapshot(querySnapshot => {
+      querySnapshot.docChanges().forEach(change => {
+        const collectionId = change.doc.id
+
+        if (change.type === 'added') {
+          dispatch(addModalId(collectionId))
+        }
+        if (change.type === 'removed') {
+          dispatch(deleteModalId(collectionId))
+        }
+      })
+    })
+}
