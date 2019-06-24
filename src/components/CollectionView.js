@@ -1,75 +1,96 @@
-/* eslint-disable standard/computed-property-even-spacing */
 import { firestoreConnect } from 'react-redux-firebase'
 import { compose } from 'redux'
 import { connect } from 'react-redux'
 import React from 'react'
+import { deleteImage } from '../firebase/collectionFunctions'
+import { deleteFile } from '../firebase/storageFunctions'
+import EditCollectionTitle from './EditCollectionTitle'
 import EditItem from './EditItem'
 import NewItem from './NewItem'
 import Footer from './Footer'
 import Emoji from './Emoji'
-import { deleteImage } from '../firebase/collectionFunctions'
-import { deleteFile } from '../firebase/storageFunctions'
 
-// TODO: edit collection title here
-const CollectionView = ({
-  uid,
-  collectionId,
-  title,
-  items,
-  image,
-  collectionColor
-}) => {
-  const itemKeys = items
-    ? Object.keys(items).filter(key => items[key] !== null)
-    : null
+class CollectionView extends React.Component {
+  state = {
+    editTitleMode: false
+  }
 
-  const editItem = items
-    ? itemKeys.map(itemId => (
-      <EditItem
-        key={itemId}
-        collectionId={collectionId}
-        itemId={itemId}
-        {...items[itemId]}
-        uid={uid} />
-    ))
-    : null
+  toggleEditTitleMode = () => {
+    this.setState({ editTitleMode: !this.state.editTitleMode })
+  }
 
-  const displayImage = image ? (
-    <div className='coverart'>
-      <img src={image} alt='cover-art' />
-      <label
-        className='deleteImage'
-        onClick={() => {
-          deleteFile(image)
-          deleteImage(uid, collectionId)
-        }}>
-        <Emoji symbol='🗑' label='delete' />
-      </label>
-    </div>
-  ) : null
+  render () {
+    const itemKeys = this.props.items
+      ? Object.keys(this.props.items).filter(
+        key => this.props.items[key] !== null
+      )
+      : null
 
-  const uncheckedItems = itemKeys
-    ? itemKeys.filter(itemId => items[itemId].isComplete === false).length > 0
-    : null
-  const checkItems = itemKeys
-    ? itemKeys.filter(itemId => items[itemId].isComplete === true).length > 0
-    : null
+    // list of all items in the collection
+    const editItem = this.props.items
+      ? itemKeys.map(itemId => (
+        <EditItem
+          key={itemId}
+          collectionId={this.props.collectionId}
+          itemId={itemId}
+          {...this.props.items[itemId]}
+          uid={this.props.uid} />
+      ))
+      : null
 
-  return (
-    <div style={{ backgroundColor: collectionColor }}>
-      {displayImage}
-      <h1 className='titleCollectionView'>{title}</h1>
-      {editItem}
-      <NewItem collectionId={collectionId} uid={uid} />
-      <Footer
-        uid={uid}
-        collectionId={collectionId}
-        areItems={!!items}
-        uncheckedItems={uncheckedItems}
-        checkItems={checkItems}
-        collectionView={true} />
-    </div>
-  )
+    const displayImage = this.props.image ? (
+      <div className='coverart'>
+        <img src={this.props.image} alt='cover-art' />
+        <label
+          className='deleteImage'
+          onClick={() => {
+            deleteFile(this.props.image)
+            deleteImage(this.props.uid, this.props.collectionId)
+          }}>
+          <Emoji symbol='🗑' label='delete' />
+        </label>
+      </div>
+    ) : null
+
+    const displayTitle = this.state.editTitleMode ? (
+      <EditCollectionTitle
+        toggleEditTitleMode={this.toggleEditTitleMode}
+        title={this.props.title}
+        uid={this.props.uid}
+        collectionId={this.props.collectionId} />
+    ) : (
+      <h1
+        className='titleCollectionView'
+        onClick={() => this.toggleEditTitleMode()}>
+        {this.props.title}
+      </h1>
+    )
+
+    const uncheckedItems = itemKeys
+      ? itemKeys.filter(itemId => this.props.items[itemId].isComplete === false)
+        .length > 0
+      : null
+    const checkItems = itemKeys
+      ? itemKeys.filter(itemId => this.props.items[itemId].isComplete === true)
+        .length > 0
+      : null
+
+    return (
+      <div style={{ backgroundColor: this.props.collectionColor }}>
+        {displayImage}
+        {displayTitle}
+        {editItem}
+        <NewItem collectionId={this.props.collectionId} uid={this.props.uid} />
+        <Footer
+          uid={this.props.uid}
+          collectionId={this.props.collectionId}
+          areItems={!!this.props.items}
+          uncheckedItems={uncheckedItems}
+          checkItems={checkItems}
+          collectionView={true} />
+      </div>
+    )
+  }
 }
 const mapStateToProps = (state, props) => {
   const items =
