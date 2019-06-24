@@ -26,7 +26,7 @@ class NewCollection extends React.Component {
     let title
     return (
       <div>
-        <h1 className='titleCollectionView'>HAVE</h1>
+        <h1 className='title'>HAVE</h1>
 
         <form
           onSubmit={e => {

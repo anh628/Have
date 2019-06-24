@@ -19,7 +19,9 @@ const ModalView = ({
       styles={{
         modal: {
           backgroundColor: collectionColor,
-          width: '400px'
+          width: '400px',
+          padding: '1px',
+          borderRadius: '5px'
         }
       }}
       onClose={() => toggleModalStatus(collectionId)}

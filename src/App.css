@@ -164,6 +164,15 @@ img {
   border: 5px solid #8a8585;
 }
 
+.title {
+  top: 0px;
+  margin: 0px;
+  padding: 0px 2px 2px 3px;
+  border-width: 2px;
+  width: 100%;
+  border: 5px solid #8a8585;
+}
+
 .titleCollectionViewBlur {
   top: 0px;
   margin: 0px;
