@@ -11,8 +11,7 @@ const Item = ({
   itemId,
   text,
   isComplete,
-  color,
-  open,
+  collectionColor,
   toggleModalStatus
 }) => (
   <div id='flex' className='item-row'>
@@ -31,7 +30,7 @@ const Item = ({
     </label>
     <ModalView
       collectionId={collectionId}
-      collectionColor={color}
+      collectionColor={collectionColor}
       componentDisplay={
         <CollectionView uid={uid} collectionId={collectionId} />
       } />

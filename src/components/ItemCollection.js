@@ -27,7 +27,7 @@ class ItemCollection extends React.Component {
               uid={this.props.uid}
               collectionId={this.props.collectionId}
               itemId={this.props.itemId}
-              color={this.props.color}
+              collectionColor={this.props.collectionColor}
               {...this.props.items[itemId]} />
           ))
           : null
