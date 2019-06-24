@@ -1,15 +1,14 @@
-/* eslint-disable standard/computed-property-even-spacing */
 import { firestoreConnect } from 'react-redux-firebase'
 import { compose } from 'redux'
 import { connect } from 'react-redux'
 import React from 'react'
+import { deleteImage } from '../firebase/collectionFunctions'
+import { deleteFile } from '../firebase/storageFunctions'
+import EditCollectionTitle from './EditCollectionTitle'
 import EditItem from './EditItem'
 import NewItem from './NewItem'
 import Footer from './Footer'
 import Emoji from './Emoji'
-import { deleteImage } from '../firebase/collectionFunctions'
-import { deleteFile } from '../firebase/storageFunctions'
-import EditCollectionTitle from './EditCollectionTitle'
 
 class CollectionView extends React.Component {
   state = {
@@ -27,6 +26,7 @@ class CollectionView extends React.Component {
       )
       : null
 
+    // list of all items in the collection
     const editItem = this.props.items
       ? itemKeys.map(itemId => (
         <EditItem

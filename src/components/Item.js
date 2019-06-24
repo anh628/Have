@@ -12,7 +12,6 @@ const Item = ({
   text,
   isComplete,
   color,
-  open,
   toggleModalStatus
 }) => (
   <div id='flex' className='item-row'>
