@@ -1,4 +1,5 @@
 import React from 'react'
+import { connect } from 'react-redux'
 import Emoji from './Emoji'
 import { uploadFile, deleteFile } from '../firebase/storageFunctions'
 import {
@@ -7,7 +8,7 @@ import {
   deleteAllCompleted,
   setAllItemsCompleteness
 } from '../firebase/collectionFunctions'
-
+import { toggleModalStatus } from '../actions/actionCreator'
 
 class Footer extends React.Component {
   state = {
@@ -129,14 +130,30 @@ class Footer extends React.Component {
       </div>
     )
 
+    const doneButton = (
+      <div className='done'>
+        <label
+          onClick={() => this.props.toggleModalStatus(this.props.collectionId)}>
+          Done
+        </label>
+      </div>
+    )
+
     return (
       <div className='footer-bar'>
         {changeColorButton}
         {imageButton}
         {moreButton}
+        {this.props.collectionView ? doneButton : null}
       </div>
     )
   }
 }
 
-export default Footer
+const mapDispatchToProps = {
+  toggleModalStatus
+}
+export default connect(
+  null,
+  mapDispatchToProps
+)(Footer)
