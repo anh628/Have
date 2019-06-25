@@ -4,7 +4,7 @@ import { addItem } from '../firebase/collectionFunctions'
 // props passed in: uid, collectionId
 class NewItem extends React.Component {
   state = {
-    text: null
+    text: ''
   }
 
   /*
