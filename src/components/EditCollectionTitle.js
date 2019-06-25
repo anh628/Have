@@ -43,8 +43,9 @@ class EditCollectionTitle extends React.Component {
 
   render () {
     return (
-      <h1 className=' titleCollectionView-editing'>
+      <h1>
         <input
+          className='titleCollectionView-editing'
           type='input'
           value={this.state.title}
           onBlur={this.handleBlur}
