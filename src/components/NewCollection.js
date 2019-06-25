@@ -27,7 +27,7 @@ class NewCollection extends React.Component {
     return (
       <div>
         <h1 className='title'>HAVE</h1>
-
+        <label className='descrip'>a collection of lists</label>
         <form
           onSubmit={e => {
             e.preventDefault()
@@ -51,7 +51,7 @@ class NewCollection extends React.Component {
             type='text'
             ref={node => (input = node)}
             autoFocus={true}
-            placeholder='add a collection title' />
+            placeholder='name your list' />
         </form>
 
         <ModalView
