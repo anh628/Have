@@ -12,7 +12,7 @@
 
 .App-header {
   background-color: #282c34;
-  min-height: 50vh;
+  min-height: 35vh;
   display: flex;
   flex-direction: column;
   align-items: center;
@@ -253,14 +253,16 @@ img {
   border-radius: 2px;
   bottom: 5px;
   display: block;
-  opacity: 0;
+  opacity: 0.5;
   position: absolute;
   transition: opacity 0.218s linear;
   right: 5px;
+  background-color: white; /* TODO: change color later */
 }
 
 .coverart {
   position: relative;
+  text-align: center;
 }
 
 .coverart:hover .deleteImage {
@@ -304,4 +306,12 @@ img {
 
 #hide.item-collection {
   display: none;
+}
+
+.descrip {
+  text-align: center;
+  font-style: italic;
+  font-size: 10px;
+  position: relative;
+  top: -13px;
 }
