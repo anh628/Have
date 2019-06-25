@@ -77,17 +77,16 @@ class EditItem extends React.Component {
           type='checkbox'
           checked={this.props.isComplete}
           onChange={this.handleToggle} />
-        <span
+        <label
           onClick={this.handleBeginEdit}
           style={{
             textDecoration: this.props.isComplete ? 'line-through' : 'none'
           }}>
           {this.props.text}
-        </span>
+        </label>
         <button className='deleteButton' onClick={this.handleDelete}>
           delete
         </button>
-        {/* still have to fix the delete button here so the buttons go away when needed  */}
       </div>
     )
 
