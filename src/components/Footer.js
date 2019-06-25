@@ -45,7 +45,7 @@ class Footer extends React.Component {
             symbol='📷' // TODO change emoji later
             label='imageUploader'
             style={{ filter: 'grayscale(100%)' }} />
-          <p className='description'>Add image</p>
+          <label className='description'>Add image</label>
         </label>
       </div>
     )
@@ -60,7 +60,7 @@ class Footer extends React.Component {
     const moreButton = (
       <div className='footer-button' onClick={() => this.toggleShow()}>
         <Emoji symbol='⋮' label='more' className='dropdown' id='more' />
-        <p className='description'>More</p>
+        <label className='description'>More</label>
         <div
           className={`dropdown-content-more  ${
             this.state.showMenu ? 'show' : ''
@@ -126,7 +126,7 @@ class Footer extends React.Component {
     const changeColorButton = (
       <div className='footer-button'>
         <Emoji symbol='🎨' label='colorChanger' />
-        <p className='description'>Change color</p>
+        <label className='description'>Change color</label>
       </div>
     )
 

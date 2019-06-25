@@ -34,37 +34,41 @@
   }
 }
 
-/* TODO: CHANGE WIDTH to be the same size as list */
-div.footer-bar {
-  display: inline-flex;
+.footer-bar {
+  display: none;
   align-items: center;
   justify-content: center;
   width: 100%;
   background-color: rgb(71, 71, 72);
-  overflow: auto; /* Overflow due to float */
   border-bottom-left-radius: 5px;
   border-bottom-right-radius: 5px;
   max-height: 50px;
   margin-top: 5px;
 }
 
-div.footer-bar div.footer-button {
-  text-align: center; /* Center-align text */
-  color: white; /* White text color */
-  float: left; /* Float links side by side */
-  width: 20%; /* Equal width (5 icons with 20% width each = 100%) */
-  padding: 12px 0; /* Some top and bottom padding */
-  transition: all 0.3s ease; /* Add transition for hover effects */
-  color: white; /* White text color */
+.item-collection:hover .footer-bar {
+  display: inline-flex;
+}
+
+.footer-bar .footer-button {
+  text-align: center;
+  color: white;
+  float: left;
+  width: 20%;
+  padding: 12px 0;
+  color: white;
   overflow: hidden;
 }
 
-div.footer-bar div.footer-button:hover p.description {
+.footer-bar .footer-button:hover .description {
   display: block;
   -webkit-animation: fadeIn 1s;
   animation: fadeIn 1s;
   z-index: 1;
-  overflow: auto;
+  background-color: rgb(167, 164, 164);
+  border-radius: 5px;
+  font-size: 10px;
+  padding: 2px;
 }
 
 /* Add animation (fade in the popup) */
@@ -86,11 +90,7 @@ div.footer-bar div.footer-button:hover p.description {
   }
 }
 
-div.footer-bar div.footer-button p.description {
-  background-color: rgb(167, 164, 164);
-  border-radius: 5px;
-  font-size: 10px;
-  padding: 2px;
+div.footer-bar div.footer-button label.description {
   display: none;
 }
 
