@@ -5,7 +5,6 @@ import rootReducer from './reducers/rootReducer'
 import { createStore, applyMiddleware, compose } from 'redux'
 import thunk from 'redux-thunk'
 import { composeWithDevTools } from 'redux-devtools-extension'
-import logger from 'redux-logger'
 
 // const composeEnhancers = window.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__ || compose
 
@@ -22,7 +21,7 @@ const createStoreWithFirebase = compose(
 )(createStore)
 
 // logger prints to the console
-const middleware = applyMiddleware(thunk, logger)
+const middleware = applyMiddleware(thunk)
 // Add reactReduxFirebase enhancer when making store creator
 export const store = createStoreWithFirebase(
   rootReducer,
