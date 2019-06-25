@@ -1,4 +1,4 @@
-import { usersCollectionRef, db } from './firebase'
+import { usersCollectionRef, db, firebase } from './firebase'
 import { v4 } from 'node-uuid'
 import { addModalId, deleteModalId } from '../actions/actionCreator'
 
@@ -15,9 +15,10 @@ const getItemRef = (uid, collectionId, itemId) => {
 export const addCollection = (uid, collectionId, title, collectionColor) => {
   const collectionInfo = {
     title,
-    collaborators: [],
+    // collaborators: [], add back in when we do collaborators
     collectionColor,
-    image: null
+    image: null,
+    timeStamp: firebase.firestore.FieldValue.serverTimestamp()
   }
 
   const itemCollectionRef = getItemCollectionRef(uid, collectionId)
