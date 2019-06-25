@@ -55,7 +55,7 @@ class ItemCollection extends React.Component {
         <div>
           {displayImage}
           <h2
-            className='item-collection-title'
+            className='titleCollectionView'
             onClick={() =>
               this.props.toggleModalStatus(this.props.collectionId)
             }>

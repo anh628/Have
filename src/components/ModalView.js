@@ -2,6 +2,7 @@ import React from 'react'
 import Modal from 'react-responsive-modal'
 import { connect } from 'react-redux'
 
+// TODO: FIND A WAY TO FOCUS ON ADDING NEW ITEM INPUT
 const ModalView = ({ open, collectionColor, onClose, componentDisplay }) => {
   return (
     <Modal
