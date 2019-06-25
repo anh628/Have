@@ -9,27 +9,23 @@ import {
 class EditItem extends React.Component {
   state = {
     text: this.props.text,
-    original: this.props.text,
     isEditing: false
   }
 
-  handleEndEdit = cancel => {
-    if (cancel === true) {
-      this.setState({ text: this.state.original })
+  handleEndEdit = () => {
+    // if text exists, update the item's text
+    if (this.state.text !== null && this.state.text.trim()) {
+      editItem(
+        this.props.uid,
+        this.props.collectionId,
+        this.props.itemId,
+        this.state.text.trim()
+      )
     } else {
-      // if text exists, update the item's text
-      if (this.state.text !== null && this.state.text.trim()) {
-        editItem(
-          this.props.uid,
-          this.props.collectionId,
-          this.props.itemId,
-          this.state.text
-        )
-      } else {
-        // deletes item if text is null
-        this.handleDelete()
-      }
+      // deletes item if text is null
+      this.handleDelete()
     }
+
     this.setState({
       isEditing: false
     })
@@ -59,11 +55,8 @@ class EditItem extends React.Component {
   determines when to go to handleBlur
   */
   handleKeyDown = event => {
-    if (event.key === 'Escape') {
-      this.handleEndEdit(true)
-    }
     if (event.key === 'Enter') {
-      this.handleEndEdit(false)
+      this.handleEndEdit()
     }
   }
 
