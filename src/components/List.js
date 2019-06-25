@@ -33,7 +33,8 @@ export default compose(
   firestoreConnect(props => [
     {
       storeAs: 'itemCollections',
-      collection: `users/${props.uid}/itemCollections/`
+      collection: `users/${props.uid}/itemCollections/`,
+      orderBy: 'timeStamp'
     }
   ]),
   connect(
