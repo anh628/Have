@@ -9,6 +9,7 @@ import EditItem from './EditItem'
 import NewItem from './NewItem'
 import Footer from './Footer'
 import Emoji from './Emoji'
+import { orderBy } from 'lodash'
 
 class CollectionView extends React.Component {
   state = {
@@ -20,7 +21,10 @@ class CollectionView extends React.Component {
   }
 
   render () {
-    const itemKeys = this.props.items
+    const orderedItems = this.props.items
+      ? orderBy(this.props.items, 'timeStamp', 'desc')
+      : null
+    const itemKeys = orderedItems
       ? Object.keys(this.props.items).filter(
         key => this.props.items[key] !== null
       )
@@ -126,7 +130,17 @@ const mapStateToProps = (state, props) => {
 
 export default compose(
   firestoreConnect(props => [
-    `users/${props.uid}/itemCollections/${props.collectionId}/items/`
+    {
+      collection: 'users',
+      doc: props.uid,
+      subcollections: [
+        {
+          collection: 'itemCollections',
+          doc: props.collectionId,
+          subcollections: [{ collection: 'items', orderBy: 'timeStamp' }]
+        }
+      ]
+    }
   ]),
   connect(
     mapStateToProps,
