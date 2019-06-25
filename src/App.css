@@ -34,38 +34,45 @@
   }
 }
 
-/* TODO: CHANGE WIDTH to be the same size as list */
-div.footer-bar {
-  display: inline-flex;
+.footer-bar {
+  display: none;
   align-items: center;
   justify-content: center;
   width: 100%;
   background-color: rgb(71, 71, 72);
-  overflow: auto; /* Overflow due to float */
   border-bottom-left-radius: 5px;
   border-bottom-right-radius: 5px;
   max-height: 50px;
-  padding-top: 6px;
+  margin-top: 5px;
 }
 
-/* TODO: CHANGE WIDTH of footer buttons */
-div.footer-bar div.footer-button {
-  text-align: center; /* Center-align text */
-  color: white; /* White text color */
-  float: left; /* Float links side by side */
-  width: 20%; /* Equal width (5 icons with 20% width each = 100%) */
-  padding: 12px 0; /* Some top and bottom padding */
-  transition: all 0.3s ease; /* Add transition for hover effects */
-  color: white; /* White text color */
+.item-collection:hover .footer-bar {
+  display: inline-flex;
+}
+
+.item-collection:hover {
+  padding-bottom: 0px;
+}
+
+.footer-bar .footer-button {
+  text-align: center;
+  color: white;
+  float: left;
+  width: 20%;
+  padding: 12px 0;
+  color: white;
   overflow: hidden;
 }
 
-div.footer-bar div.footer-button:hover p.description {
+.footer-bar .footer-button:hover .description {
   display: block;
   -webkit-animation: fadeIn 1s;
   animation: fadeIn 1s;
   z-index: 1;
-  overflow: auto;
+  background-color: rgb(167, 164, 164);
+  border-radius: 5px;
+  font-size: 10px;
+  padding: 2px;
 }
 
 /* Add animation (fade in the popup) */
@@ -87,11 +94,7 @@ div.footer-bar div.footer-button:hover p.description {
   }
 }
 
-div.footer-bar div.footer-button p.description {
-  background-color: rgb(167, 164, 164);
-  border-radius: 5px;
-  font-size: 10px;
-  padding: 2px;
+div.footer-bar div.footer-button label.description {
   display: none;
 }
 
@@ -127,7 +130,7 @@ div.show {
   display: block;
 }
 
-div.item-collection {
+.item-collection {
   width: 30%;
   border: gray;
   background-color: black;
@@ -136,6 +139,7 @@ div.item-collection {
   border-radius: 10px;
   margin: 2px;
   vertical-align: top;
+  padding-bottom: 5px;
 }
 
 img {
@@ -149,13 +153,20 @@ img {
   margin: 8px 0;
   border-width: 2px;
   border-bottom-width: 2px;
-  /* border-top-width: 2px; */
   border-bottom-color: White;
   border-bottom-style: solid;
-  width: 100%;
 }
 
 .titleCollectionView {
+  top: 0px;
+  margin: 5px;
+  padding: 0px 2px 2px 3px;
+  border-width: 2px;
+  border: 5px solid #8a8585;
+  text-align: center;
+}
+
+.title {
   top: 0px;
   margin: 0px;
   padding: 0px 2px 2px 3px;
@@ -182,6 +193,13 @@ img {
   border-radius: 100%;
   background-color: #d2868d;
   border-width: 0px;
+  position: absolute;
+  right: 10px;
+  opacity: 0.1;
+}
+
+.deleteButton:hover {
+  opacity: 1;
 }
 
 .compeltedItem {
@@ -206,9 +224,28 @@ img {
   background-color: #282c34;
   color: white;
   margin-left: 10px;
+  width: 95%;
 }
 
 .addItem:focus {
+  border: 3px solid #555;
+}
+
+.addCollection {
+  padding: 12px 20px;
+  margin: 8px 0;
+  box-sizing: border-box;
+  border: 3px solid #ccc;
+  -webkit-transition: 0.5s;
+  transition: 0.5s;
+  outline: none;
+  background-color: #282c34;
+  color: white;
+  margin-left: 10px;
+  width: 95%;
+}
+
+.addCollection:focus {
   border: 3px solid #555;
 }
 
@@ -228,4 +265,43 @@ img {
 
 .coverart:hover .deleteImage {
   opacity: 1;
+}
+
+.item-row {
+  text-align: left;
+  padding-left: 5px;
+  position: relative;
+}
+
+.item-text {
+  position: absolute;
+  bottom: -15px;
+  left: 30px;
+}
+
+.titleCollectionView-editing {
+  margin: 5px;
+  box-sizing: border-box;
+  -webkit-transition: 0.5s;
+  transition: 0.5s;
+  outline: none;
+  background-color: #babdbf;
+  color: black;
+  margin-left: 10px;
+  width: 95%;
+  margin: 5px;
+  padding: 0px 2px 2px 3px;
+  border-width: 2px;
+  border: 5px solid #8a8585;
+  text-align: center;
+  font-size: 1em;
+  font-weight: bold;
+}
+
+#cv.footer-bar {
+  display: inline-flex;
+}
+
+#hide.item-collection {
+  display: none;
 }

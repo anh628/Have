@@ -26,7 +26,7 @@ class NewCollection extends React.Component {
     let title
     return (
       <div>
-        <h1 className='titleCollectionView'>HAVE</h1>
+        <h1 className='title'>HAVE</h1>
 
         <form
           onSubmit={e => {
@@ -47,7 +47,7 @@ class NewCollection extends React.Component {
             input.value = ''
           }}>
           <input
-            className='addItem'
+            className='addCollection'
             type='text'
             ref={node => (input = node)}
             autoFocus={true}
@@ -57,6 +57,7 @@ class NewCollection extends React.Component {
         <ModalView
           collectionColor={COLLECTION_COLOR}
           collectionId={this.state.collectionId}
+          onClose={() => this.props.toggleModalStatus(this.state.collectionId)}
           componentDisplay={
             <CollectionView
               uid={this.props.uid}

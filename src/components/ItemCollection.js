@@ -16,21 +16,24 @@ class ItemCollection extends React.Component {
       )
       : null
 
-    const itemsList = !isLoaded(this.props.items)
-      ? 'loading'
-      : isEmpty(this.props.items)
-        ? 'Item Collection list is empty'
-        : keys
-          ? keys.map(itemId => (
-            <Item
-              key={itemId}
-              uid={this.props.uid}
-              collectionId={this.props.collectionId}
-              itemId={this.props.itemId}
-              color={this.props.color}
-              {...this.props.items[itemId]} />
-          ))
-          : null
+    const itemsList = !isLoaded(this.props.items) ? (
+      'loading'
+    ) : isEmpty(this.props.items) ? (
+      <div
+        onClick={() => this.props.toggleModalStatus(this.props.collectionId)}>
+        Item Collection list is empty
+      </div>
+    ) : keys ? (
+      keys.map(itemId => (
+        <Item
+          key={itemId}
+          uid={this.props.uid}
+          collectionId={this.props.collectionId}
+          itemId={this.props.itemId}
+          collectionColor={this.props.collectionColor}
+          {...this.props.items[itemId]} />
+      ))
+    ) : null
 
     const displayImage = this.props.image ? (
       <img
@@ -50,12 +53,15 @@ class ItemCollection extends React.Component {
 
     return (
       <div
-        style={{ backgroundColor: this.props.collectionColor }}
+        style={{
+          backgroundColor: this.props.collectionColor
+        }}
+        id={this.props.open ? 'hide' : null}
         className='item-collection'>
         <div>
           {displayImage}
           <h2
-            className='item-collection-title'
+            className='titleCollectionView'
             onClick={() =>
               this.props.toggleModalStatus(this.props.collectionId)
             }>
@@ -72,6 +78,7 @@ class ItemCollection extends React.Component {
         <ModalView
           collectionId={this.props.collectionId}
           collectionColor={this.props.collectionColor}
+          onClose={() => this.props.toggleModalStatus(this.props.collectionId)}
           componentDisplay={
             <CollectionView
               uid={this.props.uid}
@@ -90,12 +97,15 @@ const mapStateToProps = (state, props) => {
     state.firestore.data.users[props.uid].itemCollections[props.collectionId] &&
     state.firestore.data.users[props.uid].itemCollections[props.collectionId]
       .items
+
+  const open =
+    state.modal.filter(modal => modal.modalId === props.collectionId) &&
+    state.modal.filter(modal => modal.modalId === props.collectionId)[0] &&
+    state.modal.filter(modal => modal.modalId === props.collectionId)[0].open
+
   return {
     items,
-    open:
-      state.modal.length > 0
-        ? state.modal.filter(modal => modal.modalId !== props.collectionId)
-        : false
+    open
   }
 }
 

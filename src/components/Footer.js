@@ -1,4 +1,5 @@
 import React from 'react'
+import { connect } from 'react-redux'
 import Emoji from './Emoji'
 import { uploadFile, deleteFile } from '../firebase/storageFunctions'
 import {
@@ -7,7 +8,7 @@ import {
   deleteAllCompleted,
   setAllItemsCompleteness
 } from '../firebase/collectionFunctions'
-
+import { toggleModalStatus } from '../actions/actionCreator'
 
 class Footer extends React.Component {
   state = {
@@ -44,7 +45,7 @@ class Footer extends React.Component {
             symbol='📷' // TODO change emoji later
             label='imageUploader'
             style={{ filter: 'grayscale(100%)' }} />
-          <p className='description'>Add image</p>
+          <label className='description'>Add image</label>
         </label>
       </div>
     )
@@ -59,7 +60,7 @@ class Footer extends React.Component {
     const moreButton = (
       <div className='footer-button' onClick={() => this.toggleShow()}>
         <Emoji symbol='⋮' label='more' className='dropdown' id='more' />
-        <p className='description'>More</p>
+        <label className='description'>More</label>
         <div
           className={`dropdown-content-more  ${
             this.state.showMenu ? 'show' : ''
@@ -125,18 +126,34 @@ class Footer extends React.Component {
     const changeColorButton = (
       <div className='footer-button'>
         <Emoji symbol='🎨' label='colorChanger' />
-        <p className='description'>Change color</p>
+        <label className='description'>Change color</label>
+      </div>
+    )
+
+    const doneButton = (
+      <div className='done'>
+        <label
+          onClick={() => this.props.toggleModalStatus(this.props.collectionId)}>
+          Done
+        </label>
       </div>
     )
 
     return (
-      <div className='footer-bar'>
+      <div className='footer-bar' id={this.props.collectionView ? 'cv' : null}>
         {changeColorButton}
         {imageButton}
         {moreButton}
+        {this.props.collectionView ? doneButton : null}
       </div>
     )
   }
 }
 
-export default Footer
+const mapDispatchToProps = {
+  toggleModalStatus
+}
+export default connect(
+  null,
+  mapDispatchToProps
+)(Footer)

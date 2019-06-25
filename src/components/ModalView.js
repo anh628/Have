@@ -1,15 +1,9 @@
 import React from 'react'
 import Modal from 'react-responsive-modal'
 import { connect } from 'react-redux'
-import { toggleModalStatus } from '../actions/actionCreator'
 
-const ModalView = ({
-  open,
-  collectionColor,
-  collectionId,
-  toggleModalStatus,
-  componentDisplay
-}) => {
+// TODO: FIND A WAY TO FOCUS ON ADDING NEW ITEM INPUT
+const ModalView = ({ open, collectionColor, onClose, componentDisplay }) => {
   return (
     <Modal
       closeOnOverlayClick
@@ -19,11 +13,14 @@ const ModalView = ({
       styles={{
         modal: {
           backgroundColor: collectionColor,
-          width: '400px'
+          width: '400px',
+          padding: '1px',
+          borderRadius: '5px'
         }
       }}
-      onClose={() => toggleModalStatus(collectionId)}
-      showCloseIcon>
+      onClose={onClose}
+      showCloseIcon={false}
+      focusTrapped={false}>
       {componentDisplay}
     </Modal>
   )
@@ -38,10 +35,7 @@ const mapStateToProps = (state, props) => {
   return { open: open || false }
 }
 
-const mapDispatchToProps = {
-  toggleModalStatus
-}
 export default connect(
   mapStateToProps,
-  mapDispatchToProps
+  null
 )(ModalView)
