@@ -16,21 +16,23 @@ class ItemCollection extends React.Component {
       )
       : null
 
-    const itemsList = !isLoaded(this.props.items)
-      ? 'loading'
-      : isEmpty(this.props.items)
-        ? 'Item Collection list is empty'
-        : keys
-          ? keys.map(itemId => (
-            <Item
-              key={itemId}
-              uid={this.props.uid}
-              collectionId={this.props.collectionId}
-              itemId={this.props.itemId}
-              collectionColor={this.props.collectionColor}
-              {...this.props.items[itemId]} />
-          ))
-          : null
+    const itemsList = !isLoaded(this.props.items) ? (
+      'loading'
+    ) : isEmpty(this.props.items) ? (
+      <p onClick={() => this.props.toggleModalStatus(this.props.collectionId)}>
+        Item Collection list is empty
+      </p>
+    ) : keys ? (
+      keys.map(itemId => (
+        <Item
+          key={itemId}
+          uid={this.props.uid}
+          collectionId={this.props.collectionId}
+          itemId={this.props.itemId}
+          collectionColor={this.props.collectionColor}
+          {...this.props.items[itemId]} />
+      ))
+    ) : null
 
     const displayImage = this.props.image ? (
       <img

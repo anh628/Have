@@ -20,6 +20,7 @@ class NewItem extends React.Component {
             className='addItem'
             type='text'
             ref={node => (input = node)}
+            placeholder='add new item'
             autoFocus={true} />
         </form>
       </div>
