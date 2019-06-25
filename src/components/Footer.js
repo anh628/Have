@@ -140,7 +140,7 @@ class Footer extends React.Component {
     )
 
     return (
-      <div className='footer-bar'>
+      <div className='footer-bar' id={this.props.collectionView ? 'cv' : null}>
         {changeColorButton}
         {imageButton}
         {moreButton}

@@ -297,3 +297,11 @@ img {
   font-size: 1em;
   font-weight: bold;
 }
+
+#cv.footer-bar {
+  display: inline-flex;
+}
+
+#hide.item-collection {
+  display: none;
+}

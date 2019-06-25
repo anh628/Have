@@ -53,7 +53,10 @@ class ItemCollection extends React.Component {
 
     return (
       <div
-        style={{ backgroundColor: this.props.collectionColor }}
+        style={{
+          backgroundColor: this.props.collectionColor
+        }}
+        id={this.props.open ? 'hide' : null}
         className='item-collection'>
         <div>
           {displayImage}
@@ -94,12 +97,15 @@ const mapStateToProps = (state, props) => {
     state.firestore.data.users[props.uid].itemCollections[props.collectionId] &&
     state.firestore.data.users[props.uid].itemCollections[props.collectionId]
       .items
+
+  const open =
+    state.modal.filter(modal => modal.modalId === props.collectionId) &&
+    state.modal.filter(modal => modal.modalId === props.collectionId)[0] &&
+    state.modal.filter(modal => modal.modalId === props.collectionId)[0].open
+
   return {
     items,
-    open:
-      state.modal.length > 0
-        ? state.modal.filter(modal => modal.modalId !== props.collectionId)
-        : false
+    open
   }
 }
 
