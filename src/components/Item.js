@@ -21,13 +21,14 @@ const Item = ({
         checked={isComplete}
         onChange={() => toggleItem(uid, collectionId, itemId)} />
     </label>
-    <label
+    <p
+      className='item-text'
       style={{
         textDecoration: isComplete ? 'line-through' : 'none'
       }}
       onClick={() => toggleModalStatus(collectionId)}>
       {text}
-    </label>
+    </p>
     <ModalView
       collectionId={collectionId}
       collectionColor={collectionColor}

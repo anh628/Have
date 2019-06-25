@@ -50,6 +50,10 @@
   display: inline-flex;
 }
 
+.item-collection:hover {
+  padding-bottom: 0px;
+}
+
 .footer-bar .footer-button {
   text-align: center;
   color: white;
@@ -126,7 +130,7 @@ div.show {
   display: block;
 }
 
-div.item-collection {
+.item-collection {
   width: 30%;
   border: gray;
   background-color: black;
@@ -135,6 +139,7 @@ div.item-collection {
   border-radius: 10px;
   margin: 2px;
   vertical-align: top;
+  padding-bottom: 5px;
 }
 
 img {
@@ -265,4 +270,11 @@ img {
 .item-row {
   text-align: left;
   padding-left: 5px;
+  position: relative;
+}
+
+.item-text {
+  position: absolute;
+  bottom: -15px;
+  left: 30px;
 }
