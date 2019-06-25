@@ -7,16 +7,29 @@ import {
 
 // props passed in: uid, collectionId, itemId, and all items associated props
 class EditItem extends React.Component {
-  constructor (props) {
-    super(props)
-
-    this.state = {
-      isEditing: false
-    }
+  state = {
+    text: this.props.text,
+    original: this.props.text,
+    isEditing: false
   }
 
-  // TODO: something somewhere to also handle what happen when we hit enter
-  handleEndEdit = () => {
+  handleEndEdit = cancel => {
+    if (cancel === true) {
+      this.setState({ text: this.state.original })
+    } else {
+      // if text exists, update the item's text
+      if (this.state.text !== null && this.state.text.trim()) {
+        editItem(
+          this.props.uid,
+          this.props.collectionId,
+          this.props.itemId,
+          this.state.text
+        )
+      } else {
+        // deletes item if text is null
+        this.handleDelete()
+      }
+    }
     this.setState({
       isEditing: false
     })
@@ -29,21 +42,29 @@ class EditItem extends React.Component {
   }
 
   handleChange = event => {
-    // editItem = (uid, collectionId, itemId, editedText)
-    editItem(
-      this.props.uid,
-      this.props.collectionId,
-      this.props.itemId,
-      event.currentTarget.value
-    )
+    this.setState({ text: event.currentTarget.value })
   }
 
   handleDelete = () => {
     deleteItem(this.props.uid, this.props.collectionId, this.props.itemId)
   }
 
+  // handles checking off item
   handleToggle = () => {
     toggleItem(this.props.uid, this.props.collectionId, this.props.itemId)
+  }
+
+  /*
+  function that listen to the keys being typed
+  determines when to go to handleBlur
+  */
+  handleKeyDown = event => {
+    if (event.key === 'Escape') {
+      this.handleEndEdit(true)
+    }
+    if (event.key === 'Enter') {
+      this.handleEndEdit(false)
+    }
   }
 
   render () {
@@ -53,7 +74,8 @@ class EditItem extends React.Component {
         onBlur={this.handleEndEdit}
         type='text'
         onChange={this.handleChange}
-        value={this.props.text}
+        onKeyDown={this.handleKeyDown}
+        value={this.state.text}
         autoFocus />
     )
     let itemDisplay = (
