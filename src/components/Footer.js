@@ -129,7 +129,7 @@ class Footer extends React.Component {
     )
 
     const doneButton = (
-      <div className='done'>
+      <div className='footer-button'>
         <label
           onClick={() => this.props.toggleModalStatus(this.props.collectionId)}>
           Done
