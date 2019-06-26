@@ -21,10 +21,7 @@ class CollectionView extends React.Component {
   }
 
   render () {
-    const orderedItems = this.props.items
-      ? orderBy(this.props.items, 'timeStamp', 'desc')
-      : null
-    const itemKeys = orderedItems
+    const itemKeys = this.props.items
       ? Object.keys(this.props.items).filter(
         key => this.props.items[key] !== null
       )
