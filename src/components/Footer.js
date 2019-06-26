@@ -1,6 +1,5 @@
 import React from 'react'
 import { connect } from 'react-redux'
-import Emoji from './Emoji'
 import { uploadFile, deleteFile } from '../firebase/storageFunctions'
 import {
   editImage,
@@ -58,7 +57,7 @@ class Footer extends React.Component {
 
     const moreButton = (
       <div className='footer-button' onClick={() => this.toggleShow()}>
-        <Emoji symbol='⋮' label='more' className='dropdown' id='more' />
+        <Icon type='menu' className='dropdown' id='more' />
         <label className='description'>More</label>
         <div
           className={`dropdown-content-more  ${
