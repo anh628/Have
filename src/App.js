@@ -12,7 +12,7 @@ const App = ({ open, modalId, toggleModalStatus, uid }) => {
   const displayModal = open ? (
     <ModalView
       collectionId={modalId}
-      onClose={() => toggleModalStatus(this.props.modalId)}
+      onClose={() => toggleModalStatus(modalId)}
       componentDisplay={<CollectionView uid={uid} collectionId={modalId} />} />
   ) : null
 

@@ -86,8 +86,15 @@ const mapStateToProps = (state, props) => {
     state.firestore.data.users[props.uid].itemCollections[props.collectionId] &&
     state.firestore.data.users[props.uid].itemCollections[props.collectionId]
       .items
+
+  const open =
+    state.modal.filter(modal => modal.modalId === props.collectionId) &&
+    state.modal.filter(modal => modal.modalId === props.collectionId)[0] &&
+    state.modal.filter(modal => modal.modalId === props.collectionId)[0].open
+
   return {
-    items
+    items,
+    open
   }
 }
 
