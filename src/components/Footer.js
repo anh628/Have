@@ -9,7 +9,7 @@ import {
   setAllItemsCompleteness
 } from '../firebase/collectionFunctions'
 import { toggleModalStatus } from '../actions/actionCreator'
-
+import { Icon } from 'antd'
 class Footer extends React.Component {
   state = {
     showMenu: false
@@ -31,6 +31,7 @@ class Footer extends React.Component {
             type='file'
             onChange={async () => {
               if (this.props.image) deleteFile(this.props.image)
+              editImage(this.props.uid, this.props.collectionId, 'loading')
               const imageUrl = await uploadFile(
                 collectionImageInputId,
                 this.props.uid,
@@ -40,11 +41,9 @@ class Footer extends React.Component {
             }}
             id={collectionImageInputId}
             name='files'
+            accept='image/*'
             style={{ display: 'none' }} />
-          <Emoji
-            symbol='📷' // TODO change emoji later
-            label='imageUploader'
-            style={{ filter: 'grayscale(100%)' }} />
+          <Icon type='picture' />
           <label className='description'>Add image</label>
         </label>
       </div>
@@ -125,7 +124,7 @@ class Footer extends React.Component {
   */
     const changeColorButton = (
       <div className='footer-button'>
-        <Emoji symbol='🎨' label='colorChanger' />
+        <Icon type='bg-colors' />
         <label className='description'>Change color</label>
       </div>
     )
