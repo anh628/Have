@@ -315,3 +315,11 @@ img {
   margin: 3px;
   text-align: center;
 }
+
+input[type='checkbox'] {
+  display: none;
+}
+
+i:focus {
+  outline: none;
+}

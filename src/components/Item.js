@@ -2,6 +2,7 @@ import React from 'react'
 import { toggleItem } from '../firebase/collectionFunctions'
 import { connect } from 'react-redux'
 import { toggleModalStatus } from '../actions/actionCreator'
+import { Icon } from 'antd'
 
 const Item = ({
   uid,
@@ -13,10 +14,17 @@ const Item = ({
 }) => (
   <div id='flex' className='item-row'>
     <label className={isComplete ? 'checkbox-completed' : 'checkbox'}>
-      <input
-        type='checkbox'
-        checked={isComplete}
-        onChange={() => toggleItem(uid, collectionId, itemId)} />
+      {isComplete ? (
+        <Icon
+          type='check-square'
+          onClick={() => toggleItem(uid, collectionId, itemId)}
+          style={{ paddingRight: '5px' }} />
+      ) : (
+        <Icon
+          type='border'
+          onClick={() => toggleItem(uid, collectionId, itemId)}
+          style={{ paddingRight: '5px' }} />
+      )}
     </label>
     <p
       className='item-text'

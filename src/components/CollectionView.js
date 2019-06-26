@@ -8,7 +8,6 @@ import EditCollectionTitle from './EditCollectionTitle'
 import EditItem from './EditItem'
 import NewItem from './NewItem'
 import Footer from './Footer'
-import Emoji from './Emoji'
 import { Icon } from 'antd'
 
 class CollectionView extends React.Component {
@@ -54,7 +53,7 @@ class CollectionView extends React.Component {
               deleteFile(this.props.image)
               deleteImage(this.props.uid, this.props.collectionId)
             }}>
-            <Emoji symbol='🗑' label='delete' />
+            <Icon type='delete' />
           </label>
         </div>
       )
