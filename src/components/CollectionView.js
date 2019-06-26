@@ -9,7 +9,6 @@ import EditItem from './EditItem'
 import NewItem from './NewItem'
 import Footer from './Footer'
 import Emoji from './Emoji'
-import { orderBy } from 'lodash'
 
 class CollectionView extends React.Component {
   state = {
