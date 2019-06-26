@@ -14,6 +14,7 @@ class NewItem extends React.Component {
     if (this.state.text && this.state.text.trim()) {
       addItem(this.props.uid, this.props.collectionId, this.state.text.trim())
     }
+    this.setState({ text: '' })
   }
 
   handleChange = event => {
@@ -40,7 +41,8 @@ class NewItem extends React.Component {
           value={this.state.text}
           onBlur={this.handleBlur}
           onChange={this.handleChange}
-          onKeyDown={this.handleKeyDown} />
+          onKeyDown={this.handleKeyDown}
+          tabIndex='100' />
       </div>
     )
   }
