@@ -20,7 +20,8 @@ const ModalView = ({ open, onClose, componentDisplay }) => {
       }}
       onClose={onClose}
       showCloseIcon={false}
-      focusTrapped={true}>
+      focusTrapped={true}
+      focusTrapOptions={{ returnFocusOnDeactivate: true }}>
       {componentDisplay}
     </Modal>
   )
