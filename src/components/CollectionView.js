@@ -76,7 +76,9 @@ class CollectionView extends React.Component {
       : null
 
     return (
-      <div style={{ backgroundColor: this.props.collectionColor }}>
+      <div
+        style={{ backgroundColor: this.props.collectionColor }}
+        className='collection-view'>
         {displayImage}
         {displayTitle}
         {editItem}

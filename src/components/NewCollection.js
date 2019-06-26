@@ -1,9 +1,7 @@
 import React from 'react'
 import { addCollection } from '../firebase/collectionFunctions'
 import { v4 } from 'node-uuid'
-import CollectionView from './CollectionView'
 import { COLLECTION_COLOR } from '../constants/constants'
-import ModalView from './ModalView'
 import { toggleModalStatus } from '../actions/actionCreator'
 import { connect } from 'react-redux'
 
@@ -27,7 +25,7 @@ class NewCollection extends React.Component {
     return (
       <div>
         <h1 className='title'>HAVE</h1>
-
+        <label className='descrip'>a collection of lists</label>
         <form
           onSubmit={e => {
             e.preventDefault()
@@ -51,26 +49,15 @@ class NewCollection extends React.Component {
             type='text'
             ref={node => (input = node)}
             autoFocus={true}
-            placeholder='add a collection title' />
+            placeholder='name your list' />
         </form>
-
-        <ModalView
-          collectionColor={COLLECTION_COLOR}
-          collectionId={this.state.collectionId}
-          onClose={() => this.props.toggleModalStatus(this.state.collectionId)}
-          componentDisplay={
-            <CollectionView
-              uid={this.props.uid}
-              collectionId={this.state.collectionId} />
-          } />
       </div>
     )
   }
 }
 
 const mapDispatchToProps = {
-  toggleModalStatus,
-  addCollection
+  toggleModalStatus
 }
 
 export default connect(
