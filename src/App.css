@@ -315,3 +315,14 @@ img {
   margin: 3px;
   text-align: center;
 }
+
+.colorCheckBoxes {
+  display: none;
+  position: absolute;
+  background-color: rgb(224, 221, 221);
+  min-width: 160px;
+  box-shadow: 2px 4px 7px 8px rgba(0, 0, 0, 0.3);
+  z-index: 1;
+  padding: 5px;
+  border-radius: 10px;
+}

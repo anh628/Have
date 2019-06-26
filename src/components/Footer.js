@@ -13,14 +13,7 @@ import Color from './Color'
 
 class Footer extends React.Component {
   state = {
-    showMenu: false,
-    isShowingColorPicker: false
-  }
-
-  ShowColorPicker = () => {
-    this.setState({
-      isShowingColorPicker: true
-    })
+    showMenu: false
   }
 
   toggleShow = () => {
@@ -133,13 +126,10 @@ class Footer extends React.Component {
   */
     const changeColorButton = (
       <div className='footer-button'>
-        {/* <Emoji symbol='🎨' label='colorChanger' /> */}
-        <span className='colorCheckBoxes'>
-          <Color
-            color={this.props.collectionColor}
-            uid={this.props.uid}
-            collectionId={this.props.collectionId} />
-        </span>
+        <Color
+          color={this.props.collectionColor}
+          uid={this.props.uid}
+          collectionId={this.props.collectionId} />
         <label className='description'>Change color</label>
       </div>
     )

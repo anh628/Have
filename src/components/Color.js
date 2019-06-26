@@ -2,6 +2,7 @@ import React from 'react'
 import reactCSS from 'reactcss'
 import { GithubPicker } from 'react-color'
 import { editColor } from '../firebase/collectionFunctions'
+import Emoji from './Emoji'
 
 class Color extends React.Component {
   state = {
@@ -19,7 +20,6 @@ class Color extends React.Component {
   }
 
   handleChange = color => {
-    console.log(`the color ${color.rgb}`)
     editColor(this.props.uid, this.props.collectionId, color)
   }
 
@@ -34,9 +34,8 @@ class Color extends React.Component {
         },
         swatch: {
           padding: '5px',
-          background: '#fff',
+          background: 'transparent',
           borderRadius: '1px',
-          boxShadow: '0 0 0 1px rgba(0,0,0,.1)',
           display: 'inline-block',
           cursor: 'pointer'
         },
@@ -57,7 +56,7 @@ class Color extends React.Component {
     return (
       <div className='colorPickerPosition'>
         <div style={styles.swatch} onClick={this.handleClick}>
-          <div style={styles.color} />
+          <Emoji symbol='🎨' label='colorChanger' />
         </div>
         {this.state.displayColorPicker ? (
           <div style={styles.popover}>
