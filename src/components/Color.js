@@ -21,7 +21,7 @@ class Color extends React.Component {
   }
 
   handleChange = color => {
-    editColor(this.props.uid, this.props.collectionId, color)
+    editColor(this.props.uid, this.props.collectionId, color.hex)
   }
 
   render () {
