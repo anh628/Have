@@ -3,7 +3,7 @@ import Modal from 'react-responsive-modal'
 import { connect } from 'react-redux'
 
 // TODO: FIND A WAY TO FOCUS ON ADDING NEW ITEM INPUT
-const ModalView = ({ open, collectionColor, onClose, componentDisplay }) => {
+const ModalView = ({ open, onClose, componentDisplay }) => {
   return (
     <Modal
       closeOnOverlayClick
@@ -20,7 +20,7 @@ const ModalView = ({ open, collectionColor, onClose, componentDisplay }) => {
       }}
       onClose={onClose}
       showCloseIcon={false}
-      focusTrapped={false}>
+      focusTrapped={true}>
       {componentDisplay}
     </Modal>
   )
