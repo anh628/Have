@@ -9,6 +9,7 @@ import EditItem from './EditItem'
 import NewItem from './NewItem'
 import Footer from './Footer'
 import Emoji from './Emoji'
+import { Icon } from 'antd'
 
 class CollectionView extends React.Component {
   state = {
@@ -39,17 +40,24 @@ class CollectionView extends React.Component {
       : null
 
     const displayImage = this.props.image ? (
-      <div className='coverart'>
-        <img src={this.props.image} alt='cover-art' />
-        <label
-          className='deleteImage'
-          onClick={() => {
-            deleteFile(this.props.image)
-            deleteImage(this.props.uid, this.props.collectionId)
-          }}>
-          <Emoji symbol='🗑' label='delete' />
-        </label>
-      </div>
+      // check to see if its loading
+      this.props.image === 'loading' ? (
+        <div className='coverart'>
+          <Icon type='ellipsis' spin />
+        </div>
+      ) : (
+        <div className='coverart'>
+          <img src={this.props.image} alt='cover-art' />
+          <label
+            className='deleteImage'
+            onClick={() => {
+              deleteFile(this.props.image)
+              deleteImage(this.props.uid, this.props.collectionId)
+            }}>
+            <Emoji symbol='🗑' label='delete' />
+          </label>
+        </div>
+      )
     ) : null
 
     const displayTitle = this.state.editTitleMode ? (
