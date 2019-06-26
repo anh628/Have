@@ -12,7 +12,7 @@ const ModalView = ({ open, collectionColor, onClose, componentDisplay }) => {
       open={open}
       styles={{
         modal: {
-          backgroundColor: collectionColor,
+          backgroundColor: 'transparent',
           width: '400px',
           padding: '1px',
           borderRadius: '5px'
@@ -28,7 +28,7 @@ const ModalView = ({ open, collectionColor, onClose, componentDisplay }) => {
 
 const mapStateToProps = (state, props) => {
   const open =
-    state.modal.filter(modal => modal.modalId === props.collectionId) &&
+    state.modal.filter(modal => modal.open === props.collectionId) &&
     state.modal.filter(modal => modal.modalId === props.collectionId)[0] &&
     state.modal.filter(modal => modal.modalId === props.collectionId)[0].open
 

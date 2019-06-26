@@ -3,8 +3,6 @@ import Item from './Item'
 import { connect } from 'react-redux'
 import { compose } from 'redux'
 import { firestoreConnect, isLoaded, isEmpty } from 'react-redux-firebase'
-import CollectionView from './CollectionView'
-import ModalView from './ModalView'
 import Footer from './Footer'
 import { toggleModalStatus } from '../actions/actionCreator'
 
@@ -75,15 +73,6 @@ class ItemCollection extends React.Component {
           areItems={!!this.props.items}
           uncheckedItems={uncheckedItems}
           checkItems={checkItems} />
-        <ModalView
-          collectionId={this.props.collectionId}
-          collectionColor={this.props.collectionColor}
-          onClose={() => this.props.toggleModalStatus(this.props.collectionId)}
-          componentDisplay={
-            <CollectionView
-              uid={this.props.uid}
-              collectionId={this.props.collectionId} />
-          } />
       </div>
     )
   }
@@ -97,15 +86,8 @@ const mapStateToProps = (state, props) => {
     state.firestore.data.users[props.uid].itemCollections[props.collectionId] &&
     state.firestore.data.users[props.uid].itemCollections[props.collectionId]
       .items
-
-  const open =
-    state.modal.filter(modal => modal.modalId === props.collectionId) &&
-    state.modal.filter(modal => modal.modalId === props.collectionId)[0] &&
-    state.modal.filter(modal => modal.modalId === props.collectionId)[0].open
-
   return {
-    items,
-    open
+    items
   }
 }
 

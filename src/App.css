@@ -315,3 +315,8 @@ img {
   position: relative;
   top: -13px;
 }
+
+.collection-view {
+  border-radius: 5px;
+  padding-top: 5px;
+}

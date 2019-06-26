@@ -1,5 +1,3 @@
-/* eslint-disable react/jsx-key */
-/* eslint-disable no-console */
 import React from 'react'
 import { connect } from 'react-redux'
 import { compose } from 'redux'
