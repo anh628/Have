@@ -19,7 +19,6 @@ class Color extends React.Component {
   }
 
   handleChange = color => {
-    console.log(`the color ${color.rgb}`)
     editColor(this.props.uid, this.props.collectionId, color)
   }
 
@@ -31,6 +30,8 @@ class Color extends React.Component {
           height: '15px',
           borderRadius: '1px',
           background: `${this.props.color}`
+          // I think ^ this should be this.props.color.hex to make sure the color picker box is the same color as the rest of the
+          // collection but if I do that, I get a TypeError: Cannot read property Hex of undefined
         },
         swatch: {
           padding: '5px',
