@@ -12,9 +12,8 @@
 
 .App-header {
   background-color: #282c34;
-  min-height: 50vh;
+  min-height: 35vh;
   display: flex;
-  flex-direction: column;
   align-items: center;
   justify-content: center;
   font-size: calc(10px + 2vmin);
@@ -158,19 +157,14 @@ img {
 }
 
 .titleCollectionView {
-  top: 0px;
   margin: 5px;
-  padding: 0px 2px 2px 3px;
-  border-width: 2px;
   border: 5px solid #8a8585;
   text-align: center;
 }
 
 .title {
-  top: 0px;
   margin: 0px;
   padding: 0px 2px 2px 3px;
-  border-width: 2px;
   width: 100%;
   border: 5px solid #8a8585;
 }
@@ -218,13 +212,14 @@ img {
   margin: 8px 0;
   box-sizing: border-box;
   border: 3px solid #ccc;
-  -webkit-transition: 0.5s;
   transition: 0.5s;
   outline: none;
   background-color: #282c34;
   color: white;
-  margin-left: 10px;
   width: 95%;
+  display: block;
+  margin-right: auto;
+  margin-left: auto;
 }
 
 .addItem:focus {
@@ -253,14 +248,16 @@ img {
   border-radius: 2px;
   bottom: 5px;
   display: block;
-  opacity: 0;
+  opacity: 0.5;
   position: absolute;
   transition: opacity 0.218s linear;
   right: 5px;
+  background-color: white; /* TODO: change color later */
 }
 
 .coverart {
   position: relative;
+  text-align: center;
 }
 
 .coverart:hover .deleteImage {
@@ -280,18 +277,13 @@ img {
 }
 
 .titleCollectionView-editing {
-  margin: 5px;
   box-sizing: border-box;
-  -webkit-transition: 0.5s;
   transition: 0.5s;
   outline: none;
   background-color: #babdbf;
   color: black;
-  margin-left: 10px;
   width: 95%;
-  margin: 5px;
   padding: 0px 2px 2px 3px;
-  border-width: 2px;
   border: 5px solid #8a8585;
   text-align: center;
   font-size: 1em;
@@ -304,4 +296,22 @@ img {
 
 #hide.item-collection {
   display: none;
+}
+
+.descrip {
+  text-align: center;
+  font-style: italic;
+  font-size: 10px;
+  position: relative;
+  top: -13px;
+}
+
+.collection-view {
+  border-radius: 5px;
+  padding-top: 5px;
+}
+
+.collection-view h1 {
+  margin: 3px;
+  text-align: center;
 }

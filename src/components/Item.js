@@ -1,7 +1,5 @@
 import React from 'react'
 import { toggleItem } from '../firebase/collectionFunctions'
-import ModalView from './ModalView'
-import CollectionView from './CollectionView'
 import { connect } from 'react-redux'
 import { toggleModalStatus } from '../actions/actionCreator'
 
@@ -11,7 +9,6 @@ const Item = ({
   itemId,
   text,
   isComplete,
-  collectionColor,
   toggleModalStatus
 }) => (
   <div id='flex' className='item-row'>
@@ -29,13 +26,6 @@ const Item = ({
       onClick={() => toggleModalStatus(collectionId)}>
       {text}
     </p>
-    <ModalView
-      collectionId={collectionId}
-      collectionColor={collectionColor}
-      onClose={() => toggleModalStatus(collectionId)}
-      componentDisplay={
-        <CollectionView uid={uid} collectionId={collectionId} />
-      } />
   </div>
 )
 

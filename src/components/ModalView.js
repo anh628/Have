@@ -3,7 +3,7 @@ import Modal from 'react-responsive-modal'
 import { connect } from 'react-redux'
 
 // TODO: FIND A WAY TO FOCUS ON ADDING NEW ITEM INPUT
-const ModalView = ({ open, collectionColor, onClose, componentDisplay }) => {
+const ModalView = ({ open, onClose, componentDisplay }) => {
   return (
     <Modal
       closeOnOverlayClick
@@ -12,7 +12,7 @@ const ModalView = ({ open, collectionColor, onClose, componentDisplay }) => {
       open={open}
       styles={{
         modal: {
-          backgroundColor: collectionColor.hex,
+          backgroundColor: 'transparent',
           width: '400px',
           padding: '1px',
           borderRadius: '5px'
@@ -20,7 +20,8 @@ const ModalView = ({ open, collectionColor, onClose, componentDisplay }) => {
       }}
       onClose={onClose}
       showCloseIcon={false}
-      focusTrapped={false}>
+      focusTrapped={true}
+      focusTrapOptions={{ returnFocusOnDeactivate: true }}>
       {componentDisplay}
     </Modal>
   )
@@ -28,7 +29,7 @@ const ModalView = ({ open, collectionColor, onClose, componentDisplay }) => {
 
 const mapStateToProps = (state, props) => {
   const open =
-    state.modal.filter(modal => modal.modalId === props.collectionId) &&
+    state.modal.filter(modal => modal.open === props.collectionId) &&
     state.modal.filter(modal => modal.modalId === props.collectionId)[0] &&
     state.modal.filter(modal => modal.modalId === props.collectionId)[0].open
 
