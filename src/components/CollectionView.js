@@ -126,7 +126,17 @@ const mapStateToProps = (state, props) => {
 
 export default compose(
   firestoreConnect(props => [
-    `users/${props.uid}/itemCollections/${props.collectionId}/items/`
+    {
+      collection: 'users',
+      doc: props.uid,
+      subcollections: [
+        {
+          collection: 'itemCollections',
+          doc: props.collectionId,
+          subcollections: [{ collection: 'items', orderBy: 'timeStamp' }]
+        }
+      ]
+    }
   ]),
   connect(
     mapStateToProps,

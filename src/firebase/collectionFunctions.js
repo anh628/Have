@@ -47,7 +47,8 @@ export const addItem = (uid, collectionId, text) => {
   const itemInfo = {
     itemId,
     text,
-    isComplete: false
+    isComplete: false,
+    timeStamp: firebase.firestore.FieldValue.serverTimestamp()
   }
 
   const itemRef = getItemRef(uid, collectionId, itemId)
