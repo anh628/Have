@@ -3,6 +3,7 @@ import reactCSS from 'reactcss'
 import { GithubPicker } from 'react-color'
 import { editColor } from '../firebase/collectionFunctions'
 import Emoji from './Emoji'
+import { COLOR_CHOICES } from '../constants/constants'
 
 class Color extends React.Component {
   state = {
@@ -31,8 +32,6 @@ class Color extends React.Component {
           height: '15px',
           borderRadius: '1px',
           background: `${this.props.color}`
-          // I think ^ this should be this.props.color.hex to make sure the color picker box is the same color as the rest of the
-          // collection but if I do that, I get a TypeError: Cannot read property Hex of undefined
         },
         swatch: {
           padding: '5px',
@@ -64,7 +63,7 @@ class Color extends React.Component {
           <div style={styles.popover}>
             <div style={styles.cover} onClick={this.handleClose} />
             <GithubPicker
-              colors={['#FACBCD', '#FBE0A8', '#CAE5C3', '#BCDBEC', '#FFFFFF']}
+              colors={COLOR_CHOICES}
               width='130px'
               color={this.props.collectionColor}
               onChange={this.handleChange} />
