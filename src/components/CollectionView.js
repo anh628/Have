@@ -83,6 +83,7 @@ class CollectionView extends React.Component {
         <NewItem collectionId={this.props.collectionId} uid={this.props.uid} />
         <Footer
           uid={this.props.uid}
+          collectionColor={this.props.collectionColor}
           collectionId={this.props.collectionId}
           areItems={!!this.props.items}
           uncheckedItems={uncheckedItems}

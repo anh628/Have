@@ -12,7 +12,7 @@ const ModalView = ({ open, collectionColor, onClose, componentDisplay }) => {
       open={open}
       styles={{
         modal: {
-          backgroundColor: collectionColor,
+          backgroundColor: collectionColor.hex,
           width: '400px',
           padding: '1px',
           borderRadius: '5px'

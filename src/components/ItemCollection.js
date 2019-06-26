@@ -54,7 +54,7 @@ class ItemCollection extends React.Component {
     return (
       <div
         style={{
-          backgroundColor: this.props.collectionColor
+          backgroundColor: this.props.collectionColor.hex
         }}
         id={this.props.open ? 'hide' : null}
         className='item-collection'>
