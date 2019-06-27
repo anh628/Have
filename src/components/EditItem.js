@@ -74,10 +74,17 @@ class EditItem extends React.Component {
     )
     let itemDisplay = (
       <div className='ItemCollectionView'>
-        <input
-          type='checkbox'
-          checked={this.props.isComplete}
-          onChange={this.handleToggle} />
+        {this.props.isComplete ? (
+          <Icon
+            type='check-square'
+            onClick={this.handleToggle}
+            style={{ paddingRight: '5px' }} />
+        ) : (
+          <Icon
+            type='border'
+            onClick={this.handleToggle}
+            style={{ paddingRight: '5px' }} />
+        )}
         <label
           onClick={this.handleBeginEdit}
           style={{
