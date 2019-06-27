@@ -145,6 +145,7 @@ div.show {
   margin: 8px;
   vertical-align: top;
   padding-bottom: 5px;
+  color: white;
   padding-top: 7px;
 }
 
@@ -161,6 +162,7 @@ img {
   border-bottom-width: 2px;
   border-bottom-color: White;
   border-bottom-style: solid;
+  position: relative;
 }
 
 .titleCollectionView {
@@ -168,12 +170,9 @@ img {
 }
 
 .deleteButton {
-  border-radius: 100%;
-  background-color: #d2868d;
-  border-width: 0px;
   position: absolute;
   right: 10px;
-  opacity: 0.9;
+  opacity: 0.4;
 }
 
 .deleteButton:hover {
@@ -296,4 +295,8 @@ i:focus {
 
 .done {
   color: white;
+}
+
+li {
+  list-style-type: none;
 }
