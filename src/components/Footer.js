@@ -9,6 +9,7 @@ import {
   setAllItemsCompleteness
 } from '../firebase/collectionFunctions'
 import { toggleModalStatus } from '../actions/actionCreator'
+import Color from './Color'
 
 class Footer extends React.Component {
   state = {
@@ -125,7 +126,10 @@ class Footer extends React.Component {
   */
     const changeColorButton = (
       <div className='footer-button'>
-        <Emoji symbol='🎨' label='colorChanger' />
+        <Color
+          color={this.props.collectionColor}
+          uid={this.props.uid}
+          collectionId={this.props.collectionId} />
         <label className='description'>Change color</label>
       </div>
     )
