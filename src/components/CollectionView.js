@@ -42,7 +42,7 @@ class CollectionView extends React.Component {
       // check to see if its loading
       this.props.image === 'loading' ? (
         <div className='coverart'>
-          <Icon type='ellipsis' spin />
+          <Icon type='loading' />
         </div>
       ) : (
         <div className='coverart'>
