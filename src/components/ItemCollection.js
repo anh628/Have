@@ -35,16 +35,18 @@ class ItemCollection extends React.Component {
     ) : null
 
     const displayImage = this.props.image ? (
-      this.props.image === 'loading' ? (
-        <div className='coverart'>
+      <div className='coverart'>
+        {this.props.image === 'loading' ? (
           <Icon type='loading' />
-        </div>
-      ) : (
-        <img
-          src={this.props.image}
-          alt='cover-art'
-          onClick={() => this.props.toggleModalStatus(this.props.collectionId)} />
-      )
+        ) : (
+          <img
+            src={this.props.image}
+            alt='cover-art'
+            onClick={() =>
+              this.props.toggleModalStatus(this.props.collectionId)
+            } />
+        )}
+      </div>
     ) : null
 
     const uncheckedItems = keys

@@ -39,24 +39,23 @@ class CollectionView extends React.Component {
       : null
 
     const displayImage = this.props.image ? (
-      // check to see if its loading
-      this.props.image === 'loading' ? (
-        <div className='coverart'>
+      <div className='coverart'>
+        {this.props.image === 'loading' ? (
           <Icon type='loading' />
-        </div>
-      ) : (
-        <div className='coverart'>
-          <img src={this.props.image} alt='cover-art' />
-          <label
-            className='deleteImage'
-            onClick={() => {
-              deleteFile(this.props.image)
-              deleteImage(this.props.uid, this.props.collectionId)
-            }}>
-            <Icon type='delete' />
-          </label>
-        </div>
-      )
+        ) : (
+          <div>
+            <img src={this.props.image} alt='cover-art' />
+            <label
+              className='deleteImage'
+              onClick={() => {
+                deleteFile(this.props.image)
+                deleteImage(this.props.uid, this.props.collectionId)
+              }}>
+              <Icon type='delete' />
+            </label>
+          </div>
+        )}
+      </div>
     ) : null
 
     const displayTitle = this.state.editTitleMode ? (
