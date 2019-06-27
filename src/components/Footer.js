@@ -72,7 +72,7 @@ class Footer extends React.Component {
             onClick={() =>
               deleteCollection(this.props.uid, this.props.collectionId)
             }>
-            Delete collection
+            Delete list
           </label>
           {/* Only display the rest of the options if there are items in the collection */}
           {this.props.areItems ? (

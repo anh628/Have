@@ -4,6 +4,7 @@ import {
   deleteItem,
   toggleItem
 } from '../firebase/collectionFunctions'
+import { Icon } from 'antd'
 
 // props passed in: uid, collectionId, itemId, and all items associated props
 class EditItem extends React.Component {
@@ -84,9 +85,9 @@ class EditItem extends React.Component {
           }}>
           {this.props.text}
         </label>
-        <button className='deleteButton' onClick={this.handleDelete}>
-          delete
-        </button>
+        <label className='deleteButton' onClick={this.handleDelete}>
+          <Icon type='delete' />
+        </label>
       </div>
     )
 
