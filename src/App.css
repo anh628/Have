@@ -142,9 +142,10 @@ div.show {
   border: gray;
   display: inline-block;
   border-radius: 10px;
-  margin: 2px;
+  margin: 4px;
   vertical-align: top;
   padding-bottom: 5px;
+  padding-top: 7px;
 }
 
 img {
@@ -199,7 +200,7 @@ img {
 }
 
 .addCollection {
-  margin: 8px 0;
+  padding: 4px 10px;
   box-sizing: border-box;
   border: 3px solid #ccc;
   -webkit-transition: 0.5s;
@@ -207,8 +208,9 @@ img {
   outline: none;
   background-color: #282c34;
   color: white;
-  margin-left: 10px;
-  width: 95%;
+  width: 90%;
+  font-size: 20px;
+  text-align: center;
 }
 
 .addCollection:focus {
@@ -272,7 +274,7 @@ img {
 .descrip {
   text-align: center;
   font-style: italic;
-  font-size: 10px;
+  font-size: 13px;
   position: relative;
   top: -13px;
 }
