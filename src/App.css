@@ -309,6 +309,7 @@ img {
 .collection-view {
   border-radius: 5px;
   padding-top: 5px;
+  color: white;
 }
 
 .collection-view h1 {
