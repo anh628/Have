@@ -9,6 +9,8 @@ import {
 } from '../firebase/collectionFunctions'
 import { toggleModalStatus } from '../actions/actionCreator'
 import { Icon } from 'antd'
+import Color from './Color'
+
 class Footer extends React.Component {
   state = {
     showMenu: false
@@ -123,7 +125,10 @@ class Footer extends React.Component {
   */
     const changeColorButton = (
       <div className='footer-button'>
-        <Icon type='bg-colors' />
+        <Color
+          color={this.props.collectionColor}
+          uid={this.props.uid}
+          collectionId={this.props.collectionId} />
         <label className='description'>Change color</label>
       </div>
     )

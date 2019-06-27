@@ -36,3 +36,11 @@ export const COLLECTION_COLOR = '#8a8c90'
 export const TOGGLE_MODAL_STATUS = 'TOGGLE_MODAL_STATUS'
 export const ADD_MODAL_ID = 'ADD_MODAL_ID'
 export const DELETE_MODAL_ID = 'DELETE_MODAL_ID'
+
+export const COLOR_CHOICES = [
+  '#0c2233',
+  '#2a2438',
+  '#352f44',
+  '#5c5470',
+  '#bcb9c4'
+]
