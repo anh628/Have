@@ -2,9 +2,8 @@ import React from 'react'
 import reactCSS from 'reactcss'
 import { GithubPicker } from 'react-color'
 import { editColor } from '../firebase/collectionFunctions'
-import Emoji from './Emoji'
 import { COLOR_CHOICES } from '../constants/constants'
-
+import { Icon } from 'antd'
 class Color extends React.Component {
   state = {
     displayColorPicker: false
@@ -57,7 +56,7 @@ class Color extends React.Component {
     return (
       <div className='colorPickerPosition'>
         <div style={styles.swatch} onClick={this.handleClick}>
-          <Emoji symbol='🎨' label='colorChanger' />
+          <Icon type='bg-colors' />
         </div>
         {this.state.displayColorPicker ? (
           <div style={styles.popover}>

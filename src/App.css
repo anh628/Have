@@ -34,6 +34,14 @@
     transform: rotate(360deg);
   }
 }
+.title {
+  margin: 0px;
+  padding: 0px 2px 2px 3px;
+  width: 100%;
+  border: 5px solid #8a8585;
+  color: white;
+  font-weight: bold;
+}
 
 .footer-bar {
   display: none;
@@ -191,7 +199,6 @@ img {
 }
 
 .addCollection {
-  padding: 12px 20px;
   margin: 8px 0;
   box-sizing: border-box;
   border: 3px solid #ccc;
