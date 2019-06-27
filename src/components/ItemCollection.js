@@ -5,6 +5,7 @@ import { compose } from 'redux'
 import { firestoreConnect, isLoaded, isEmpty } from 'react-redux-firebase'
 import Footer from './Footer'
 import { toggleModalStatus } from '../actions/actionCreator'
+import { Icon } from 'antd'
 
 class ItemCollection extends React.Component {
   render () {
@@ -34,10 +35,18 @@ class ItemCollection extends React.Component {
     ) : null
 
     const displayImage = this.props.image ? (
-      <img
-        src={this.props.image}
-        alt='cover-art'
-        onClick={() => this.props.toggleModalStatus(this.props.collectionId)} />
+      <div className='coverart'>
+        {this.props.image === 'loading' ? (
+          <Icon type='loading' />
+        ) : (
+          <img
+            src={this.props.image}
+            alt='cover-art'
+            onClick={() =>
+              this.props.toggleModalStatus(this.props.collectionId)
+            } />
+        )}
+      </div>
     ) : null
 
     const uncheckedItems = keys

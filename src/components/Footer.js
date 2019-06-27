@@ -1,6 +1,5 @@
 import React from 'react'
 import { connect } from 'react-redux'
-import Emoji from './Emoji'
 import { uploadFile, deleteFile } from '../firebase/storageFunctions'
 import {
   editImage,
@@ -9,6 +8,7 @@ import {
   setAllItemsCompleteness
 } from '../firebase/collectionFunctions'
 import { toggleModalStatus } from '../actions/actionCreator'
+import { Icon } from 'antd'
 import Color from './Color'
 
 class Footer extends React.Component {
@@ -32,6 +32,7 @@ class Footer extends React.Component {
             type='file'
             onChange={async () => {
               if (this.props.image) deleteFile(this.props.image)
+              editImage(this.props.uid, this.props.collectionId, 'loading')
               const imageUrl = await uploadFile(
                 collectionImageInputId,
                 this.props.uid,
@@ -41,11 +42,9 @@ class Footer extends React.Component {
             }}
             id={collectionImageInputId}
             name='files'
+            accept='image/*'
             style={{ display: 'none' }} />
-          <Emoji
-            symbol='📷' // TODO change emoji later
-            label='imageUploader'
-            style={{ filter: 'grayscale(100%)' }} />
+          <Icon type='picture' />
           <label className='description'>Add image</label>
         </label>
       </div>
@@ -60,7 +59,7 @@ class Footer extends React.Component {
 
     const moreButton = (
       <div className='footer-button' onClick={() => this.toggleShow()}>
-        <Emoji symbol='⋮' label='more' className='dropdown' id='more' />
+        <Icon type='menu' className='dropdown' id='more' />
         <label className='description'>More</label>
         <div
           className={`dropdown-content-more  ${
@@ -135,7 +134,7 @@ class Footer extends React.Component {
     )
 
     const doneButton = (
-      <div className='done'>
+      <div className='footer-button'>
         <label
           onClick={() => this.props.toggleModalStatus(this.props.collectionId)}>
           Done

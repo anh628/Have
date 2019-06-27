@@ -4,7 +4,7 @@ import {
   deleteItem,
   toggleItem
 } from '../firebase/collectionFunctions'
-
+import { Icon } from 'antd'
 // props passed in: uid, collectionId, itemId, and all items associated props
 class EditItem extends React.Component {
   state = {
@@ -73,10 +73,17 @@ class EditItem extends React.Component {
     )
     let itemDisplay = (
       <div className='ItemCollectionView'>
-        <input
-          type='checkbox'
-          checked={this.props.isComplete}
-          onChange={this.handleToggle} />
+        {this.props.isComplete ? (
+          <Icon
+            type='check-square'
+            onClick={this.handleToggle}
+            style={{ paddingRight: '5px' }} />
+        ) : (
+          <Icon
+            type='border'
+            onClick={this.handleToggle}
+            style={{ paddingRight: '5px' }} />
+        )}
         <label
           onClick={this.handleBeginEdit}
           style={{

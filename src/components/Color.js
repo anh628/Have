@@ -2,9 +2,8 @@ import React from 'react'
 import reactCSS from 'reactcss'
 import { GithubPicker } from 'react-color'
 import { editColor } from '../firebase/collectionFunctions'
-import Emoji from './Emoji'
 import { COLOR_CHOICES } from '../constants/constants'
-
+import { Icon } from 'antd'
 class Color extends React.Component {
   state = {
     displayColorPicker: false
@@ -33,13 +32,6 @@ class Color extends React.Component {
           borderRadius: '1px',
           background: `${this.props.color}`
         },
-        swatch: {
-          padding: '5px',
-          background: 'transparent',
-          borderRadius: '1px',
-          display: 'inline-block',
-          cursor: 'pointer'
-        },
         popover: {
           position: 'absolute',
           zIndex: '2'
@@ -55,16 +47,16 @@ class Color extends React.Component {
     })
 
     return (
-      <div className='colorPickerPosition'>
+      <div className='colorPickerPosition '>
         <div style={styles.swatch} onClick={this.handleClick}>
-          <Emoji symbol='🎨' label='colorChanger' />
+          <Icon type='bg-colors' />
         </div>
         {this.state.displayColorPicker ? (
           <div style={styles.popover}>
             <div style={styles.cover} onClick={this.handleClose} />
             <GithubPicker
               colors={COLOR_CHOICES}
-              width='130px'
+              width='140px'
               color={this.props.collectionColor}
               onChange={this.handleChange} />
           </div>
