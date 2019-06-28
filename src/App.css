@@ -68,7 +68,6 @@
   float: left;
   width: 20%;
   padding: 12px 0;
-  overflow: hidden;
 }
 
 .footer-bar .footer-button:hover .description {
@@ -76,7 +75,7 @@
   -webkit-animation: fadeIn 1s;
   animation: fadeIn 1s;
   z-index: 1;
-  background-color: rgb(167, 164, 164);
+  background-color: rgb(194, 190, 190);
   border-radius: 5px;
   font-size: 10px;
   padding: 2px;
@@ -220,11 +219,11 @@ img {
   border-radius: 2px;
   bottom: 5px;
   display: block;
-  opacity: 0.5;
+  opacity: 0.8;
   position: absolute;
   transition: opacity 0.218s linear;
   right: 5px;
-  background-color: white; /* TODO: change color later */
+  background-color: #555;
 }
 
 .coverart {
