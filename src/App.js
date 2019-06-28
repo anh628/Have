@@ -19,7 +19,6 @@ const App = ({ open, modalId, toggleModalStatus, uid, anon }) => {
 
   return (
     <div className='App'>
-<<<<<<< HEAD
       {uid ? (
         <div>
           <AuthenticationButton />
@@ -32,27 +31,6 @@ const App = ({ open, modalId, toggleModalStatus, uid, anon }) => {
       ) : (
         <Icon type='loading' />
       )}
-||||||| merged common ancestors
-      <AuthenticationButton />
-      <header className='App-header'>
-        <NewCollection uid={uid} />
-      </header>
-      <List uid={uid} />
-      {displayModal}
-=======
-      {uid ? (
-        <div>
-          <AuthenticationButton />
-          <header className='App-header'>
-            <NewCollection uid={uid} />
-          </header>
-          <List uid={uid} />
-          {displayModal}
-        </div>
-      ) : (
-        <Icon type='loading' />
-      )}
->>>>>>> dev1
     </div>
   )
 }
