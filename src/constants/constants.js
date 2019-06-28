@@ -32,7 +32,7 @@ export const LOG_IN = 'LOG_IN'
 export const LOG_OUT = 'LOG_OUT'
 
 // odd default color : #8a8c90
-export const COLLECTION_COLOR = '#0c2233'
+export const COLLECTION_COLOR = '#1b1f3a'
 
 export const TOGGLE_MODAL_STATUS = 'TOGGLE_MODAL_STATUS'
 export const ADD_MODAL_ID = 'ADD_MODAL_ID'
