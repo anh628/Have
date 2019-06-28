@@ -1,8 +1,10 @@
 /* @import '~antd/dist/antd.css'; */
 
 #root {
-  font-family: "Lucida Console", Monaco, monospace
+  font-family: 'Lucida Console', Monaco, monospace;
+  background-color: #131519;
 }
+
 .App {
   text-align: center;
   background-color: #131519;
@@ -45,7 +47,6 @@
   color: white;
   font-weight: 200;
   border-radius: 2px;
-
 }
 
 .footer-bar {
@@ -165,22 +166,20 @@ img {
   border-bottom-color: White;
   border-bottom-style: solid;
   position: relative;
-  overflow:hidden
-
+  overflow: hidden;
 }
 
 .titleCollectionView {
   border: 2px solid #8a8585;
   display: inline-block;
-      width: 95%;
-    margin-top: 2px;
-    border-radius: 2px;
+  width: 95%;
+  margin-top: 2px;
+  border-radius: 2px;
 }
 
 .deleteButton {
   float: right;
   opacity: 0.4;
-
 }
 
 .deleteButton:hover {
@@ -200,7 +199,7 @@ img {
   display: block;
   margin-right: auto;
   margin-left: auto;
-  border-radius: 2px
+  border-radius: 2px;
 }
 
 .addItem:focus {
@@ -217,9 +216,9 @@ img {
   background-color: #131519;
   color: white;
   width: 88%;
-  font-size: 20px;
+  font-size: 15px;
   text-align: center;
-  border-radius: 2px
+  border-radius: 2px;
 }
 
 .addCollection:focus {
@@ -270,7 +269,7 @@ img {
   text-align: center;
   font-size: 1em;
   font-weight: bold;
-    border-radius: 2px;
+  border-radius: 2px;
 }
 
 #cv.footer-bar {
@@ -296,8 +295,8 @@ img {
 
 .collection-view h1 {
   text-align: center;
-    display: inline-block;
-    width: 100%;
+  display: inline-block;
+  width: 100%;
 }
 
 i:focus {
@@ -308,19 +307,19 @@ i:focus {
   color: white;
 }
 
-.collection-list-item{
+.collection-list-item {
   overflow-wrap: break-word;
-    float:left;
-margin: 0px;
-    left: 40px;
-    width: 300px;
+  float: left;
+  margin: 0px;
+  left: 40px;
+  width: 300px;
 }
 
-#flex{
+#flex {
   display: flex;
   flex-direction: row;
   align-items: center;
 }
-#list-view.collection-list-item{
-width: 90%
+#list-view.collection-list-item {
+  width: 90%;
 }
