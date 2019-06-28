@@ -1,8 +1,13 @@
 /* @import '~antd/dist/antd.css'; */
 
+#root {
+  font-family: 'Lucida Console', Monaco, monospace;
+  background-color: #131519;
+}
+
 .App {
   text-align: center;
-  background-color: #282c34;
+  background-color: #131519;
   align-items: center;
 }
 
@@ -13,7 +18,7 @@
 }
 
 .App-header {
-  background-color: #282c34;
+  background-color: #131519;
   min-height: 35vh;
   display: flex;
   align-items: center;
@@ -38,9 +43,10 @@
   margin: 0px;
   padding: 0px 2px 2px 3px;
   width: 100%;
-  border: 5px solid #8a8585;
+  border: 3px solid #8a8585;
   color: white;
-  font-weight: bold;
+  font-weight: 200;
+  border-radius: 2px;
 }
 
 .footer-bar {
@@ -68,7 +74,6 @@
   float: left;
   width: 20%;
   padding: 12px 0;
-  overflow: hidden;
 }
 
 .footer-bar .footer-button:hover .description {
@@ -76,7 +81,7 @@
   -webkit-animation: fadeIn 1s;
   animation: fadeIn 1s;
   z-index: 1;
-  background-color: rgb(167, 164, 164);
+  background-color: rgb(194, 190, 190);
   border-radius: 5px;
   font-size: 10px;
   padding: 2px;
@@ -138,14 +143,14 @@ div.show {
 }
 
 .item-collection {
-  width: 30%;
+  width: 25%;
   border: gray;
   display: inline-block;
   border-radius: 10px;
   margin: 8px;
   vertical-align: top;
   padding-bottom: 5px;
-  padding-top: 7px;
+  color: white;
 }
 
 img {
@@ -156,24 +161,25 @@ img {
 
 .ItemCollectionView {
   padding: 12px 20px;
-  margin: 8px 0;
   border-width: 2px;
   border-bottom-width: 2px;
   border-bottom-color: White;
   border-bottom-style: solid;
+  position: relative;
+  overflow: hidden;
 }
 
 .titleCollectionView {
-  border: 5px solid #8a8585;
+  border: 2px solid #8a8585;
+  display: inline-block;
+  width: 95%;
+  margin-top: 2px;
+  border-radius: 2px;
 }
 
 .deleteButton {
-  border-radius: 100%;
-  background-color: #d2868d;
-  border-width: 0px;
-  position: absolute;
-  right: 10px;
-  opacity: 0.1;
+  float: right;
+  opacity: 0.4;
 }
 
 .deleteButton:hover {
@@ -184,7 +190,7 @@ img {
   padding: 12px 20px;
   margin: 8px 0;
   box-sizing: border-box;
-  border: 3px solid #ccc;
+  border: 2px solid #ccc;
   transition: 0.5s;
   outline: none;
   background-color: #282c34;
@@ -193,24 +199,26 @@ img {
   display: block;
   margin-right: auto;
   margin-left: auto;
+  border-radius: 2px;
 }
 
 .addItem:focus {
-  border: 3px solid #555;
+  border: 2px solid #555;
 }
 
 .addCollection {
   padding: 4px 10px;
   box-sizing: border-box;
-  border: 3px solid #ccc;
+  border: 2px solid #ccc;
   -webkit-transition: 0.5s;
   transition: 0.5s;
   outline: none;
-  background-color: #282c34;
+  background-color: #131519;
   color: white;
-  width: 90%;
-  font-size: 20px;
+  width: 88%;
+  font-size: 15px;
   text-align: center;
+  border-radius: 2px;
 }
 
 .addCollection:focus {
@@ -221,11 +229,11 @@ img {
   border-radius: 2px;
   bottom: 5px;
   display: block;
-  opacity: 0.5;
+  opacity: 0.8;
   position: absolute;
   transition: opacity 0.218s linear;
   right: 5px;
-  background-color: white; /* TODO: change color later */
+  background-color: #555;
 }
 
 .coverart {
@@ -253,14 +261,15 @@ img {
   box-sizing: border-box;
   transition: 0.5s;
   outline: none;
-  background-color: #babdbf;
+  background-color: #ebf1f5;
   color: black;
   width: 95%;
   padding: 0px 2px 2px 3px;
-  border: 5px solid #8a8585;
+  border: 2px solid #8a8585;
   text-align: center;
   font-size: 1em;
   font-weight: bold;
+  border-radius: 2px;
 }
 
 #cv.footer-bar {
@@ -273,7 +282,6 @@ img {
 
 .descrip {
   text-align: center;
-  font-style: italic;
   font-size: 13px;
   position: relative;
   top: -13px;
@@ -282,11 +290,13 @@ img {
 .collection-view {
   border-radius: 5px;
   padding-top: 5px;
+  color: white;
 }
 
 .collection-view h1 {
-  margin: 3px;
   text-align: center;
+  display: inline-block;
+  width: 100%;
 }
 
 i:focus {
@@ -295,4 +305,21 @@ i:focus {
 
 .done {
   color: white;
+}
+
+.collection-list-item {
+  overflow-wrap: break-word;
+  float: left;
+  margin: 0px;
+  left: 40px;
+  width: 300px;
+}
+
+#flex {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+}
+#list-view.collection-list-item {
+  width: 90%;
 }

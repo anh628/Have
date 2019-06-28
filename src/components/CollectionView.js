@@ -96,7 +96,8 @@ class CollectionView extends React.Component {
           areItems={!!this.props.items}
           uncheckedItems={uncheckedItems}
           checkItems={checkItems}
-          collectionView={true} />
+          collectionView={true} image={this.props.image}/>
+
       </div>
     )
   }
