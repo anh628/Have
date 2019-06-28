@@ -77,6 +77,7 @@ class ItemCollection extends React.Component {
           <div >{itemsList}</div>
         </div>
         <Footer
+          image={this.props.image}
           uid={this.props.uid}
           collectionId={this.props.collectionId}
           areItems={!!this.props.items}

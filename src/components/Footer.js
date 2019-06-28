@@ -45,7 +45,7 @@ class Footer extends React.Component {
             accept='image/*'
             style={{ display: 'none' }} />
           <Icon type='picture' />
-          <label className='description'>Add cover image</label>
+          <label className='description'>{`${this.props.image ? 'Change':'Add'} cover image`}</label>
         </label>
       </div>
     )
