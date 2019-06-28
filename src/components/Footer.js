@@ -45,7 +45,7 @@ class Footer extends React.Component {
             accept='image/*'
             style={{ display: 'none' }} />
           <Icon type='picture' />
-          <label className='description'>Add image</label>
+          <label className='description'>{`${this.props.image ? 'Change':'Add'} cover image`}</label>
         </label>
       </div>
     )
@@ -71,7 +71,7 @@ class Footer extends React.Component {
             onClick={() =>
               deleteCollection(this.props.uid, this.props.collectionId)
             }>
-            Delete collection
+            Delete list
           </label>
           {/* Only display the rest of the options if there are items in the collection */}
           {this.props.areItems ? (
@@ -129,7 +129,7 @@ class Footer extends React.Component {
           color={this.props.collectionColor}
           uid={this.props.uid}
           collectionId={this.props.collectionId} />
-        <label className='description'>Change color</label>
+        <label className='description'>Change list color</label>
       </div>
     )
 
