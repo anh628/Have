@@ -21,8 +21,13 @@ ReactDOM.render(
 // Learn more about service workers: https://bit.ly/CRA-PWA
 serviceWorker.unregister()
 
+// need to sign in anonymously so that guest can create lists without app crashing
 firebase.auth().onAuthStateChanged(user => {
   if (user) {
     store.dispatch(fetchCollectionIds(user.uid))
+  } else {
+    firebase.auth().signInAnonymously()
   }
 })
+
+firebase.auth().setPersistence(firebase.auth.Auth.Persistence.LOCAL)
