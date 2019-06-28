@@ -18,7 +18,7 @@ const List = ({ itemCollections, uid, anon }) => {
   // build list if itemCollections exist and are loaded.
   const itemCollectionList = !isLoaded(itemCollections)
     ? 'loading'
-    : isEmpty(itemCollections && anon)
+    : isEmpty(itemCollections) && anon
       ? info()
       : itemCollections.map(item => (
         <ItemCollection
