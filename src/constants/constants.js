@@ -39,9 +39,9 @@ export const ADD_MODAL_ID = 'ADD_MODAL_ID'
 export const DELETE_MODAL_ID = 'DELETE_MODAL_ID'
 
 export const COLOR_CHOICES = [
-  '#0c2233',
-  '#2a2438',
-  '#352f44',
-  '#5c5470',
+  '#1b1f3a',
+  '#53354a',
+  '#a64942',
+  '#ff7844',
   '#bcb9c4'
 ]
