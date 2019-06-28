@@ -5,20 +5,20 @@ import { firestoreConnect, isLoaded, isEmpty } from 'react-redux-firebase'
 import ItemCollection from './ItemCollection'
 import { message } from 'antd'
 
-const List = ({ itemCollections, uid }) => {
+const List = ({ itemCollections, uid, anon }) => {
   const info = () => {
     message.info('Log in to save your list', 5)
   }
 
   message.config({
-    top: 300,
+    top: 30,
     duration: 2,
     maxCount: 3
   })
   // build list if itemCollections exist and are loaded.
   const itemCollectionList = !isLoaded(itemCollections)
     ? 'loading'
-    : isEmpty(itemCollections)
+    : isEmpty(itemCollections) && anon
       ? info()
       : itemCollections.map(item => (
         <ItemCollection

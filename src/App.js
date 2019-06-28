@@ -9,7 +9,7 @@ import { toggleModalStatus } from './actions/actionCreator'
 import CollectionView from './components/CollectionView'
 import { Icon } from 'antd'
 
-const App = ({ open, modalId, toggleModalStatus, uid }) => {
+const App = ({ open, modalId, toggleModalStatus, uid, anon }) => {
   const displayModal = open ? (
     <ModalView
       collectionId={modalId}
@@ -25,7 +25,7 @@ const App = ({ open, modalId, toggleModalStatus, uid }) => {
           <header className='App-header'>
             <NewCollection uid={uid} />
           </header>
-          <List uid={uid} />
+          <List uid={uid} anon={anon} />
           {displayModal}
         </div>
       ) : (
