@@ -60,5 +60,6 @@
     "eslint-plugin-react": "^7.13.0",
     "eslint-plugin-standard": "^4.0.0",
     "less-loader": "^5.0.0"
-  }
+  },
+  "homepage": "https://roxy0928.gitlab.io/have"
 }
