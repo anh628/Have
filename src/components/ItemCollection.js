@@ -74,7 +74,7 @@ class ItemCollection extends React.Component {
             }>
             {this.props.title}
           </h2>
-          <div>{itemsList}</div>
+          <div >{itemsList}</div>
         </div>
         <Footer
           uid={this.props.uid}

@@ -73,7 +73,7 @@ class EditItem extends React.Component {
         autoFocus />
     )
     let itemDisplay = (
-      <div className='ItemCollectionView'>
+      <div className='ItemCollectionView' id='flex'>
         {this.props.isComplete ? (
           <Icon
             type='check-square'
@@ -85,13 +85,14 @@ class EditItem extends React.Component {
             onClick={this.handleToggle}
             style={{ paddingRight: '5px' }} />
         )}
-        <label
+        <p
+          className='collection-list-item'
           onClick={this.handleBeginEdit}
           style={{
             textDecoration: this.props.isComplete ? 'line-through' : 'none'
           }}>
           {this.props.text}
-        </label>
+        </p>
         <label className='deleteButton' onClick={this.handleDelete}>
           <Icon type='delete' />
         </label>

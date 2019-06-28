@@ -27,7 +27,8 @@ const Item = ({
       )}
     </label>
     <p
-      className='item-text'
+      id="list-view"
+      className='collection-list-item'
       style={{
         textDecoration: isComplete ? 'line-through' : 'none'
       }}
