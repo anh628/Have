@@ -4,19 +4,29 @@ import {
   deleteItem,
   toggleItem
 } from '../firebase/collectionFunctions'
+import { Icon } from 'antd'
 
 // props passed in: uid, collectionId, itemId, and all items associated props
 class EditItem extends React.Component {
-  constructor (props) {
-    super(props)
-
-    this.state = {
-      isEditing: false
-    }
+  state = {
+    text: this.props.text,
+    isEditing: false
   }
 
-  // TODO: something somewhere to also handle what happen when we hit enter
   handleEndEdit = () => {
+    // if text exists, update the item's text
+    if (this.state.text !== null && this.state.text.trim()) {
+      editItem(
+        this.props.uid,
+        this.props.collectionId,
+        this.props.itemId,
+        this.state.text.trim()
+      )
+    } else {
+      // deletes item if text is null
+      this.handleDelete()
+    }
+
     this.setState({
       isEditing: false
     })
@@ -29,48 +39,63 @@ class EditItem extends React.Component {
   }
 
   handleChange = event => {
-    // editItem = (uid, collectionId, itemId, editedText)
-    editItem(
-      this.props.uid,
-      this.props.collectionId,
-      this.props.itemId,
-      event.currentTarget.value
-    )
+    this.setState({ text: event.currentTarget.value })
   }
 
   handleDelete = () => {
     deleteItem(this.props.uid, this.props.collectionId, this.props.itemId)
   }
 
+  // handles checking off item
   handleToggle = () => {
     toggleItem(this.props.uid, this.props.collectionId, this.props.itemId)
   }
 
+  /*
+  function that listen to the keys being typed
+  determines when to go to handleBlur
+  */
+  handleKeyDown = event => {
+    if (event.key === 'Enter') {
+      this.handleEndEdit()
+    }
+  }
+
   render () {
     let editableItem = (
-      <div>
-        <input
-          className='addItem'
-          onBlur={this.handleEndEdit}
-          type='text'
-          onChange={this.handleChange}
-          value={this.props.text}
-          autoFocus />{' '}
-      </div>
+      <input
+        className='addItem'
+        onBlur={this.handleEndEdit}
+        type='text'
+        onChange={this.handleChange}
+        onKeyDown={this.handleKeyDown}
+        value={this.state.text}
+        autoFocus />
     )
     let itemDisplay = (
-      <div className='ItemCollectionView'>
-        <input
-          type='checkbox'
-          checked={this.props.isComplete}
-          onChange={this.handleToggle} />
-        <span onClick={this.handleBeginEdit}> {this.props.text} </span>
-        {/* TODO: for way later, trash can? */}
-        <button className='deleteButton' onClick={this.handleDelete}>
-          {' '}
-          delete{' '}
-        </button>
-        {/* still have to fix the delete button here so the buttons go away when needed  */}
+      <div className='ItemCollectionView' id='flex'>
+        {this.props.isComplete ? (
+          <Icon
+            type='check-square'
+            onClick={this.handleToggle}
+            style={{ paddingRight: '5px' }} />
+        ) : (
+          <Icon
+            type='border'
+            onClick={this.handleToggle}
+            style={{ paddingRight: '5px' }} />
+        )}
+        <p
+          className='collection-list-item'
+          onClick={this.handleBeginEdit}
+          style={{
+            textDecoration: this.props.isComplete ? 'line-through' : 'none'
+          }}>
+          {this.props.text}
+        </p>
+        <label className='deleteButton' onClick={this.handleDelete}>
+          <Icon type='delete' />
+        </label>
       </div>
     )
 

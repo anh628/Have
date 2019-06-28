@@ -1,12 +1,15 @@
 import React from 'react'
-import Emoji from './Emoji'
-import { uploadFile } from '../firebase/storageFunctions'
+import { connect } from 'react-redux'
+import { uploadFile, deleteFile } from '../firebase/storageFunctions'
 import {
   editImage,
   deleteCollection,
   deleteAllCompleted,
   setAllItemsCompleteness
 } from '../firebase/collectionFunctions'
+import { toggleModalStatus } from '../actions/actionCreator'
+import { Icon } from 'antd'
+import Color from './Color'
 
 class Footer extends React.Component {
   state = {
@@ -18,7 +21,9 @@ class Footer extends React.Component {
   }
 
   render () {
-    const collectionImageInputId = `${this.props.collectionId}-image`
+    const collectionImageInputId = this.props.collectionView
+      ? `${this.props.collectionId}-imageCV`
+      : `${this.props.collectionId}-image`
 
     const imageButton = (
       <div className='footer-button'>
@@ -26,6 +31,8 @@ class Footer extends React.Component {
           <input
             type='file'
             onChange={async () => {
+              if (this.props.image) deleteFile(this.props.image)
+              editImage(this.props.uid, this.props.collectionId, 'loading')
               const imageUrl = await uploadFile(
                 collectionImageInputId,
                 this.props.uid,
@@ -35,12 +42,10 @@ class Footer extends React.Component {
             }}
             id={collectionImageInputId}
             name='files'
+            accept='image/*'
             style={{ display: 'none' }} />
-          <Emoji
-            symbol='📷' // TODO change emoji later
-            label='imageUploader'
-            style={{ filter: 'grayscale(100%)' }} />
-          <p className='description'>Add image</p>
+          <Icon type='picture' />
+          <label className='description'>{`${this.props.image ? 'Change':'Add'} cover image`}</label>
         </label>
       </div>
     )
@@ -54,8 +59,8 @@ class Footer extends React.Component {
 
     const moreButton = (
       <div className='footer-button' onClick={() => this.toggleShow()}>
-        <Emoji symbol='⋮' label='more' className='dropdown' id='more' />
-        <p className='description'>More</p>
+        <Icon type='menu' className='dropdown' id='more' />
+        <label className='description'>More</label>
         <div
           className={`dropdown-content-more  ${
             this.state.showMenu ? 'show' : ''
@@ -66,7 +71,7 @@ class Footer extends React.Component {
             onClick={() =>
               deleteCollection(this.props.uid, this.props.collectionId)
             }>
-            Delete collection
+            Delete list
           </label>
           {/* Only display the rest of the options if there are items in the collection */}
           {this.props.areItems ? (
@@ -120,19 +125,38 @@ class Footer extends React.Component {
   */
     const changeColorButton = (
       <div className='footer-button'>
-        <Emoji symbol='🎨' label='colorChanger' />
-        <p className='description'>Change color</p>
+        <Color
+          color={this.props.collectionColor}
+          uid={this.props.uid}
+          collectionId={this.props.collectionId} />
+        <label className='description'>Change list color</label>
+      </div>
+    )
+
+    const doneButton = (
+      <div className='footer-button'>
+        <label
+          onClick={() => this.props.toggleModalStatus(this.props.collectionId)}>
+          Done
+        </label>
       </div>
     )
 
     return (
-      <div className='footer-bar'>
+      <div className='footer-bar' id={this.props.collectionView ? 'cv' : null}>
         {changeColorButton}
         {imageButton}
         {moreButton}
+        {this.props.collectionView ? doneButton : null}
       </div>
     )
   }
 }
 
-export default Footer
+const mapDispatchToProps = {
+  toggleModalStatus
+}
+export default connect(
+  null,
+  mapDispatchToProps
+)(Footer)

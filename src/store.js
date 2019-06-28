@@ -30,8 +30,3 @@ export const store = createStoreWithFirebase(
   //  composeEnhancers(applyMiddleware(thunk)) // <- for redux dev tools
   composeWithDevTools(middleware)
 )
-
-// Listen for auth ready (promise available on store thanks to attachAuthIsReady: true config option)
-store.firebaseAuthIsReady.then(() => {
-  console.log('Auth has loaded') // eslint-disable-line no-console
-})

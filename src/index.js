@@ -6,6 +6,8 @@ import { store } from './store'
 // import PropPrint from './components/DummyPropsPrinter/PropPrint'
 import App from './App'
 import { Provider } from 'react-redux'
+import { firebase } from './firebase/firebase'
+import { fetchCollectionIds } from './firebase/collectionFunctions'
 
 ReactDOM.render(
   <Provider store={store}>
@@ -18,3 +20,14 @@ ReactDOM.render(
 // unregister() to register() below. Note this comes with some pitfalls.
 // Learn more about service workers: https://bit.ly/CRA-PWA
 serviceWorker.unregister()
+
+// need to sign in anonymously so that guest can create lists without app crashing
+firebase.auth().onAuthStateChanged(user => {
+  if (user) {
+    store.dispatch(fetchCollectionIds(user.uid))
+  } else {
+    firebase.auth().signInAnonymously()
+  }
+})
+
+firebase.auth().setPersistence(firebase.auth.Auth.Persistence.LOCAL)

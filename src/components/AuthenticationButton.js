@@ -2,18 +2,9 @@ import React from 'react'
 import PropTypes from 'prop-types'
 import { connect } from 'react-redux'
 import { compose } from 'redux'
-import { withFirebase, isLoaded, isEmpty } from 'react-redux-firebase'
-// import GoogleButton from 'react-google-button' // optional
+import { withFirebase, isLoaded } from 'react-redux-firebase'
 
-/*
-if using the google button instead
- https://developers.google.com/identity/branding-guidelines
- guideline for using google's login button
- (can't use image on it's own and have to be either white or blue backgorund)
- */
-// http://react-redux-firebase.com/docs/recipes/auth.html
-
-function AuthenticationButton ({ firebase, auth }) {
+function AuthenticationButton ({ firebase, auth, isAnonymous }) {
   function loginWithGoogle () {
     return firebase.login({ provider: 'google', type: 'popup' })
   }
@@ -24,8 +15,7 @@ function AuthenticationButton ({ firebase, auth }) {
     <div>
       {!isLoaded(auth) ? (
         <span>Loading...</span>
-      ) : isEmpty(auth) ? (
-        // <GoogleButton/> button can be used instead
+      ) : isAnonymous ? (
         <button onClick={loginWithGoogle}>Login With Google</button>
       ) : (
         <div>
@@ -50,7 +40,8 @@ export default compose(
   withFirebase,
   connect(state => {
     return {
-      auth: state.firebase.auth // auth passed as props.auth
+      auth: state.firebase.auth, // auth passed as props.auth
+      isAnonymous: state.firebase.auth.isAnonymous
     }
   })
 )(AuthenticationButton)

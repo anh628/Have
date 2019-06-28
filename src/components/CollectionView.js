@@ -1,44 +1,106 @@
-/* eslint-disable standard/computed-property-even-spacing */
 import { firestoreConnect } from 'react-redux-firebase'
 import { compose } from 'redux'
 import { connect } from 'react-redux'
 import React from 'react'
+import { deleteImage } from '../firebase/collectionFunctions'
+import { deleteFile } from '../firebase/storageFunctions'
+import EditCollectionTitle from './EditCollectionTitle'
 import EditItem from './EditItem'
 import NewItem from './NewItem'
 import Footer from './Footer'
-import { changeEditCollectionFlag } from '../actions/actionCreators'
+import { Icon } from 'antd'
 
-// TODO: edit collection title here
-const CollectionView = ({
-  uid,
-  collectionId,
-  changeEditCollectionFlag,
-  title,
-  items,
-  collectionColor
-}) => {
-  const itemKeys = items ? Object.keys(items) : null
-  const editItem = items
-    ? itemKeys.map(itemId => (
-      <EditItem
-        key={itemId}
-        collectionId={collectionId}
-        itemId={itemId}
-        {...items[itemId]}
-        uid={uid} />
-    ))
-    : null
-  return (
-    <div style={{ backgroundColor: collectionColor }}>
-      <h1 className='titleCollectionViewBlur'>HAVE</h1>
-      <h1 className='titleCollectionView'>{title}</h1>
-      {editItem}
-      <NewItem collectionId={collectionId} uid={uid} />
-      {/* TODO: DOUBLE CHECK THIS */}
-      {/* <label onClick={() => changeEditCollectionFlag(collectionId)}>Done</label> */}
-      {items ? <Footer uid={uid} collectionId={collectionId} /> : null}
-    </div>
-  )
+class CollectionView extends React.Component {
+  state = {
+    editTitleMode: false
+  }
+
+  toggleEditTitleMode = () => {
+    this.setState({ editTitleMode: !this.state.editTitleMode })
+  }
+
+  render () {
+    const itemKeys = this.props.items
+      ? Object.keys(this.props.items).filter(
+        key => this.props.items[key] !== null
+      )
+      : null
+
+    // list of all items in the collection
+    const editItem = this.props.items
+      ? itemKeys.map(itemId => (
+        <EditItem
+          key={itemId}
+          collectionId={this.props.collectionId}
+          itemId={itemId}
+          {...this.props.items[itemId]}
+          uid={this.props.uid} />
+      ))
+      : null
+
+    const displayImage = this.props.image ? (
+      <div className='coverart'>
+        {this.props.image === 'loading' ? (
+          <Icon type='loading' />
+        ) : (
+          <div>
+            <img src={this.props.image} alt='cover-art' />
+            <label
+              className='deleteImage'
+              onClick={() => {
+                deleteFile(this.props.image)
+                deleteImage(this.props.uid, this.props.collectionId)
+              }}>
+              <Icon type='delete' />
+            </label>
+          </div>
+        )}
+      </div>
+    ) : null
+
+    const displayTitle = this.state.editTitleMode ? (
+      <EditCollectionTitle
+        toggleEditTitleMode={this.toggleEditTitleMode}
+        title={this.props.title}
+        uid={this.props.uid}
+        collectionId={this.props.collectionId} />
+    ) : (
+      <h1
+        className='titleCollectionView'
+        onClick={() => this.toggleEditTitleMode()}>
+        {this.props.title}
+      </h1>
+    )
+
+    const uncheckedItems = itemKeys
+      ? itemKeys.filter(itemId => this.props.items[itemId].isComplete === false)
+        .length > 0
+      : null
+    const checkItems = itemKeys
+      ? itemKeys.filter(itemId => this.props.items[itemId].isComplete === true)
+        .length > 0
+      : null
+
+    return (
+      <div
+        style={{ backgroundColor: this.props.collectionColor }}
+        className='collection-view'>
+        {displayImage}
+        {displayTitle}
+        {editItem}
+        <NewItem collectionId={this.props.collectionId} uid={this.props.uid} />
+        <Footer
+          uid={this.props.uid}
+          collectionColor={this.props.collectionColor}
+          collectionId={this.props.collectionId}
+          areItems={!!this.props.items}
+          uncheckedItems={uncheckedItems}
+          checkItems={checkItems}
+          collectionView={true}
+          image={this.props.image} />
+      </div>
+    )
+  }
 }
 const mapStateToProps = (state, props) => {
   const items =
@@ -53,21 +115,41 @@ const mapStateToProps = (state, props) => {
     state.firestore.data.itemCollections &&
     state.firestore.data.itemCollections[props.collectionId] &&
     state.firestore.data.itemCollections[props.collectionId].collectionColor
+
+  const image =
+    state.firestore.data.itemCollections &&
+    state.firestore.data.itemCollections[props.collectionId] &&
+    state.firestore.data.itemCollections[props.collectionId].image
+
+  const title =
+    state.firestore.data.itemCollections &&
+    state.firestore.data.itemCollections[props.collectionId] &&
+    state.firestore.data.itemCollections[props.collectionId].title
+
   return {
     items,
-    collectionColor
+    collectionColor,
+    image,
+    title
   }
 }
 
-const mapDispatchToProps = {
-  changeEditCollectionFlag
-}
 export default compose(
   firestoreConnect(props => [
-    `users/${props.uid}/itemCollections/${props.collectionId}/items/`
+    {
+      collection: 'users',
+      doc: props.uid,
+      subcollections: [
+        {
+          collection: 'itemCollections',
+          doc: props.collectionId,
+          subcollections: [{ collection: 'items', orderBy: 'timeStamp' }]
+        }
+      ]
+    }
   ]),
   connect(
     mapStateToProps,
-    mapDispatchToProps
+    null
   )
 )(CollectionView)

@@ -1,6 +1,6 @@
-import { usersCollectionRef, db } from './firebase'
+import { usersCollectionRef, db, firebase } from './firebase'
 import { v4 } from 'node-uuid'
-import { _addCollection, _deleteCollection } from '../actions/actionCreators'
+import { addModalId, deleteModalId } from '../actions/actionCreator'
 
 const getItemCollectionRef = (uid, collectionId) => {
   return usersCollectionRef.doc(`${uid}/itemCollections/${collectionId}`)
@@ -11,13 +11,14 @@ const getItemRef = (uid, collectionId, itemId) => {
   )
 }
 
-// this is now a thunk and not a regular function! because of the dispatching thing
+// because modal id will be collection id
 export const addCollection = (uid, collectionId, title, collectionColor) => {
   const collectionInfo = {
     title,
-    collaborators: [],
+    // collaborators: [], add back in when we do collaborators
     collectionColor,
-    image: null
+    image: null,
+    timeStamp: firebase.firestore.FieldValue.serverTimestamp()
   }
 
   const itemCollectionRef = getItemCollectionRef(uid, collectionId)
@@ -26,9 +27,6 @@ export const addCollection = (uid, collectionId, title, collectionColor) => {
     .catch(error => console.log(error))
 }
 
-/*
-TODO: get dispatch to work
-*/
 export const deleteCollection = (uid, collectionId) => {
   const collectionRef = getItemCollectionRef(uid, collectionId)
   return collectionRef.delete().catch(error => console.log(error))
@@ -49,7 +47,8 @@ export const addItem = (uid, collectionId, text) => {
   const itemInfo = {
     itemId,
     text,
-    isComplete: false
+    isComplete: false,
+    timeStamp: firebase.firestore.FieldValue.serverTimestamp()
   }
 
   const itemRef = getItemRef(uid, collectionId, itemId)
@@ -139,7 +138,7 @@ export const setAllItemsCompleteness = (
 // add and edit color are basically the same thing since we already have a default set to null
 export const editColor = (uid, collectionId, collectionColor) => {
   const itemCollectionRef = getItemCollectionRef(uid, collectionId)
-
+  console.log('editing color')
   return itemCollectionRef
     .update({ collectionColor })
     .catch(error => console.log(error))
@@ -167,3 +166,21 @@ export const removeCollaborator = (uid, collectionId, collabUID) => {
     .catch(error => console.log(error))
 }
 */
+
+export const fetchCollectionIds = uid => dispatch => {
+  return usersCollectionRef
+    .doc(uid)
+    .collection('itemCollections')
+    .onSnapshot(querySnapshot => {
+      querySnapshot.docChanges().forEach(change => {
+        const collectionId = change.doc.id
+
+        if (change.type === 'added') {
+          dispatch(addModalId(collectionId))
+        }
+        if (change.type === 'removed') {
+          dispatch(deleteModalId(collectionId))
+        }
+      })
+    })
+}
