@@ -11,7 +11,7 @@ const List = ({ itemCollections, uid, anon }) => {
   }
 
   message.config({
-    top: 300,
+    top: 30,
     duration: 2,
     maxCount: 3
   })
