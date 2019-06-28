@@ -5,6 +5,7 @@ import rootReducer from './reducers/rootReducer'
 import { createStore, applyMiddleware, compose } from 'redux'
 import thunk from 'redux-thunk'
 import { composeWithDevTools } from 'redux-devtools-extension'
+import logger from 'redux-logger'
 
 // const composeEnhancers = window.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__ || compose
 
@@ -21,7 +22,7 @@ const createStoreWithFirebase = compose(
 )(createStore)
 
 // logger prints to the console
-const middleware = applyMiddleware(thunk)
+const middleware = applyMiddleware(thunk, logger)
 // Add reactReduxFirebase enhancer when making store creator
 export const store = createStoreWithFirebase(
   rootReducer,
@@ -29,8 +30,3 @@ export const store = createStoreWithFirebase(
   //  composeEnhancers(applyMiddleware(thunk)) // <- for redux dev tools
   composeWithDevTools(middleware)
 )
-
-// Listen for auth ready (promise available on store thanks to attachAuthIsReady: true config option)
-store.firebaseAuthIsReady.then(() => {
-  console.log('Auth has loaded') // eslint-disable-line no-console
-})

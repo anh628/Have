@@ -81,10 +81,11 @@
   -webkit-animation: fadeIn 1s;
   animation: fadeIn 1s;
   z-index: 1;
-  background-color: rgb(194, 190, 190);
+  background-color: rgb(243, 239, 239);
   border-radius: 5px;
   font-size: 10px;
   padding: 2px;
+  color: black;
 }
 
 /* Add animation (fade in the popup) */

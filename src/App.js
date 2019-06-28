@@ -7,6 +7,7 @@ import List from './components/List'
 import ModalView from './components/ModalView'
 import { toggleModalStatus } from './actions/actionCreator'
 import CollectionView from './components/CollectionView'
+import { Icon } from 'antd'
 
 const App = ({ open, modalId, toggleModalStatus, uid }) => {
   const displayModal = open ? (
@@ -18,12 +19,18 @@ const App = ({ open, modalId, toggleModalStatus, uid }) => {
 
   return (
     <div className='App'>
-      <AuthenticationButton />
-      <header className='App-header'>
-        <NewCollection uid={uid} />
-      </header>
-      <List uid={uid} />
-      {displayModal}
+      {uid ? (
+        <div>
+          <AuthenticationButton />
+          <header className='App-header'>
+            <NewCollection uid={uid} />
+          </header>
+          <List uid={uid} />
+          {displayModal}
+        </div>
+      ) : (
+        <Icon type='loading' />
+      )}
     </div>
   )
 }
@@ -42,7 +49,8 @@ const mapStateToProps = state => {
   return {
     open: open || false,
     uid: state.firebase.auth.uid,
-    modalId: modalId || null
+    modalId: modalId || null,
+    anon: state.firebase.auth.isAnonymous
   }
 }
 
