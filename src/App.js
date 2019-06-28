@@ -8,6 +8,7 @@ import ModalView from './components/ModalView'
 import { toggleModalStatus } from './actions/actionCreator'
 import CollectionView from './components/CollectionView'
 import { Icon } from 'antd'
+
 const App = ({ open, modalId, toggleModalStatus, uid }) => {
   const displayModal = open ? (
     <ModalView
@@ -48,7 +49,8 @@ const mapStateToProps = state => {
   return {
     open: open || false,
     uid: state.firebase.auth.uid,
-    modalId: modalId || null
+    modalId: modalId || null,
+    anon: state.firebase.auth.isAnonymous
   }
 }
 

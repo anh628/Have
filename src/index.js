@@ -8,17 +8,6 @@ import App from './App'
 import { Provider } from 'react-redux'
 import { firebase } from './firebase/firebase'
 import { fetchCollectionIds } from './firebase/collectionFunctions'
-import { message } from 'antd'
-
-const info = () => {
-  message.info('Log in to save your list', 5)
-}
-
-message.config({
-  top: 300,
-  duration: 2,
-  maxCount: 3
-})
 
 ReactDOM.render(
   <Provider store={store}>
@@ -36,10 +25,8 @@ serviceWorker.unregister()
 firebase.auth().onAuthStateChanged(user => {
   if (user) {
     store.dispatch(fetchCollectionIds(user.uid))
-    if (user.isAnonymous) info()
   } else {
     firebase.auth().signInAnonymously()
-    info()
   }
 })
 

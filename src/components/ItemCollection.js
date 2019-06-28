@@ -20,7 +20,7 @@ class ItemCollection extends React.Component {
     ) : isEmpty(this.props.items) ? (
       <div
         onClick={() => this.props.toggleModalStatus(this.props.collectionId)}>
-        Item Collection list is empty
+        Click to add to the list
       </div>
     ) : keys ? (
       keys.map(itemId => (
