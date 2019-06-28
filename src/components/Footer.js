@@ -45,7 +45,7 @@ class Footer extends React.Component {
             accept='image/*'
             style={{ display: 'none' }} />
           <Icon type='picture' />
-          <label className='description'>Add image</label>
+          <label className='description'>Add cover image</label>
         </label>
       </div>
     )
@@ -129,7 +129,7 @@ class Footer extends React.Component {
           color={this.props.collectionColor}
           uid={this.props.uid}
           collectionId={this.props.collectionId} />
-        <label className='description'>Change color</label>
+        <label className='description'>Change list color</label>
       </div>
     )
 
