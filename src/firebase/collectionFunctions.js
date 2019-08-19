@@ -2,10 +2,10 @@ import { usersCollectionRef, db, firebase } from './firebase'
 import { v4 } from 'node-uuid'
 import { addModalId, deleteModalId } from '../actions/actionCreator'
 
-const getItemCollectionRef = (uid, collectionId) => {
+export const getItemCollectionRef = (uid, collectionId) => {
   return usersCollectionRef.doc(`${uid}/itemCollections/${collectionId}`)
 }
-const getItemRef = (uid, collectionId, itemId) => {
+export const getItemRef = (uid, collectionId, itemId) => {
   return usersCollectionRef.doc(
     `${uid}/itemCollections/${collectionId}/items/${itemId}`
   )

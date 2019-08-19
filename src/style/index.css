@@ -339,3 +339,19 @@ i:focus {
 #list-view.collection-list-item {
   width: 90%;
 }
+
+.authentication {
+  position: absolute;
+  top: 20px;
+  right: 20px;
+  cursor: pointer;
+}
+
+.logout {
+  display: none;
+}
+.logout-visible {
+  position: absolute;
+  top: 36px;
+  right: 0;
+}
