@@ -1,17 +1,19 @@
 import React from 'react'
 import ReactDOM from 'react-dom'
-import './index.css'
-import * as serviceWorker from './serviceWorker'
-import { store } from './store'
-// import PropPrint from './components/DummyPropsPrinter/PropPrint'
-import App from './App'
 import { Provider } from 'react-redux'
+import { ReactReduxFirebaseProvider } from 'react-redux-firebase'
 import { firebase } from './firebase/firebase'
 import { fetchCollectionIds } from './firebase/collectionFunctions'
+import App from './App'
+import { store, rrfProps } from './store/store'
+import * as serviceWorker from './serviceWorker'
+import './style/index.css'
 
 ReactDOM.render(
   <Provider store={store}>
-    <App />
+    <ReactReduxFirebaseProvider {...rrfProps}>
+      <App />
+    </ReactReduxFirebaseProvider>
   </Provider>,
   document.getElementById('root')
 )

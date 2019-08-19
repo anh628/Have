@@ -1,4 +1,3 @@
-import './App.css'
 import { connect } from 'react-redux'
 import AuthenticationButton from './components/AuthenticationButton'
 import NewCollection from './components/NewCollection'
