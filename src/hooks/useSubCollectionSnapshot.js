@@ -1,5 +1,5 @@
 import { useState, useEffect, useReducer } from 'react'
-import { getItemCollectionRef } from '../firebase/firebase'
+import { usersCollectionRef } from '../firebase/firebase'
 
 // TODO double check how you get the error
 // grab list of a single collection's items
@@ -15,21 +15,26 @@ const useSubCollectionSnapshot = (uid, collectionId) => {
         return items
       case 'modified':
         return items.map(item =>
-          item.id === action.id ? { ...action.listInfo } : item
+          item.itemId === action.itemId ? { ...action.listInfo } : item
         )
       case 'removed':
-        return items.filter(item => item.id !== action.listInfo.id)
+        return items.filter(item => item.itemId !== action.listInfo.itemId)
       default:
     }
   }, [])
 
   useEffect(() => {
     if (uid) {
-      const listener = getItemCollectionRef(uid, collectionId)
+      const listener = usersCollectionRef
+        .doc(uid)
+        .collection('itemCollections')
+        .doc(collectionId)
+        .collection('items')
         .orderBy('timeStamp')
         .onSnapshot(querySnapshot => {
           querySnapshot.docChanges().forEach(change => {
             const listInfo = { ...change.doc.data() }
+
             if (change.type === 'added') {
               dispatch({ type: 'added', listInfo })
             }
@@ -48,7 +53,7 @@ const useSubCollectionSnapshot = (uid, collectionId) => {
         listener()
       }
     }
-  }, [collectionId])
+  }, [uid, collectionId])
 
   return [list, loading]
 }

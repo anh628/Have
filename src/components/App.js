@@ -9,16 +9,24 @@ import CollectionView from './CollectionView'
 import { Icon } from 'antd'
 import { firebase } from '../firebase/firebase'
 import useAuthState from '../hooks/useAuthState'
+import useCollectionSnapshot from '../hooks/useCollectionSnapshot'
 
 const App = ({ open, modalId, toggleModalStatus }) => {
   const [user] = useAuthState(firebase.auth())
   const { uid, isAnonymous } = user
 
+  const [collectionList, loading] = useCollectionSnapshot(uid)
+
   const displayModal = open ? (
     <ModalView
       collectionId={modalId}
       onClose={() => toggleModalStatus(modalId)}
-      componentDisplay={<CollectionView uid={uid} collectionId={modalId} />} />
+      componentDisplay={
+        <CollectionView
+          uid={uid}
+          collectionId={modalId}
+          {...collectionList.filter(list => list.id === modalId)[0]} />
+      } />
   ) : null
 
   return (

@@ -1,150 +1,105 @@
-import { firestoreConnect } from 'react-redux-firebase'
-import { compose } from 'redux'
-import { connect } from 'react-redux'
 import React, { useState } from 'react'
+import { Icon } from 'antd'
 import { deleteImage } from '../firebase/collectionFunctions'
 import { deleteFile } from '../firebase/storageFunctions'
 import EditCollectionTitle from './EditCollectionTitle'
 import EditItem from './EditItem'
 import NewItem from './NewItem'
 import Footer from './Footer'
-import { Icon } from 'antd'
-import useCollectionSnapshot from '../hooks/useCollectionSnapshot'
+import useSubCollectionSnapshot from '../hooks/useSubCollectionSnapshot'
 
-const CollectionView = ({ collectionId, uid }) => {
-  const [collectionInfo, loading] = useCollectionSnapshot(uid)
+const CollectionView = ({
+  uid,
+  id: collectionId,
+  collectionColor,
+  image,
+  title
+}) => {
   const [editTitle, toggleEditTitle] = useState(false)
 
-  const itemKeys = this.props.items
-    ? Object.keys(this.props.items).filter(
-      key => this.props.items[key] !== null
-    )
-    : null
-
-  // list of all items in the collection
-  const editItem = this.props.items
-    ? itemKeys.map(itemId => (
+  const [items, loading] = useSubCollectionSnapshot(uid, collectionId)
+  console.log(items)
+  const listItem =
+    items &&
+    items.map(item => (
       <EditItem
-        key={itemId}
-        collectionId={this.props.collectionId}
-        itemId={itemId}
-        {...this.props.items[itemId]}
-        uid={this.props.uid} />
+        key={item.itemId}
+        uid={uid}
+        collectionId={collectionId}
+        {...item} />
     ))
-    : null
 
-  const displayImage = this.props.image ? (
+  const displayImage = image && (
     <div className='coverart'>
-      {this.props.image === 'loading' ? (
+      {image === 'loading' ? ( // TODO: figure out this
         <Icon type='loading' />
       ) : (
         <div>
-          <img src={this.props.image} alt='cover-art' />
+          <img src={image} alt='cover-art' />
           <label
             className='deleteImage'
             onClick={() => {
-              deleteFile(this.props.image)
-              deleteImage(this.props.uid, this.props.collectionId)
+              deleteFile(image)
+              deleteImage(uid, collectionId)
             }}>
             <Icon type='delete' />
           </label>
         </div>
       )}
     </div>
-  ) : null
+  )
 
-  const displayTitle = this.state.editTitleMode ? (
+  const displayTitle = editTitle ? (
     <EditCollectionTitle
-      toggleEditTitleMode={this.toggleEditTitleMode}
-      title={this.props.title}
-      uid={this.props.uid}
-      collectionId={this.props.collectionId} />
+      uid={uid}
+      collectionId={collectionId}
+      title={title}
+      toggleEditTitle={toggleEditTitle} />
   ) : (
-    <h1
-      className='titleCollectionView'
-      onClick={() => this.toggleEditTitleMode()}>
-      {this.props.title}
+    <h1 className='titleCollectionView' onClick={toggleEditTitle(true)}>
+      {title}
     </h1>
   )
 
-  const uncheckedItems = itemKeys
-    ? itemKeys.filter(itemId => this.props.items[itemId].isComplete === false)
-      .length > 0
+  const uncheckedItems = items
+    ? items.filter(item => !item.isComplete).length > 0
     : null
-  const checkItems = itemKeys
-    ? itemKeys.filter(itemId => this.props.items[itemId].isComplete === true)
-      .length > 0
+  const checkItems = items
+    ? items.filter(item => item.isComplete).length > 0
     : null
 
   return (
     <div
-      style={{ backgroundColor: this.props.collectionColor }}
+      style={{ backgroundColor: collectionColor, paddingBottom: '10px' }}
       className='collection-view'>
       {displayImage}
       {displayTitle}
-      {editItem}
-      <NewItem collectionId={this.props.collectionId} uid={this.props.uid} />
+
+      {loading ? (
+        <Icon
+          type='loading'
+          style={{
+            fontSize: '20px',
+            position: 'absolute',
+            left: '50%',
+            top: '30%'
+          }} />
+      ) : (
+        listItem
+      )}
+      {/* TODO adding new item is getting modified instead of adding??? */}
+      <NewItem collectionId={collectionId} uid={uid} />
       <Footer
-        uid={this.props.uid}
-        collectionColor={this.props.collectionColor}
-        collectionId={this.props.collectionId}
-        areItems={!!this.props.items}
+        uid={uid}
+        collectionColor={collectionColor}
+        collectionId={collectionId}
+        areItems={!!items}
         uncheckedItems={uncheckedItems}
         checkItems={checkItems}
         collectionView={true}
-        image={this.props.image} />
+        image={image} />
     </div>
   )
 }
 
-const mapStateToProps = (state, props) => {
-  const items =
-    state.firestore.data.users &&
-    state.firestore.data.users[props.uid] &&
-    state.firestore.data.users[props.uid].itemCollections &&
-    state.firestore.data.users[props.uid].itemCollections[props.collectionId] &&
-    state.firestore.data.users[props.uid].itemCollections[props.collectionId]
-      .items
-
-  const collectionColor =
-    state.firestore.data.itemCollections &&
-    state.firestore.data.itemCollections[props.collectionId] &&
-    state.firestore.data.itemCollections[props.collectionId].collectionColor
-
-  const image =
-    state.firestore.data.itemCollections &&
-    state.firestore.data.itemCollections[props.collectionId] &&
-    state.firestore.data.itemCollections[props.collectionId].image
-
-  const title =
-    state.firestore.data.itemCollections &&
-    state.firestore.data.itemCollections[props.collectionId] &&
-    state.firestore.data.itemCollections[props.collectionId].title
-
-  return {
-    items,
-    collectionColor,
-    image,
-    title
-  }
-}
-
-export default compose(
-  firestoreConnect(props => [
-    {
-      collection: 'users',
-      doc: props.uid,
-      subcollections: [
-        {
-          collection: 'itemCollections',
-          doc: props.collectionId,
-          subcollections: [{ collection: 'items', orderBy: 'timeStamp' }]
-        }
-      ]
-    }
-  ]),
-  connect(
-    mapStateToProps,
-    null
-  )
-)(CollectionView)
+export default CollectionView
