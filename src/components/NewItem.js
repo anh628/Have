@@ -1,51 +1,37 @@
-import React from 'react'
+import React, { useState } from 'react'
 import { addItem } from '../firebase/collectionFunctions'
 
-// props passed in: uid, collectionId
-class NewItem extends React.Component {
-  state = {
-    text: ''
+const NewItem = ({ uid, collectionId }) => {
+  const [text, updateText] = useState('')
+
+  const handleBlur = () => {
+    const item = text.trim()
+    if (item) addItem(uid, collectionId, item)
+    updateText('')
   }
 
-  /*
-  function for when you leave the add new item bar
-  */
-  handleBlur = () => {
-    if (this.state.text && this.state.text.trim()) {
-      addItem(this.props.uid, this.props.collectionId, this.state.text.trim())
-    }
-    this.setState({ text: '' })
+  const handleChange = e => {
+    updateText(e.currentTarget.value)
   }
 
-  handleChange = event => {
-    this.setState({ text: event.currentTarget.value })
+  const handleKeyDown = e => {
+    if (e.key === 'Enter') handleBlur()
   }
 
-  /*
-  function that listen to the keys being typed
-  determines when to go to handleBlur
-  */
-  handleKeyDown = event => {
-    if (event.key === 'Enter') {
-      this.handleBlur()
-    }
-  }
-  render () {
-    return (
-      <div>
-        <input
-          className='addItem'
-          type='text'
-          placeholder='add new item'
-          autoFocus={true}
-          value={this.state.text}
-          onBlur={this.handleBlur}
-          onChange={this.handleChange}
-          onKeyDown={this.handleKeyDown}
-          tabIndex='100' />
-      </div>
-    )
-  }
+  return (
+    <div>
+      <input
+        className='addItem'
+        type='text'
+        placeholder='add new item'
+        value={text}
+        onBlur={handleBlur}
+        onChange={handleChange}
+        onKeyDown={handleKeyDown}
+        tabIndex='100'
+        autoFocus />
+    </div>
+  )
 }
 
 export default NewItem
