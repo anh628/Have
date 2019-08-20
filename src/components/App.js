@@ -6,7 +6,7 @@ import List from './List'
 import ModalView from './ModalView'
 import { toggleModalStatus } from '../actions/actionCreator'
 import CollectionView from './CollectionView'
-import { Icon } from 'antd'
+import { Spin } from 'antd'
 import { firebase } from '../firebase/firebase'
 import useAuthState from '../hooks/useAuthState'
 import useCollectionSnapshot from '../hooks/useCollectionSnapshot'
@@ -35,11 +35,22 @@ const App = ({ open, modalId, toggleModalStatus }) => {
         <div>
           <AuthenticationButton />
           <NewCollection uid={uid} />
-          <List uid={uid} anon={isAnonymous} />
+          {loading ? (
+            <Spin size='large' />
+          ) : (
+            <List uid={uid} anon={isAnonymous} />
+          )}
           {displayModal}
         </div>
       ) : (
-        <Icon type='loading' />
+        <Spin
+          size='large'
+          style={{
+            fontSize: '20px',
+            position: 'absolute',
+            left: '50%',
+            top: '30%'
+          }} />
       )}
     </div>
   )

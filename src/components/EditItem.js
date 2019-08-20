@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { useState } from 'react'
 import {
   editItem,
   deleteItem,
@@ -6,104 +6,66 @@ import {
 } from '../firebase/collectionFunctions'
 import { Icon } from 'antd'
 
-// props passed in: uid, collectionId, itemId, and all items associated props
-class EditItem extends React.Component {
-  state = {
-    text: this.props.text,
-    isEditing: false
-  }
+// Display items in the modal view (single collection)
+const EditItem = ({ uid, collectionId, itemId, text, isComplete }) => {
+  const [newText, updateText] = useState(text)
+  const [isEditing, toggleEdit] = useState(false)
 
-  handleEndEdit = () => {
-    // if text exists, update the item's text
-    if (this.state.text !== null && this.state.text.trim()) {
-      editItem(
-        this.props.uid,
-        this.props.collectionId,
-        this.props.itemId,
-        this.state.text.trim()
-      )
+  const handleBlur = () => {
+    updateText(newText.trim())
+    if (newText) {
+      editItem(uid, collectionId, itemId, newText)
     } else {
-      // deletes item if text is null
-      this.handleDelete()
+      deleteItem(uid, collectionId, itemId)
     }
-
-    this.setState({
-      isEditing: false
-    })
+    toggleEdit(false)
   }
 
-  handleBeginEdit = () => {
-    this.setState({
-      isEditing: true
-    })
-  }
+  let editItemDisplay = (
+    <input
+      className='addItem'
+      onBlur={handleBlur}
+      type='text'
+      onChange={e => updateText(e.currentTarget.value)}
+      onKeyDown={e => {
+        if (e.key === 'Enter') handleBlur()
+      }}
+      value={newText}
+      autoFocus />
+  )
+  let itemDisplay = (
+    <div className='ItemCollectionView' id='flex'>
+      {isComplete ? (
+        <Icon
+          type='check-square'
+          onClick={() => toggleItem(uid, collectionId, itemId)}
+          style={{ paddingRight: '5px' }} />
+      ) : (
+        <Icon
+          type='border'
+          onClick={() => toggleItem(uid, collectionId, itemId)}
+          style={{ paddingRight: '5px' }} />
+      )}
+      <p
+        className='collection-list-item'
+        onClick={() => toggleEdit(true)}
+        style={{
+          textDecoration: isComplete ? 'line-through' : 'none'
+        }}>
+        {newText}
+      </p>
+      <label
+        className='deleteButton'
+        onClick={() => deleteItem(uid, collectionId, itemId)}>
+        <Icon type='delete' />
+      </label>
+    </div>
+  )
 
-  handleChange = event => {
-    this.setState({ text: event.currentTarget.value })
-  }
-
-  handleDelete = () => {
-    deleteItem(this.props.uid, this.props.collectionId, this.props.itemId)
-  }
-
-  // handles checking off item
-  handleToggle = () => {
-    toggleItem(this.props.uid, this.props.collectionId, this.props.itemId)
-  }
-
-  /*
-  function that listen to the keys being typed
-  determines when to go to handleBlur
-  */
-  handleKeyDown = event => {
-    if (event.key === 'Enter') {
-      this.handleEndEdit()
-    }
-  }
-
-  render () {
-    let editableItem = (
-      <input
-        className='addItem'
-        onBlur={this.handleEndEdit}
-        type='text'
-        onChange={this.handleChange}
-        onKeyDown={this.handleKeyDown}
-        value={this.state.text}
-        autoFocus />
-    )
-    let itemDisplay = (
-      <div className='ItemCollectionView' id='flex'>
-        {this.props.isComplete ? (
-          <Icon
-            type='check-square'
-            onClick={this.handleToggle}
-            style={{ paddingRight: '5px' }} />
-        ) : (
-          <Icon
-            type='border'
-            onClick={this.handleToggle}
-            style={{ paddingRight: '5px' }} />
-        )}
-        <p
-          className='collection-list-item'
-          onClick={this.handleBeginEdit}
-          style={{
-            textDecoration: this.props.isComplete ? 'line-through' : 'none'
-          }}>
-          {this.props.text}
-        </p>
-        <label className='deleteButton' onClick={this.handleDelete}>
-          <Icon type='delete' />
-        </label>
-      </div>
-    )
-
-    if (this.state.isEditing === true) {
-      return editableItem
-    } else {
-      return itemDisplay
-    }
+  if (isEditing) {
+    return editItemDisplay
+  } else {
+    return itemDisplay
   }
 }
 

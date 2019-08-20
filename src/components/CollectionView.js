@@ -18,7 +18,7 @@ const CollectionView = ({
   const [editTitle, toggleEditTitle] = useState(false)
 
   const [items, loading] = useSubCollectionSnapshot(uid, collectionId)
-  console.log(items)
+
   const listItem =
     items &&
     items.map(item => (
@@ -87,7 +87,6 @@ const CollectionView = ({
       ) : (
         listItem
       )}
-      {/* TODO adding new item is getting modified instead of adding??? */}
       <NewItem collectionId={collectionId} uid={uid} />
       <Footer
         uid={uid}
