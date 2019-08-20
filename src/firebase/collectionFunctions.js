@@ -1,5 +1,4 @@
 import { usersCollectionRef, db, firebase } from './firebase'
-import { v4 } from 'node-uuid'
 import { addModalId, deleteModalId } from '../actions/actionCreator'
 
 export const getItemCollectionRef = (uid, collectionId) => {
@@ -43,7 +42,7 @@ export const deleteTitle = (uid, collectionId) => {
 }
 
 export const addItem = (uid, collectionId, text) => {
-  let itemId = v4()
+  let itemId = Date.now()
   const itemInfo = {
     itemId,
     text,

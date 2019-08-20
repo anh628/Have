@@ -241,6 +241,17 @@ img {
   border: 3px solid #555;
 }
 
+/* to prevent the arrow overflow the popup container,
+or the height is not enough when content is empty */
+.title-input .ant-tooltip-inner {
+  min-width: 32px;
+  min-height: 37px;
+}
+
+.title-input .numeric-input-title {
+  font-size: 14px;
+}
+
 .deleteImage {
   border-radius: 2px;
   bottom: 5px;

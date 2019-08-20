@@ -7,8 +7,12 @@ import ModalView from './components/ModalView'
 import { toggleModalStatus } from './actions/actionCreator'
 import CollectionView from './components/CollectionView'
 import { Icon } from 'antd'
+import { firebase } from './firebase/firebase'
+import useAuthState from './hooks/useAuthState'
 
-const App = ({ open, modalId, toggleModalStatus, uid, anon }) => {
+const App = ({ open, modalId, toggleModalStatus, anon }) => {
+  const [user] = useAuthState(firebase.auth())
+  const { uid } = user
   const displayModal = open ? (
     <ModalView
       collectionId={modalId}
@@ -21,9 +25,7 @@ const App = ({ open, modalId, toggleModalStatus, uid, anon }) => {
       {uid ? (
         <div>
           <AuthenticationButton />
-          <header className='App-header'>
-            <NewCollection uid={uid} />
-          </header>
+          <NewCollection uid={uid} />
           <List uid={uid} anon={anon} />
           {displayModal}
         </div>
