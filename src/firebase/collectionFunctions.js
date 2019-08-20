@@ -173,7 +173,6 @@ export const fetchCollectionIds = uid => dispatch => {
     .onSnapshot(querySnapshot => {
       querySnapshot.docChanges().forEach(change => {
         const collectionId = change.doc.id
-
         if (change.type === 'added') {
           dispatch(addModalId(collectionId))
         }

@@ -9,6 +9,7 @@
     "customize-cra": "^0.2.14",
     "eslint": "^5.16.0",
     "firebase": "^6.0.2",
+    "less": "^3.10.1",
     "prettier": "^1.17.1",
     "react": "^16.8.6",
     "react-app-rewired": "^2.1.3",

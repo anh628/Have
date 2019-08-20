@@ -9,7 +9,7 @@ import PropTypes from 'prop-types'
 const NewCollection = ({ uid }) => {
   const dispatch = useDispatch()
   const inputRef = useRef(null)
-  const [collectionId, setCollectionId] = useState()
+  const [collectionId, setCollectionId] = useState(uuid.v4())
 
   return (
     <header className='App-header'>

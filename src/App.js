@@ -10,9 +10,10 @@ import { Icon } from 'antd'
 import { firebase } from './firebase/firebase'
 import useAuthState from './hooks/useAuthState'
 
-const App = ({ open, modalId, toggleModalStatus, anon }) => {
+const App = ({ open, modalId, toggleModalStatus }) => {
   const [user] = useAuthState(firebase.auth())
-  const { uid } = user
+  const { uid, isAnonymous } = user
+
   const displayModal = open ? (
     <ModalView
       collectionId={modalId}
@@ -26,7 +27,7 @@ const App = ({ open, modalId, toggleModalStatus, anon }) => {
         <div>
           <AuthenticationButton />
           <NewCollection uid={uid} />
-          <List uid={uid} anon={anon} />
+          <List uid={uid} anon={isAnonymous} />
           {displayModal}
         </div>
       ) : (
@@ -49,9 +50,7 @@ const mapStateToProps = state => {
 
   return {
     open: open || false,
-    uid: state.firebase.auth.uid,
-    modalId: modalId || null,
-    anon: state.firebase.auth.isAnonymous
+    modalId: modalId || null
   }
 }
 
