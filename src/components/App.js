@@ -1,14 +1,14 @@
 import { connect } from 'react-redux'
-import AuthenticationButton from './components/AuthenticationButton'
-import NewCollection from './components/NewCollection'
+import AuthenticationButton from './AuthenticationButton'
+import NewCollection from './NewCollection'
 import React from 'react'
-import List from './components/List'
-import ModalView from './components/ModalView'
-import { toggleModalStatus } from './actions/actionCreator'
-import CollectionView from './components/CollectionView'
+import List from './List'
+import ModalView from './ModalView'
+import { toggleModalStatus } from '../actions/actionCreator'
+import CollectionView from './CollectionView'
 import { Icon } from 'antd'
-import { firebase } from './firebase/firebase'
-import useAuthState from './hooks/useAuthState'
+import { firebase } from '../firebase/firebase'
+import useAuthState from '../hooks/useAuthState'
 
 const App = ({ open, modalId, toggleModalStatus }) => {
   const [user] = useAuthState(firebase.auth())
