@@ -62,11 +62,9 @@ const SingleItem = ({ uid, collectionId, itemId, text, isComplete }) => {
     </div>
   )
 
-  if (isEditing) {
-    return editItemDisplay
-  } else {
-    return itemDisplay
-  }
+  if (isEditing) return editItemDisplay
+
+  return itemDisplay
 }
 
 export default SingleItem

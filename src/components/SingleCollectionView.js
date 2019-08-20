@@ -1,8 +1,8 @@
-import React, { useState } from 'react'
+import React from 'react'
 import { Icon } from 'antd'
 import { deleteImage } from '../firebase/collectionFunctions'
 import { deleteFile } from '../firebase/storageFunctions'
-import EditCollectionTitle from './EditCollectionTitle'
+import SingleCollectionTitleView from './SingleCollectionTitleView'
 import SingleItem from './SingleItem'
 import NewItem from './NewItem'
 import Footer from './Footer'
@@ -15,8 +15,6 @@ const SingleCollectionView = ({
   image,
   title
 }) => {
-  const [editTitle, toggleEditTitle] = useState(false)
-
   const [items, loading] = useSubCollectionSnapshot(uid, collectionId)
 
   const listItem =
@@ -49,18 +47,6 @@ const SingleCollectionView = ({
     </div>
   )
 
-  const displayTitle = editTitle ? (
-    <EditCollectionTitle
-      uid={uid}
-      collectionId={collectionId}
-      title={title}
-      toggleEditTitle={toggleEditTitle} />
-  ) : (
-    <h1 className='titleCollectionView' onClick={toggleEditTitle(true)}>
-      {title}
-    </h1>
-  )
-
   const uncheckedItems = items
     ? items.filter(item => !item.isComplete).length > 0
     : null
@@ -73,8 +59,10 @@ const SingleCollectionView = ({
       style={{ backgroundColor: collectionColor, paddingBottom: '10px' }}
       className='collection-view'>
       {displayImage}
-      {displayTitle}
-
+      <SingleCollectionTitleView
+        uid={uid}
+        collectionId={collectionId}
+        title={title} />
       {loading ? (
         <Icon
           type='loading'
