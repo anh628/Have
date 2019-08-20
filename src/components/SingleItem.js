@@ -7,7 +7,7 @@ import {
 import { Icon } from 'antd'
 
 // Display items in the modal view (single collection)
-const EditItem = ({ uid, collectionId, itemId, text, isComplete }) => {
+const SingleItem = ({ uid, collectionId, itemId, text, isComplete }) => {
   const [newText, updateText] = useState(text)
   const [isEditing, toggleEdit] = useState(false)
 
@@ -69,4 +69,4 @@ const EditItem = ({ uid, collectionId, itemId, text, isComplete }) => {
   }
 }
 
-export default EditItem
+export default SingleItem

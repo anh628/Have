@@ -5,7 +5,7 @@ import React from 'react'
 import List from './List'
 import ModalView from './ModalView'
 import { toggleModalStatus } from '../actions/actionCreator'
-import CollectionView from './CollectionView'
+import SingleCollectionView from './SingleCollectionView'
 import { Spin } from 'antd'
 import { firebase } from '../firebase/firebase'
 import useAuthState from '../hooks/useAuthState'
@@ -22,7 +22,7 @@ const App = ({ open, modalId, toggleModalStatus }) => {
       collectionId={modalId}
       onClose={() => toggleModalStatus(modalId)}
       componentDisplay={
-        <CollectionView
+        <SingleCollectionView
           uid={uid}
           collectionId={modalId}
           {...collectionList.filter(list => list.id === modalId)[0]} />

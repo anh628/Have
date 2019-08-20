@@ -3,12 +3,12 @@ import { Icon } from 'antd'
 import { deleteImage } from '../firebase/collectionFunctions'
 import { deleteFile } from '../firebase/storageFunctions'
 import EditCollectionTitle from './EditCollectionTitle'
-import EditItem from './EditItem'
+import SingleItem from './SingleItem'
 import NewItem from './NewItem'
 import Footer from './Footer'
 import useSubCollectionSnapshot from '../hooks/useSubCollectionSnapshot'
 
-const CollectionView = ({
+const SingleCollectionView = ({
   uid,
   id: collectionId,
   collectionColor,
@@ -22,7 +22,7 @@ const CollectionView = ({
   const listItem =
     items &&
     items.map(item => (
-      <EditItem
+      <SingleItem
         key={item.itemId}
         uid={uid}
         collectionId={collectionId}
@@ -101,4 +101,4 @@ const CollectionView = ({
   )
 }
 
-export default CollectionView
+export default SingleCollectionView
