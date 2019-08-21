@@ -79,7 +79,8 @@ const ItemCollection = ({
         collectionId={collectionId}
         areItems={items.length > 0}
         uncheckedItems={uncheckedItems}
-        checkItems={checkItems} />
+        checkItems={checkItems}
+        collectionColor={collectionColor} />
     </div>
   )
 }
