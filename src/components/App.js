@@ -36,9 +36,19 @@ const App = ({ open, modalId, toggleModalStatus }) => {
           <AuthenticationButton />
           <NewCollection uid={uid} />
           {loading ? (
-            <Spin size='large' />
+            <Spin
+              size='large'
+              style={{
+                fontSize: '20px',
+                position: 'absolute',
+                left: '50%',
+                top: '30%'
+              }} />
           ) : (
-            <List uid={uid} anon={isAnonymous} />
+            <List
+              uid={uid}
+              isAnonymous={isAnonymous}
+              collectionList={collectionList} />
           )}
           {displayModal}
         </div>
