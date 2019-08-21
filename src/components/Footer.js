@@ -118,7 +118,7 @@ const Footer = ({
   )
 
   return (
-    <div className='footer-bar' id={modalView && 'cv'}>
+    <div className='footer-bar' id={modalView ? 'cv' : ''}>
       {changeColorButton}
       {imageButton}
       {moreButton}

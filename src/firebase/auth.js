@@ -1,9 +1,6 @@
 import { firebase, usersCollectionRef } from './firebase'
 import { getItemCollectionRef, getItemRef } from './collectionFunctions'
-
-// import history from '../history/history'
-
-// TODO: ROUTING??
+import { clearModalId } from '../actions/actionCreator'
 
 // get user's information
 export const getUserInfo = user => {
@@ -82,7 +79,6 @@ export const login = () => {
                 .auth()
                 .signInAndRetrieveDataWithCredential(existingUser.credential)
             })
-          // .then(() => history.push(`/user/${userInfo.uid}/`))
         })
     })
     .catch(error => {
@@ -90,10 +86,10 @@ export const login = () => {
     })
 }
 
-export const logout = () => {
+export const logout = () => dispatch => {
   firebase
     .auth()
     .signOut()
     .then(() => firebase.auth().signInAnonymously())
-  // .then(() => history.push('/guest/'))
+    .then(() => dispatch(clearModalId))
 }

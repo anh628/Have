@@ -1,7 +1,8 @@
 import {
   TOGGLE_MODAL_STATUS,
   ADD_MODAL_ID,
-  DELETE_MODAL_ID
+  DELETE_MODAL_ID,
+  CLEAR_MODAL_ID
 } from '../constants/constants'
 
 const modal = (state = [], action) => {
@@ -15,6 +16,8 @@ const modal = (state = [], action) => {
       modals = [...state]
       modals = modals.filter(modal => modal.modalId !== action.modalId)
       return modals
+    case CLEAR_MODAL_ID:
+      return []
     case TOGGLE_MODAL_STATUS:
       modals = [...state]
       modals = modals.map(modal =>

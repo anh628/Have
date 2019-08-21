@@ -1,4 +1,4 @@
-import { connect } from 'react-redux'
+import { useSelector, useDispatch } from 'react-redux'
 import AuthenticationButton from './AuthenticationButton'
 import NewCollection from './NewCollection'
 import React from 'react'
@@ -11,16 +11,33 @@ import { firebase } from '../firebase/firebase'
 import useAuthState from '../hooks/useAuthState'
 import useCollectionSnapshot from '../hooks/useCollectionSnapshot'
 
-const App = ({ open, modalId, toggleModalStatus }) => {
+const App = () => {
   const [user] = useAuthState(firebase.auth())
   const { uid, isAnonymous } = user
 
   const [collectionList, loading] = useCollectionSnapshot(uid)
 
+  const open = useSelector(
+    state =>
+      (state.modal.filter(modal => modal.open) &&
+        state.modal.filter(modal => modal.open)[0] &&
+        state.modal.filter(modal => modal.open)[0].open) ||
+      false
+  )
+
+  const modalId = useSelector(
+    state =>
+      (state.modal.filter(modal => modal.open) &&
+        state.modal.filter(modal => modal.open)[0] &&
+        state.modal.filter(modal => modal.open)[0].modalId) ||
+      null
+  )
+  const dispatch = useDispatch()
+
   const displayModal = open ? (
     <ModalView
       collectionId={modalId}
-      onClose={() => toggleModalStatus(modalId)}
+      onClose={() => dispatch(toggleModalStatus(modalId))}
       componentDisplay={
         <SingleCollectionView
           uid={uid}
@@ -66,28 +83,4 @@ const App = ({ open, modalId, toggleModalStatus }) => {
   )
 }
 
-const mapStateToProps = state => {
-  const open =
-    state.modal.filter(modal => modal.open) &&
-    state.modal.filter(modal => modal.open)[0] &&
-    state.modal.filter(modal => modal.open)[0].open
-
-  const modalId =
-    state.modal.filter(modal => modal.open) &&
-    state.modal.filter(modal => modal.open)[0] &&
-    state.modal.filter(modal => modal.open)[0].modalId
-
-  return {
-    open: open || false,
-    modalId: modalId || null
-  }
-}
-
-const mapDispatchToProps = {
-  toggleModalStatus
-}
-
-export default connect(
-  mapStateToProps,
-  mapDispatchToProps
-)(App)
+export default App
