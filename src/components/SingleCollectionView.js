@@ -83,7 +83,7 @@ const SingleCollectionView = ({
         areItems={!!items}
         uncheckedItems={uncheckedItems}
         checkItems={checkItems}
-        collectionView={true}
+        modalView={true}
         image={image} />
     </div>
   )

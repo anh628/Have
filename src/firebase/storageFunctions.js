@@ -5,17 +5,14 @@ export const uploadFile = (collectionImageInputId, uid, collectionId) => {
   // get file
   const file = document.getElementById(collectionImageInputId).files[0]
   // create file name and metadata information
-  const name = `${new Date()}-${file.name}`
+
   const metadata = { contentType: file.type }
 
-  const imageRef = storageRef.child(`${uid}/${collectionId}/${name}`)
+  const imageRef = storageRef.child(`${uid}/${collectionId}/cover`)
 
   // upload file to firebase storage under user's folder
 
-  return imageRef
-    .put(file, metadata)
-    .then(snapshot => snapshot.ref.getDownloadURL())
-    .catch(error => console.log(error))
+  return imageRef.put(file, metadata)
 }
 
 export const deleteFile = imageUrl => {
