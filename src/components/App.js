@@ -1,22 +1,17 @@
-import { useSelector, useDispatch } from 'react-redux'
-import AuthenticationButton from './AuthenticationButton'
-import NewCollection from './NewCollection'
 import React from 'react'
-import List from './List'
-import ModalView from './ModalView'
-import { toggleModalStatus } from '../actions/actionCreator'
-import SingleCollectionView from './SingleCollectionView'
-import { Spin } from 'antd'
+import { useSelector, useDispatch } from 'react-redux'
 import { firebase } from '../firebase/firebase'
 import useAuthState from '../hooks/useAuthState'
 import useCollectionSnapshot from '../hooks/useCollectionSnapshot'
+import { toggleModalStatus } from '../actions/actionCreator'
+import { Spin } from 'antd'
+import AuthenticationButton from './AuthenticationButton'
+import NewCollection from './NewCollection'
+import List from './List'
+import SingleCollectionView from './SingleCollectionView'
+import ModalView from './ModalView'
 
 const App = () => {
-  const [user] = useAuthState(firebase.auth())
-  const { uid, isAnonymous } = user
-
-  const [collectionList, loading] = useCollectionSnapshot(uid)
-
   const open = useSelector(
     state =>
       (state.modal.filter(modal => modal.open) &&
@@ -24,7 +19,6 @@ const App = () => {
         state.modal.filter(modal => modal.open)[0].open) ||
       false
   )
-
   const modalId = useSelector(
     state =>
       (state.modal.filter(modal => modal.open) &&
@@ -33,7 +27,12 @@ const App = () => {
       null
   )
   const dispatch = useDispatch()
+  const [user] = useAuthState(firebase.auth())
+  const { uid, isAnonymous } = user
 
+  const [collectionList, loading] = useCollectionSnapshot(uid)
+  console.log(uid)
+  console.log(collectionList)
   const displayModal = open ? (
     <ModalView
       collectionId={modalId}

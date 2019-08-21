@@ -10,6 +10,7 @@ const modal = (state = [], action) => {
   switch (action.type) {
     case ADD_MODAL_ID:
       modals = [...state]
+      console.log(action)
       modals.push({ modalId: action.modalId, open: false })
       return modals
     case DELETE_MODAL_ID:

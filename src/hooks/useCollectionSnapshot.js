@@ -1,23 +1,28 @@
 import { useState, useEffect, useReducer } from 'react'
+import { useDispatch } from 'react-redux'
 import { usersCollectionRef } from '../firebase/firebase'
+import { addModalId, deleteModalId } from '../actions/actionCreator'
 
 // TODO double check how you get the error
 // grab list of user's item collections
 const useCollectionSnapshot = uid => {
   const [loading, setLoading] = useState(true)
 
+  const dispatchRedux = useDispatch()
   const [collections, dispatch] = useReducer((state, action) => {
     const items = state.length > 0 ? [...state] : []
 
     switch (action.type) {
       case 'added':
         items.push(action.collectionInfo)
+        dispatchRedux(addModalId(action.collectionInfo.id))
         return items
       case 'modified':
         return items.map(item =>
           item.id === action.id ? { ...action.collectionInfo } : item
         )
       case 'removed':
+        dispatchRedux(deleteModalId(action.collectionInfo.id))
         return items.filter(item => item.id !== action.collectionInfo.id)
       default:
     }
@@ -44,7 +49,6 @@ const useCollectionSnapshot = uid => {
             }
           })
         })
-
       setLoading(false)
 
       return () => {

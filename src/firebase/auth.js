@@ -38,7 +38,7 @@ export const login = () => {
       // Sign in user with the google account we attempted to link earlier
       firebase
         .auth()
-        .signInAndRetrieveDataWithCredential(existingUser.credential)
+        .signInWithCredential(existingUser.credential)
         .then(existingUser => {
           const userInfo = getUserInfo(existingUser)
 
@@ -77,7 +77,7 @@ export const login = () => {
               // sign in
               return firebase
                 .auth()
-                .signInAndRetrieveDataWithCredential(existingUser.credential)
+                .signInWithCredential(existingUser.credential)
             })
         })
     })
