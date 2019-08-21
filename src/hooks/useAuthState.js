@@ -25,18 +25,22 @@ export const getUserInfo = user => {
 const useAuthState = auth => {
   const [user, setUser] = useState(auth.currentUser)
   const [loading, setLoading] = useState(true)
+  const [error, setError] = useState(null)
 
   useEffect(() => {
-    const listener = firebase.auth().onAuthStateChanged(() => {
-      setUser(auth.currentUser)
-      setLoading(false)
-    })
+    const listener = firebase.auth().onAuthStateChanged(
+      () => {
+        setUser(auth.currentUser)
+        setLoading(false)
+      },
+      error => setError(error)
+    )
 
     return () => {
       listener()
     }
   }, [auth])
-  return [getUserInfo(user), loading, auth.Error]
+  return [getUserInfo(user), loading, error]
 }
 
 export default useAuthState

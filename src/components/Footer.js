@@ -65,7 +65,7 @@ const Footer = ({
         <div
           className={`dropdown-content-more  ${showMenu ? 'show' : ''}`}
           id={`more-dropdown ${collectionId}`}
-          onMouseLeave={() => toggleMenu(false)}>
+          onClick={() => toggleMenu(false)}>
           <label onClick={() => deleteCollection(uid, collectionId)}>
             Delete list
           </label>

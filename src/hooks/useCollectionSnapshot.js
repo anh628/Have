@@ -3,10 +3,10 @@ import { useDispatch } from 'react-redux'
 import { usersCollectionRef } from '../firebase/firebase'
 import { addModalId, deleteModalId } from '../actions/actionCreator'
 
-// TODO double check how you get the error
 // grab list of user's item collections
 const useCollectionSnapshot = uid => {
   const [loading, setLoading] = useState(true)
+  const [error, setError] = useState(null)
 
   const dispatchRedux = useDispatch()
   const [collections, dispatch] = useReducer((state, action) => {
@@ -30,34 +30,37 @@ const useCollectionSnapshot = uid => {
 
   useEffect(() => {
     if (uid) {
-      const listener = usersCollectionRef
+      const unsubscribe = usersCollectionRef
         .doc(uid)
         .collection('itemCollections')
         .orderBy('timeStamp')
-        .onSnapshot(querySnapshot => {
-          querySnapshot.docChanges().forEach(change => {
-            const id = change.doc.id
-            const collectionInfo = { ...change.doc.data(), id }
-            if (change.type === 'added') {
-              dispatch({ type: 'added', collectionInfo })
-            }
-            if (change.type === 'modified') {
-              dispatch({ type: 'modified', collectionInfo })
-            }
-            if (change.type === 'removed') {
-              dispatch({ type: 'removed', collectionInfo })
-            }
-          })
-        })
+        .onSnapshot(
+          querySnapshot => {
+            querySnapshot.docChanges().forEach(change => {
+              const id = change.doc.id
+              const collectionInfo = { ...change.doc.data(), id }
+              if (change.type === 'added') {
+                dispatch({ type: 'added', collectionInfo })
+              }
+              if (change.type === 'modified') {
+                dispatch({ type: 'modified', collectionInfo })
+              }
+              if (change.type === 'removed') {
+                dispatch({ type: 'removed', collectionInfo })
+              }
+            })
+          },
+          error => setError(error)
+        )
       setLoading(false)
 
       return () => {
-        listener()
+        unsubscribe()
       }
     }
   }, [uid])
 
-  return [collections, loading]
+  return [collections, loading, error]
 }
 
 export default useCollectionSnapshot

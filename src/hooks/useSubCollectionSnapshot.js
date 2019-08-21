@@ -5,6 +5,7 @@ import { usersCollectionRef } from '../firebase/firebase'
 // grab list of a single collection's items
 const useSubCollectionSnapshot = (uid, collectionId) => {
   const [loading, setLoading] = useState(true)
+  const [error, setError] = useState(null)
 
   const [list, dispatch] = useReducer((state, action) => {
     const items = state.length > 0 ? [...state] : []
@@ -25,37 +26,36 @@ const useSubCollectionSnapshot = (uid, collectionId) => {
 
   useEffect(() => {
     if (uid) {
-      const listener = usersCollectionRef
+      usersCollectionRef
         .doc(uid)
         .collection('itemCollections')
         .doc(collectionId)
         .collection('items')
         .orderBy('timeStamp')
-        .onSnapshot(querySnapshot => {
-          querySnapshot.docChanges().forEach(change => {
-            const listInfo = { ...change.doc.data() }
+        .onSnapshot(
+          querySnapshot => {
+            querySnapshot.docChanges().forEach(change => {
+              const listInfo = { ...change.doc.data() }
 
-            if (change.type === 'added') {
-              dispatch({ type: 'added', listInfo })
-            }
-            if (change.type === 'modified') {
-              dispatch({ type: 'modified', listInfo })
-            }
-            if (change.type === 'removed') {
-              dispatch({ type: 'removed', listInfo })
-            }
-          })
-        })
+              if (change.type === 'added') {
+                dispatch({ type: 'added', listInfo })
+              }
+              if (change.type === 'modified') {
+                dispatch({ type: 'modified', listInfo })
+              }
+              if (change.type === 'removed') {
+                dispatch({ type: 'removed', listInfo })
+              }
+            })
+          },
+          error => setError(error)
+        )
 
       setLoading(false)
-
-      return () => {
-        listener()
-      }
     }
   }, [uid, collectionId])
 
-  return [list, loading]
+  return [list, loading, error]
 }
 
 export default useSubCollectionSnapshot

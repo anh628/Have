@@ -1,5 +1,4 @@
 import { usersCollectionRef, db, firebase } from './firebase'
-import { addModalId, deleteModalId } from '../actions/actionCreator'
 
 export const getItemCollectionRef = (uid, collectionId) => {
   return usersCollectionRef.doc(`${uid}/itemCollections/${collectionId}`)
@@ -137,7 +136,7 @@ export const setAllItemsCompleteness = (
 // add and edit color are basically the same thing since we already have a default set to null
 export const editColor = (uid, collectionId, collectionColor) => {
   const itemCollectionRef = getItemCollectionRef(uid, collectionId)
-  console.log('editing color')
+
   return itemCollectionRef
     .update({ collectionColor })
     .catch(error => console.log(error))

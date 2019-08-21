@@ -31,8 +31,7 @@ const App = () => {
   const { uid, isAnonymous } = user
 
   const [collectionList, loading] = useCollectionSnapshot(uid)
-  console.log(uid)
-  console.log(collectionList)
+
   const displayModal = open ? (
     <ModalView
       collectionId={modalId}
