@@ -1,10 +1,10 @@
-import React from 'react'
+import React, { useEffect } from 'react'
 import { useSelector, useDispatch } from 'react-redux'
 import { firebase } from '../firebase/firebase'
 import useAuthState from '../hooks/useAuthState'
 import useCollectionSnapshot from '../hooks/useCollectionSnapshot'
 import { toggleModalStatus } from '../actions/actionCreator'
-import { Spin } from 'antd'
+import { Spin, notification } from 'antd'
 import AuthenticationButton from './AuthenticationButton'
 import NewCollection from './NewCollection'
 import List from './List'
@@ -31,6 +31,15 @@ const App = () => {
   const { uid, isAnonymous } = user
 
   const [collectionList, loading] = useCollectionSnapshot(uid)
+
+  useEffect(() => {
+    if (isAnonymous) {
+      notification.open({
+        message: 'Login to save your collection.',
+        duration: 2
+      })
+    }
+  }, [isAnonymous])
 
   const displayModal = open ? (
     <ModalView
