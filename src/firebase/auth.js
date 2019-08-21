@@ -91,5 +91,5 @@ export const logout = () => dispatch => {
     .auth()
     .signOut()
     .then(() => firebase.auth().signInAnonymously())
-    .then(() => dispatch(clearModalId))
+    .then(() => dispatch(clearModalId()))
 }

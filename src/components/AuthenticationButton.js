@@ -60,7 +60,7 @@ const AuthenticationButton = () => {
             </Tooltip>
             <button
               className={`logout${click ? '-visible' : ''}`}
-              onClick={() => dispatch(logout)}>
+              onClick={() => dispatch(logout())}>
               Logout
             </button>
           </div>
