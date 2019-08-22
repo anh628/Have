@@ -5,7 +5,6 @@ import Footer from './Footer'
 import { toggleModalStatus } from '../actions/actionCreator'
 import { Icon, Card } from 'antd'
 import useSubCollectionSnapshot from '../hooks/useSubCollectionSnapshot'
-import ImageButton from './ImageButton'
 
 const ItemCollection = ({
   uid,
