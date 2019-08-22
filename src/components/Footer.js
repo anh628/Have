@@ -12,6 +12,7 @@ import { Icon, Tooltip } from 'antd'
 import Color from './Color'
 
 const Footer = ({
+  collectionColor,
   areItems,
   checkItems,
   collectionId,
@@ -119,7 +120,10 @@ const Footer = ({
   )
 
   return (
-    <div className='footer-bar' id={modalView ? 'cv' : ''}>
+    <div
+      className='footer-bar'
+      id={modalView ? 'cv' : ''}
+      style={{ backgroundColor: collectionColor }}>
       {changeColorButton}
       {imageButton}
       {moreButton}

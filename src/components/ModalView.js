@@ -19,10 +19,10 @@ const ModalView = ({ collectionId, onClose, componentDisplay }) => {
       open={open}
       styles={{
         modal: {
-          backgroundColor: 'transparent',
-          width: '400px',
-          padding: '1px',
-          borderRadius: '5px'
+          backgroundColor: 'transparent'
+          // width: '400px',
+          // padding: '1px',
+          // borderRadius: '5px'
         }
       }}
       onClose={onClose}

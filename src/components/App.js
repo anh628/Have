@@ -4,7 +4,7 @@ import { firebase } from '../firebase/firebase'
 import useAuthState from '../hooks/useAuthState'
 import useCollectionSnapshot from '../hooks/useCollectionSnapshot'
 import { toggleModalStatus } from '../actions/actionCreator'
-import { Spin, notification } from 'antd'
+import { Spin, notification, Layout } from 'antd'
 import AuthenticationButton from './AuthenticationButton'
 import NewCollection from './NewCollection'
 import List from './List'
@@ -41,7 +41,7 @@ const App = () => {
     }
   }, [isAnonymous])
 
-  const displayModal = open ? (
+  const displayModal = open && (
     <ModalView
       collectionId={modalId}
       onClose={() => dispatch(toggleModalStatus(modalId))}
@@ -51,30 +51,36 @@ const App = () => {
           collectionId={modalId}
           {...collectionList.filter(list => list.id === modalId)[0]} />
       } />
-  ) : null
+  )
 
   return (
     <div className='App'>
       {uid ? (
         <div>
-          <AuthenticationButton />
-          <NewCollection uid={uid} />
-          {loading ? (
-            <Spin
-              size='large'
-              style={{
-                fontSize: '20px',
-                position: 'absolute',
-                left: '50%',
-                top: '30%'
-              }} />
-          ) : (
-            <List
-              uid={uid}
-              isAnonymous={isAnonymous}
-              collectionList={collectionList} />
-          )}
-          {displayModal}
+          <Layout>
+            <Layout.Header>
+              <AuthenticationButton />
+              <NewCollection uid={uid} />
+            </Layout.Header>
+            <Layout.Content>
+              {loading ? (
+                <Spin
+                  size='large'
+                  style={{
+                    fontSize: '20px',
+                    position: 'absolute',
+                    left: '50%',
+                    top: '30%'
+                  }} />
+              ) : (
+                <List
+                  uid={uid}
+                  isAnonymous={isAnonymous}
+                  collectionList={collectionList} />
+              )}
+              {displayModal}
+            </Layout.Content>
+          </Layout>
         </div>
       ) : (
         <Spin

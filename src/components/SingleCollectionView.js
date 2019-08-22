@@ -74,7 +74,7 @@ const SingleCollectionView = ({
     <Card
       className='collection-view'
       hoverable
-      style={{ width: 300, backgroundColor: collectionColor }}
+      style={{ width: 500, backgroundColor: collectionColor }}
       cover={displayImage}
       actions={[
         <Footer
