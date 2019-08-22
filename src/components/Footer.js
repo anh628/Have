@@ -10,7 +10,6 @@ import {
 import { toggleModalStatus } from '../actions/actionCreator'
 import { Icon, Tooltip } from 'antd'
 import Color from './Color'
-import useDownloadURL from '../hooks/useDownloadURL'
 
 const Footer = ({
   areItems,
@@ -22,7 +21,6 @@ const Footer = ({
   modalView = false
 }) => {
   const [showMenu, toggleMenu] = useState(false)
-  const [downloadURL] = useDownloadURL(uid, collectionId)
   const dispatch = useDispatch()
 
   const collectionImageInputId = modalView
@@ -36,9 +34,14 @@ const Footer = ({
           <input
             type='file'
             onChange={async () => {
-              if (image) deleteFile(image)
-              uploadFile(collectionImageInputId, uid, collectionId)
-              editImage(uid, collectionId, downloadURL)
+              if (image) await deleteFile(image)
+              editImage(uid, collectionId, 'loading')
+              const url = await uploadFile(
+                collectionImageInputId,
+                uid,
+                collectionId
+              )
+              editImage(uid, collectionId, url)
             }}
             id={collectionImageInputId}
             name='files'

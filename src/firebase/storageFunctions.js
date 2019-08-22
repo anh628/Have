@@ -12,7 +12,10 @@ export const uploadFile = (collectionImageInputId, uid, collectionId) => {
 
   // upload file to firebase storage under user's folder
 
-  return imageRef.put(file, metadata)
+  return imageRef
+    .put(file, metadata)
+    .then(snapshot => snapshot.ref.getDownloadURL())
+    .catch(error => console.log(error))
 }
 
 export const deleteFile = imageUrl => {
