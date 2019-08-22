@@ -1,5 +1,5 @@
 import React from 'react'
-import { Icon } from 'antd'
+import { Icon, Card } from 'antd'
 import { deleteImage } from '../firebase/collectionFunctions'
 import { deleteFile } from '../firebase/storageFunctions'
 import SingleCollectionTitleView from './SingleCollectionTitleView'
@@ -29,7 +29,7 @@ const SingleCollectionView = ({
 
   const displayImage = image && (
     <div className='coverart'>
-      {image === 'loading' ? ( // TODO: figure out this
+      {image === 'loading' ? (
         <Icon type='loading' />
       ) : (
         <div>
@@ -47,22 +47,8 @@ const SingleCollectionView = ({
     </div>
   )
 
-  const uncheckedItems = items
-    ? items.filter(item => !item.isComplete).length > 0
-    : null
-  const checkItems = items
-    ? items.filter(item => item.isComplete).length > 0
-    : null
-
-  return (
-    <div
-      style={{ backgroundColor: collectionColor, paddingBottom: '10px' }}
-      className='collection-view'>
-      {displayImage}
-      <SingleCollectionTitleView
-        uid={uid}
-        collectionId={collectionId}
-        title={title} />
+  const description = (
+    <div>
       {loading ? (
         <Icon
           type='loading'
@@ -76,16 +62,41 @@ const SingleCollectionView = ({
         listItem
       )}
       <NewItem collectionId={collectionId} uid={uid} />
-      <Footer
-        uid={uid}
-        collectionColor={collectionColor}
-        collectionId={collectionId}
-        areItems={!!items}
-        uncheckedItems={uncheckedItems}
-        checkItems={checkItems}
-        modalView={true}
-        image={image} />
     </div>
+  )
+
+  const uncheckedItems =
+    items && items.filter(item => !item.isComplete).length > 0
+
+  const checkItems = items && items.filter(item => item.isComplete).length > 0
+
+  return (
+    <Card
+      className='collection-view'
+      hoverable
+      style={{ width: 300, backgroundColor: collectionColor }}
+      cover={displayImage}
+      actions={[
+        <Footer
+          key='footer'
+          image={image}
+          uid={uid}
+          collectionId={collectionId}
+          areItems={items.length > 0}
+          uncheckedItems={uncheckedItems}
+          checkItems={checkItems}
+          collectionColor={collectionColor}
+          modalView={true} />
+      ]}>
+      <Card.Meta
+        title={
+          <SingleCollectionTitleView
+            uid={uid}
+            collectionId={collectionId}
+            title={title} />
+        }
+        description={description} />
+    </Card>
   )
 }
 

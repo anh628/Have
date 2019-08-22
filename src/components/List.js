@@ -1,4 +1,5 @@
 import React from 'react'
+import { Card, Col, Row } from 'antd'
 import ItemCollection from './ItemCollection'
 
 const List = ({ uid, collectionList }) => {

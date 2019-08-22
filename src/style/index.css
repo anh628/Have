@@ -65,7 +65,7 @@ code {
 }
 
 .footer-bar {
-  display: none;
+  display: inline-flex;
   justify-content: center;
   width: 100%;
   background-color: rgb(71, 71, 72);

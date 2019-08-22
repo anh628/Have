@@ -3,8 +3,9 @@ import Item from './Item'
 import { useDispatch, useSelector } from 'react-redux'
 import Footer from './Footer'
 import { toggleModalStatus } from '../actions/actionCreator'
-import { Icon } from 'antd'
+import { Icon, Card } from 'antd'
 import useSubCollectionSnapshot from '../hooks/useSubCollectionSnapshot'
+import ImageButton from './ImageButton'
 
 const ItemCollection = ({
   uid,
@@ -57,31 +58,35 @@ const ItemCollection = ({
     ? items.filter(item => item.isComplete).length > 0
     : null
 
+  // collection won't display in list if it's open
+  if (open) return null
   return (
-    <div
-      style={{
-        backgroundColor: collectionColor
-      }}
-      id={open ? 'hide' : null}
-      className='item-collection'>
-      <div>
-        {displayImage}
-        <h2
-          className='titleCollectionView'
-          onClick={() => dispatch(toggleModalStatus(collectionId))}>
-          {title}
-        </h2>
-        <div>{loading ? <Icon type='loading' /> : itemsList}</div>
-      </div>
-      <Footer
-        image={image}
-        uid={uid}
-        collectionId={collectionId}
-        areItems={items.length > 0}
-        uncheckedItems={uncheckedItems}
-        checkItems={checkItems}
-        collectionColor={collectionColor} />
-    </div>
+    <Card
+      className='item-collection'
+      hoverable
+      style={{ width: 300, backgroundColor: collectionColor }}
+      cover={displayImage}
+      actions={[
+        <Footer
+          key='footer'
+          image={image}
+          uid={uid}
+          collectionId={collectionId}
+          areItems={items.length > 0}
+          uncheckedItems={uncheckedItems}
+          checkItems={checkItems}
+          collectionColor={collectionColor} />
+      ]}>
+      <Card.Meta
+        title={
+          <h2
+            className='titleCollectionView'
+            onClick={() => dispatch(toggleModalStatus(collectionId))}>
+            {title}
+          </h2>
+        }
+        description={loading ? <Icon type='loading' /> : itemsList} />
+    </Card>
   )
 }
 
