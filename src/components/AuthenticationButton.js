@@ -3,14 +3,12 @@ import useAuthState from '../hooks/useAuthState'
 import { login, logout } from '../firebase/auth'
 import { firebase } from '../firebase/firebase'
 import { Avatar, Icon, Tooltip, message } from 'antd'
-import { useDispatch } from 'react-redux'
 
-// TODO: figure out error
 const AuthenticationButton = () => {
   const [user, loading, error] = useAuthState(firebase.auth())
   const { isAnonymous, displayName, photoURL } = user
   const [click, toggleClick] = useState(false)
-  const dispatch = useDispatch()
+
   const profilePic = photoURL ? (
     <Avatar
       src={photoURL}
@@ -60,7 +58,7 @@ const AuthenticationButton = () => {
             </Tooltip>
             <button
               className={`logout${click ? '-visible' : ''}`}
-              onClick={() => dispatch(logout())}>
+              onClick={logout}>
               Logout
             </button>
           </div>

@@ -31,9 +31,7 @@ const Footer = ({
 
   const imageButton = (
     <div className='footer-button'>
-      <Tooltip
-        title={`${image ? 'Change' : 'Add'} cover art.`}
-        placement='bottom'>
+      <Tooltip title={`${image ? 'Change' : 'Add'} cover art.`} placement='top'>
         <label>
           <input
             type='file'
@@ -60,7 +58,7 @@ const Footer = ({
   */
   const moreButton = (
     <div className='footer-button' onClick={() => toggleMenu(!showMenu)}>
-      <Tooltip title='More' placement='bottom'>
+      <Tooltip title='More' placement='top'>
         <Icon type='menu' className='dropdown' id='more' />
         <div
           className={`dropdown-content-more  ${showMenu ? 'show' : ''}`}

@@ -1,6 +1,5 @@
 import { firebase, usersCollectionRef } from './firebase'
 import { getItemCollectionRef, getItemRef } from './collectionFunctions'
-import { clearModalId } from '../actions/actionCreator'
 
 // get user's information
 export const getUserInfo = user => {
@@ -86,10 +85,9 @@ export const login = () => {
     })
 }
 
-export const logout = () => dispatch => {
+export const logout = () => {
   firebase
     .auth()
     .signOut()
     .then(() => firebase.auth().signInAnonymously())
-    .then(() => dispatch(clearModalId()))
 }

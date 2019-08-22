@@ -16,7 +16,7 @@ const useSubCollectionSnapshot = (uid, collectionId) => {
         return items
       case 'modified':
         return items.map(item =>
-          item.itemId === action.itemId ? { ...action.listInfo } : item
+          item.itemId === action.listInfo.itemId ? { ...action.listInfo } : item
         )
       case 'removed':
         return items.filter(item => item.itemId !== action.listInfo.itemId)
@@ -26,7 +26,7 @@ const useSubCollectionSnapshot = (uid, collectionId) => {
 
   useEffect(() => {
     if (uid) {
-      usersCollectionRef
+      const unsubscribe = usersCollectionRef
         .doc(uid)
         .collection('itemCollections')
         .doc(collectionId)
@@ -52,6 +52,9 @@ const useSubCollectionSnapshot = (uid, collectionId) => {
         )
 
       setLoading(false)
+      return () => {
+        unsubscribe()
+      }
     }
   }, [uid, collectionId])
 

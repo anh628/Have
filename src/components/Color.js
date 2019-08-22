@@ -27,7 +27,7 @@ const Color = ({ uid, collectionId, collectionColor }) => {
 
   return (
     <div className='colorPickerPosition '>
-      <Tooltip title='Change list color' placement='bottom'>
+      <Tooltip title='Change list color' placement='top'>
         <div onClick={() => toggleDisplayColorPicker(!displayColorPicker)}>
           <Icon type='bg-colors' />
         </div>

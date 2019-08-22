@@ -1,7 +1,11 @@
 import { useState, useEffect, useReducer } from 'react'
 import { useDispatch } from 'react-redux'
 import { usersCollectionRef } from '../firebase/firebase'
-import { addModalId, deleteModalId } from '../actions/actionCreator'
+import {
+  addModalId,
+  deleteModalId,
+  clearModalId
+} from '../actions/actionCreator'
 
 // grab list of user's item collections
 const useCollectionSnapshot = uid => {
@@ -19,11 +23,16 @@ const useCollectionSnapshot = uid => {
         return items
       case 'modified':
         return items.map(item =>
-          item.id === action.id ? { ...action.collectionInfo } : item
+          item.id === action.collectionInfo.id
+            ? { ...action.collectionInfo }
+            : item
         )
       case 'removed':
         dispatchRedux(deleteModalId(action.collectionInfo.id))
         return items.filter(item => item.id !== action.collectionInfo.id)
+      case 'clear_all':
+        dispatchRedux(clearModalId())
+        return []
       default:
     }
   }, [])
@@ -56,6 +65,7 @@ const useCollectionSnapshot = uid => {
 
       return () => {
         unsubscribe()
+        dispatch({ type: 'clear_all' })
       }
     }
   }, [uid])
