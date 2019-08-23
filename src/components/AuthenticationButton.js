@@ -1,11 +1,10 @@
 import React, { useState } from 'react'
 import useAuthState from '../hooks/useAuthState'
 import { login, logout } from '../firebase/auth'
-import { firebase } from '../firebase/firebase'
 import { Avatar, Icon, Tooltip, message, Button } from 'antd'
 
 const AuthenticationButton = () => {
-  const [user, loading, error] = useAuthState(firebase.auth())
+  const [user, loading, error] = useAuthState()
   const { isAnonymous, displayName, photoURL } = user
   const [click, toggleClick] = useState(false)
 

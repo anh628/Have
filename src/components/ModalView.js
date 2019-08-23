@@ -2,7 +2,6 @@ import React from 'react'
 import Modal from 'react-responsive-modal'
 import { useSelector } from 'react-redux'
 
-// TODO: FIND A WAY TO FOCUS ON ADDING NEW ITEM INPUT
 const ModalView = ({ collectionId, onClose, componentDisplay }) => {
   const open = useSelector(
     state =>
@@ -20,9 +19,6 @@ const ModalView = ({ collectionId, onClose, componentDisplay }) => {
       styles={{
         modal: {
           backgroundColor: 'transparent'
-          // width: '400px',
-          // padding: '1px',
-          // borderRadius: '5px'
         }
       }}
       onClose={onClose}

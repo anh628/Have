@@ -1,6 +1,5 @@
 import React, { useEffect } from 'react'
 import { useSelector, useDispatch } from 'react-redux'
-import { firebase } from '../firebase/firebase'
 import useAuthState from '../hooks/useAuthState'
 import useCollectionSnapshot from '../hooks/useCollectionSnapshot'
 import { toggleModalStatus } from '../actions/actionCreator'
@@ -27,7 +26,7 @@ const App = () => {
       null
   )
   const dispatch = useDispatch()
-  const [user] = useAuthState(firebase.auth())
+  const [user] = useAuthState()
   const { uid, isAnonymous } = user
 
   const [collectionList, loading] = useCollectionSnapshot(uid)

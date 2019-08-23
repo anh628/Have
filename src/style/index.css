@@ -182,9 +182,7 @@ img {
   border: 2px solid #ccc;
   transition: 0.5s;
   outline: none;
-  background-color: #282c34;
-  color: white;
-  width: 95%;
+  width: 100%;
   display: block;
   margin-right: auto;
   margin-left: auto;

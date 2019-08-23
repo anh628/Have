@@ -1,7 +1,6 @@
 import { useState, useEffect, useReducer } from 'react'
 import { usersCollectionRef } from '../firebase/firebase'
 
-// TODO double check how you get the error
 // grab list of a single collection's items
 const useSubCollectionSnapshot = (uid, collectionId) => {
   const [loading, setLoading] = useState(true)

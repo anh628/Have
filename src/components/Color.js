@@ -6,7 +6,6 @@ import { Icon, Tooltip, Radio } from 'antd'
 const Color = ({ uid, collectionId, collectionColor }) => {
   const [displayColorPicker, toggleDisplayColorPicker] = useState(false)
 
-  // TODO come back later
   const colorButtons = (
     <Radio.Group
       style={{ display: 'inline-flex' }}
@@ -19,7 +18,10 @@ const Color = ({ uid, collectionId, collectionColor }) => {
         <Radio.Button
           key={`${collectionId}${color}`}
           value={color}
-          style={{ backgroundColor: color }}
+          style={{
+            backgroundColor: color,
+            border: '1px solid #484646'
+          }}
           disabled={collectionColor === color} />
       ))}
     </Radio.Group>

@@ -21,16 +21,16 @@ export const getUserInfo = user => {
     email: user && user.email
   }
 }
-// TODO: figure out error
-const useAuthState = auth => {
-  const [user, setUser] = useState(auth.currentUser)
+
+const useAuthState = () => {
+  const [user, setUser] = useState(firebase.auth().currentUser)
   const [loading, setLoading] = useState(true)
   const [error, setError] = useState(null)
 
   useEffect(() => {
     const listener = firebase.auth().onAuthStateChanged(
       () => {
-        setUser(auth.currentUser)
+        setUser(firebase.auth().currentUser)
         setLoading(false)
       },
       error => setError(error)
@@ -39,7 +39,7 @@ const useAuthState = auth => {
     return () => {
       listener()
     }
-  }, [auth])
+  }, [])
   return [getUserInfo(user), loading, error]
 }
 
