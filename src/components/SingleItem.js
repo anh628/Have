@@ -39,12 +39,12 @@ const SingleItem = ({ uid, collectionId, itemId, text, isComplete }) => {
         <Icon
           type='check-square'
           onClick={() => toggleItem(uid, collectionId, itemId)}
-          style={{ paddingRight: '5px' }} />
+          style={{ paddingRight: '5px', position: 'absolute', left: '0' }} />
       ) : (
         <Icon
           type='border'
           onClick={() => toggleItem(uid, collectionId, itemId)}
-          style={{ paddingRight: '5px' }} />
+          style={{ paddingRight: '5px', position: 'absolute', left: '0' }} />
       )}
       <p
         className='collection-list-item'
@@ -57,7 +57,7 @@ const SingleItem = ({ uid, collectionId, itemId, text, isComplete }) => {
       <label
         className='deleteButton'
         onClick={() => deleteItem(uid, collectionId, itemId)}>
-        <Icon type='delete' />
+        <Icon type='delete' style={{ position: 'absolute', right: '0' }} />
       </label>
     </div>
   )
