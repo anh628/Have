@@ -6,13 +6,15 @@ import {
   addItem
 } from '../firebase/collectionFunctions'
 import useFetchOnce from '../hooks/useFetchOnce'
-import { Spin } from 'antd'
+import { Button, Spin } from 'antd'
 import Error from './Error'
 
 const AutofillAPI = ({ uid }) => {
   const url = 'https://api.thecatapi.com/v1/images/search?limit=4'
   const jeopardy = 'http://jservice.io/api/random?count=4'
 
+  // TODO figure out to fetch only once or multiple times? multiple times causes app to slow down
+  // useFetch => gives net::ERR_INSUFFICIENT_RESOURCES error
   const [data, loading, error] = useFetchOnce(url, {
     method: 'GET',
     headers: {
@@ -53,6 +55,10 @@ const AutofillAPI = ({ uid }) => {
   if (loading) return <Spin size='large' />
   if (error) return <Error />
 
-  return <button onClick={autofill}>Example</button>
+  return (
+    <Button onClick={autofill} className='Example' style={{ margin: '5px' }}>
+      Example
+    </Button>
+  )
 }
 export default AutofillAPI
