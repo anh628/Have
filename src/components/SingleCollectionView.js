@@ -34,14 +34,13 @@ const SingleCollectionView = ({
       ) : (
         <div>
           <img src={image} alt='cover-art' />
-          <label
+          <Icon
+            type='delete'
             className='deleteImage'
             onClick={() => {
               deleteFile(image)
               deleteImage(uid, collectionId)
-            }}>
-            <Icon type='delete' />
-          </label>
+            }} />
         </div>
       )}
     </div>

@@ -1,4 +1,5 @@
 import { usersCollectionRef, db, firebase } from './firebase'
+import { COLOR_CHOICES } from '../constants/constants'
 
 export const getItemCollectionRef = (uid, collectionId) => {
   return usersCollectionRef.doc(`${uid}/itemCollections/${collectionId}`)
@@ -10,11 +11,10 @@ export const getItemRef = (uid, collectionId, itemId) => {
 }
 
 // because modal id will be collection id
-export const addCollection = (uid, collectionId, title, collectionColor) => {
+export const addCollection = (uid, collectionId, title) => {
   const collectionInfo = {
     title,
-    // collaborators: [], add back in when we do collaborators
-    collectionColor,
+    collectionColor: COLOR_CHOICES[0],
     image: null,
     timeStamp: firebase.firestore.FieldValue.serverTimestamp()
   }
