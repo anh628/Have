@@ -48,7 +48,7 @@ const Footer = ({
             name='files'
             accept='image/*'
             style={{ display: 'none' }} />
-          <Icon type='picture' />
+          <Icon type='picture' onClick={() => toggleMenu(false)} />
         </label>
       </Tooltip>
     </div>
@@ -106,7 +106,7 @@ const Footer = ({
   )
 
   const changeColorButton = (
-    <div className='footer-button'>
+    <div className='footer-button' onClick={() => toggleMenu(false)}>
       <Color uid={uid} collectionId={collectionId} />
     </div>
   )
