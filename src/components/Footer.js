@@ -10,6 +10,7 @@ import {
 import { toggleModalStatus } from '../actions/actionCreator'
 import { Icon, Tooltip } from 'antd'
 import Color from './Color'
+import NewCatButton from './NewCatButton'
 
 const Footer = ({
   collectionColor,
@@ -19,7 +20,8 @@ const Footer = ({
   image,
   uid,
   uncheckedItems,
-  modalView = false
+  modalView = false,
+  itemIds
 }) => {
   const [showMenu, toggleMenu] = useState(false)
   const dispatch = useDispatch()
@@ -126,6 +128,7 @@ const Footer = ({
       style={{ backgroundColor: collectionColor }}>
       {changeColorButton}
       {imageButton}
+      <NewCatButton uid={uid} collectionId={collectionId} itemIds={itemIds} />
       {moreButton}
       {modalView && doneButton}
     </div>

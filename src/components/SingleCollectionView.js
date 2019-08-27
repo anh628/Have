@@ -68,6 +68,7 @@ const SingleCollectionView = ({
     items && items.filter(item => !item.isComplete).length > 0
 
   const checkItems = items && items.filter(item => item.isComplete).length > 0
+  const itemIds = items.map(x => x.itemId)
 
   return (
     <Card
@@ -85,7 +86,8 @@ const SingleCollectionView = ({
           uncheckedItems={uncheckedItems}
           checkItems={checkItems}
           collectionColor={collectionColor}
-          modalView={true} />
+          modalView={true}
+          itemIds={itemIds} />
       ]}>
       <Card.Meta
         title={

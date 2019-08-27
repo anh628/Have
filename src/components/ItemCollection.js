@@ -57,6 +57,7 @@ const ItemCollection = ({
     ? items.filter(item => item.isComplete).length > 0
     : null
 
+  const itemIds = items.map(x => x.itemId)
   // collection won't display in list if it's open
   if (open) return null
   return (
@@ -74,7 +75,8 @@ const ItemCollection = ({
           areItems={items.length > 0}
           uncheckedItems={uncheckedItems}
           checkItems={checkItems}
-          collectionColor={collectionColor} />
+          collectionColor={collectionColor}
+          itemIds={itemIds} />
       ]}>
       <Card.Meta
         title={

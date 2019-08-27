@@ -1,6 +1,6 @@
 import React, { useState } from 'react'
 import { editColor } from '../firebase/collectionFunctions'
-import { COLOR_CHOICES } from '../constants/constants'
+import { COLOR_CHOICES } from '../utils/constants'
 import { Icon, Tooltip, Radio } from 'antd'
 
 const Color = ({ uid, collectionId, collectionColor }) => {
