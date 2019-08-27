@@ -13,8 +13,7 @@ const AutofillAPI = ({ uid }) => {
   const url = 'https://api.thecatapi.com/v1/images/search?limit=4'
   const jeopardy = 'http://jservice.io/api/random?count=4'
 
-  // TODO figure out to fetch only once or multiple times? multiple times causes app to slow down
-  // useFetch => gives net::ERR_INSUFFICIENT_RESOURCES error
+
   const [data, loading, error] = useFetchOnce(url, {
     method: 'GET',
     headers: {
@@ -35,6 +34,7 @@ const AutofillAPI = ({ uid }) => {
           description = data[i].breeds[0].description
           temperament = data[i].breeds[0].temperament
         }
+
         addCollection(uid, collectionId, title || 'cat')
         editImage(uid, collectionId, 'loading')
         editImage(uid, collectionId, picture)
