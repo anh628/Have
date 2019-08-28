@@ -6,3 +6,10 @@ export const catData = data => {
     temperament: data.breeds[0] && data.breeds[0].temperament
   }
 }
+
+export const fetchData = (url, option, setData, setError) => {
+  return fetch(url, option)
+    .then(res => res.json())
+    .then(setData)
+    .catch(setError)
+}

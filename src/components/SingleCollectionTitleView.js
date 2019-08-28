@@ -1,10 +1,11 @@
 import React, { useState } from 'react'
 import { message } from 'antd'
 import { editTitle } from '../firebase/collectionFunctions'
+import useToggle from '../hooks/useToggle'
 
 const EditCollectionTitle = ({ uid, collectionId, title }) => {
   const [newTitle, updateTitle] = useState(title)
-  const [edit, toggleEdit] = useState(false)
+  const [edit, toggleEdit] = useToggle(false)
 
   const error = () => {
     message.error('You must name your list.')
@@ -13,7 +14,7 @@ const EditCollectionTitle = ({ uid, collectionId, title }) => {
     updateTitle(newTitle.trim())
     if (newTitle) {
       editTitle(uid, collectionId, newTitle)
-      toggleEdit(false)
+      toggleEdit()
     } else {
       error()
     }
@@ -39,7 +40,7 @@ const EditCollectionTitle = ({ uid, collectionId, title }) => {
     )
   } else {
     return (
-      <h1 className='titleCollectionView' onClick={() => toggleEdit(true)}>
+      <h1 className='titleCollectionView' onClick={toggleEdit}>
         {newTitle}
       </h1>
     )

@@ -1,17 +1,18 @@
-import React, { useState } from 'react'
+import React from 'react'
 import useAuthState from '../hooks/useAuthState'
+import useToggle from '../hooks/useToggle'
 import { login, logout } from '../firebase/auth'
 import { Avatar, Icon, Tooltip, message, Button } from 'antd'
 
 const AuthenticationButton = () => {
   const [user, loading, error] = useAuthState()
   const { isAnonymous, displayName, photoURL } = user
-  const [click, toggleClick] = useState(false)
+  const [click, toggle] = useToggle(false)
 
   const profilePic = photoURL ? (
     <Avatar
       src={photoURL}
-      onClick={() => toggleClick(!click)}
+      onClick={toggle}
       style={{
         position: 'absolute',
         top: '0',
@@ -26,7 +27,7 @@ const AuthenticationButton = () => {
         top: '0',
         right: '20px'
       }}
-      onClick={() => toggleClick(!click)}>
+      onClick={toggle}>
       {displayName ? displayName[0] : ''}
     </Avatar>
   )

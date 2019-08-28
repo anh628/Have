@@ -1,17 +1,18 @@
-import React, { useState } from 'react'
+import React from 'react'
 import { editColor } from '../firebase/collectionFunctions'
 import { COLOR_CHOICES } from '../utils/constants'
+import useToggle from '../hooks/useToggle'
 import { Icon, Tooltip, Radio } from 'antd'
 
 const Color = ({ uid, collectionId, collectionColor }) => {
-  const [displayColorPicker, toggleDisplayColorPicker] = useState(false)
+  const [displayColorPicker, toggle] = useToggle(false)
 
   const colorButtons = (
     <Radio.Group
       style={{ display: 'inline-flex' }}
       onChange={e => {
         editColor(uid, collectionId, e.target.value)
-        toggleDisplayColorPicker(false)
+        toggle()
       }}
       defaultValue={collectionColor}>
       {COLOR_CHOICES.map(color => (
@@ -30,7 +31,7 @@ const Color = ({ uid, collectionId, collectionColor }) => {
   return (
     <div className='colorPickerPosition '>
       <Tooltip title='Change list color' placement='top'>
-        <div onClick={() => toggleDisplayColorPicker(!displayColorPicker)}>
+        <div onClick={toggle}>
           <Icon type='bg-colors' />
         </div>
       </Tooltip>

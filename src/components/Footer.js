@@ -1,4 +1,4 @@
-import React, { useState } from 'react'
+import React from 'react'
 import { useDispatch } from 'react-redux'
 import { uploadFile, deleteFile } from '../firebase/storageFunctions'
 import {
@@ -8,6 +8,7 @@ import {
   setAllItemsCompleteness
 } from '../firebase/collectionFunctions'
 import { toggleModalStatus } from '../actions/actionCreator'
+import useToggle from '../hooks/useToggle'
 import { Icon, Tooltip } from 'antd'
 import Color from './Color'
 import NewCatButton from './NewCatButton'
@@ -23,7 +24,7 @@ const Footer = ({
   modalView = false,
   itemIds
 }) => {
-  const [showMenu, toggleMenu] = useState(false)
+  const [showMenu, toggle] = useToggle(false)
   const dispatch = useDispatch()
 
   const collectionImageInputId = modalView
@@ -50,7 +51,7 @@ const Footer = ({
             name='files'
             accept='image/*'
             style={{ display: 'none' }} />
-          <Icon type='picture' onClick={() => toggleMenu(false)} />
+          <Icon type='picture' onClick={toggle} />
         </label>
       </Tooltip>
     </div>
@@ -63,13 +64,13 @@ const Footer = ({
   Delete checked items
   */
   const moreButton = (
-    <div className='footer-button' onClick={() => toggleMenu(!showMenu)}>
+    <div className='footer-button' onClick={toggle}>
       <Tooltip title='More' placement='top'>
         <Icon type='menu' className='dropdown' id='more' />
         <div
           className={`dropdown-content-more  ${showMenu ? 'show' : ''}`}
           id={`more-dropdown ${collectionId}`}
-          onClick={() => toggleMenu(false)}>
+          onClick={toggle}>
           <label onClick={() => deleteCollection(uid, collectionId)}>
             Delete list
           </label>
@@ -108,7 +109,7 @@ const Footer = ({
   )
 
   const changeColorButton = (
-    <div className='footer-button' onClick={() => toggleMenu(false)}>
+    <div className='footer-button' onClick={toggle}>
       <Color uid={uid} collectionId={collectionId} />
     </div>
   )
