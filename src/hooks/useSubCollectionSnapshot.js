@@ -46,11 +46,11 @@ const useSubCollectionSnapshot = (uid, collectionId) => {
                 dispatch({ type: 'removed', listInfo })
               }
             })
+            setLoading(false)
           },
           error => setError(error)
         )
 
-      setLoading(false)
       return () => {
         unsubscribe()
       }
