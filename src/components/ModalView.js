@@ -1,9 +1,15 @@
 import React from 'react'
 import Modal from 'react-responsive-modal'
-import { connect } from 'react-redux'
+import { useSelector } from 'react-redux'
 
-// TODO: FIND A WAY TO FOCUS ON ADDING NEW ITEM INPUT
-const ModalView = ({ open, onClose, componentDisplay }) => {
+const ModalView = ({ collectionId, onClose, componentDisplay }) => {
+  const open = useSelector(
+    state =>
+      (state.modal.filter(modal => modal.open === collectionId) &&
+        state.modal.filter(modal => modal.modalId === collectionId)[0] &&
+        state.modal.filter(modal => modal.modalId === collectionId)[0].open) ||
+      false
+  )
   return (
     <Modal
       closeOnOverlayClick
@@ -12,10 +18,7 @@ const ModalView = ({ open, onClose, componentDisplay }) => {
       open={open}
       styles={{
         modal: {
-          backgroundColor: 'transparent',
-          width: '400px',
-          padding: '1px',
-          borderRadius: '5px'
+          backgroundColor: 'transparent'
         }
       }}
       onClose={onClose}
@@ -27,16 +30,4 @@ const ModalView = ({ open, onClose, componentDisplay }) => {
   )
 }
 
-const mapStateToProps = (state, props) => {
-  const open =
-    state.modal.filter(modal => modal.open === props.collectionId) &&
-    state.modal.filter(modal => modal.modalId === props.collectionId)[0] &&
-    state.modal.filter(modal => modal.modalId === props.collectionId)[0].open
-
-  return { open: open || false }
-}
-
-export default connect(
-  mapStateToProps,
-  null
-)(ModalView)
+export default ModalView

@@ -1,71 +1,62 @@
 /* @import '~antd/dist/antd.css'; */
 
+body {
+  margin: 0;
+  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen',
+    'Ubuntu', 'Cantarell', 'Fira Sans', 'Droid Sans', 'Helvetica Neue',
+    sans-serif;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+code {
+  font-family: source-code-pro, Menlo, Monaco, Consolas, 'Courier New',
+    monospace;
+}
+
 #root {
   font-family: 'Lucida Console', Monaco, monospace;
-  background-color: #131519;
 }
 
 .App {
   text-align: center;
-  background-color: #131519;
   align-items: center;
 }
 
-.App-logo {
-  animation: App-logo-spin infinite 20s linear;
-  height: 40vmin;
-  pointer-events: none;
-}
-
 .App-header {
-  background-color: #131519;
   min-height: 35vh;
   display: flex;
   align-items: center;
   justify-content: center;
   font-size: calc(10px + 2vmin);
   color: white;
+  line-height: 2 !important;
 }
 
-.App-link {
-  color: #61dafb;
-}
-
-@keyframes App-logo-spin {
-  from {
-    transform: rotate(0deg);
-  }
-  to {
-    transform: rotate(360deg);
-  }
-}
 .title {
-  margin: 0px;
-  padding: 0px 2px 2px 3px;
-  width: 100%;
-  border: 3px solid #8a8585;
+  border: 3px solid #b5b3b3;
   color: white;
   font-weight: 200;
   border-radius: 2px;
 }
 
+.descrip {
+  text-align: center;
+  font-size: 13px;
+  position: relative;
+  top: -20px;
+}
+
 .footer-bar {
-  display: none;
+  display: inline-flex;
   justify-content: center;
   width: 100%;
-  background-color: rgb(71, 71, 72);
-  border-bottom-left-radius: 5px;
-  border-bottom-right-radius: 5px;
   max-height: 50px;
   margin-top: 5px;
 }
 
 .item-collection:hover .footer-bar {
   display: inline-flex;
-}
-
-.item-collection:hover {
-  padding-bottom: 0px;
 }
 
 .footer-bar .footer-button {
@@ -88,7 +79,6 @@
   color: black;
 }
 
-/* Add animation (fade in the popup) */
 @-webkit-keyframes fadeIn {
   from {
     opacity: 0;
@@ -147,16 +137,14 @@ div.show {
   width: 25%;
   border: gray;
   display: inline-block;
-  border-radius: 10px;
   margin: 8px;
   vertical-align: top;
-  padding-bottom: 5px;
+
   color: white;
 }
 
 img {
   max-width: 100%;
-  border-radius: 10px;
   object-fit: contain;
 }
 
@@ -189,14 +177,12 @@ img {
 
 .addItem {
   padding: 12px 20px;
-  margin: 8px 0;
+  margin: 20px 0 8px 0;
   box-sizing: border-box;
   border: 2px solid #ccc;
   transition: 0.5s;
   outline: none;
-  background-color: #282c34;
-  color: white;
-  width: 95%;
+  width: 100%;
   display: block;
   margin-right: auto;
   margin-left: auto;
@@ -224,6 +210,15 @@ img {
 
 .addCollection:focus {
   border: 3px solid #555;
+}
+
+.title-input .ant-tooltip-inner {
+  min-width: 32px;
+  min-height: 37px;
+}
+
+.title-input .numeric-input-title {
+  font-size: 14px;
 }
 
 .deleteImage {
@@ -281,13 +276,6 @@ img {
   display: none;
 }
 
-.descrip {
-  text-align: center;
-  font-size: 13px;
-  position: relative;
-  top: -13px;
-}
-
 .collection-view {
   border-radius: 5px;
   padding-top: 5px;
@@ -323,4 +311,31 @@ i:focus {
 }
 #list-view.collection-list-item {
   width: 90%;
+}
+
+.authentication {
+  position: absolute;
+  top: 20px;
+  right: 20px;
+  cursor: pointer;
+}
+
+.logout {
+  display: none;
+}
+.logout-visible {
+  position: absolute;
+  top: 36px;
+  right: 0;
+}
+
+.ant-layout-content {
+  top: 175px;
+  display: block;
+  position: relative;
+}
+
+.ant-card-actions {
+  background-color: inherit;
+  border: 0;
 }
