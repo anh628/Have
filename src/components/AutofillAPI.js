@@ -6,16 +6,18 @@ import {
   addItem
 } from '../firebase/collectionFunctions'
 import { CAT_API, CAT_API_OPTION, JEOPARDY_API } from '../utils/constants'
-import { catData } from '../utils/catData'
-import useFetchOnce from '../hooks/useFetchOnce'
+import { catData } from '../utils/functions'
+import useFetch from '../hooks/useFetch'
 import { Button, Spin } from 'antd'
 
 const AutofillAPI = ({ uid }) => {
-  const [data, loading, error] = useFetchOnce(CAT_API, 4, CAT_API_OPTION)
+  const [data, loading, error, getData] = useFetch(CAT_API, 2, CAT_API_OPTION)
 
-  const [jeopardyData] = useFetchOnce(JEOPARDY_API, 4, {})
+  const [jeopardyData, , , getText] = useFetch(JEOPARDY_API, 2, {})
 
   const autofill = async () => {
+    getData()
+    getText()
     if (data) {
       for (let i = 0; i < data.length; i++) {
         const collectionId = uuid.v4()

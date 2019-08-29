@@ -6,23 +6,26 @@ import {
   editTitle
 } from '../firebase/collectionFunctions'
 import { CAT_API, CAT_API_OPTION, JEOPARDY_API } from '../utils/constants'
-import useFetchOnce from '../hooks/useFetchOnce'
 import { Icon, Spin, Tooltip } from 'antd'
 import { cat } from '../utils/cat'
-import { catData } from '../utils/catData'
+import { catData } from '../utils/functions'
+import useFetch from '../hooks/useFetch'
 
 const NewCatButton = ({ uid, collectionId, itemIds }) => {
   const [loading, setLoading] = useState(false)
-  const [data] = useFetchOnce(CAT_API, 1, CAT_API_OPTION)
 
-  const [jeopardyData] = useFetchOnce(JEOPARDY_API, 1, {})
+  const [data, , , getData] = useFetch(CAT_API, 1, CAT_API_OPTION)
+  const [jeopardyData, , , getText] = useFetch(JEOPARDY_API, 1, {})
 
   const deleteItems = () => {
     itemIds.map(id => deleteItem(uid, collectionId, id))
   }
+
   const newData = async () => {
-    if (data) {
-      setLoading(true)
+    setLoading(true)
+    getData()
+    getText()
+    if (data && jeopardyData) {
       const { picture, title, description, temperament } = catData(data[0])
       const { question, answer } = jeopardyData[0]
 
@@ -38,9 +41,8 @@ const NewCatButton = ({ uid, collectionId, itemIds }) => {
         await addItem(uid, collectionId, question)
         addItem(uid, collectionId, `What is ${answer}?`)
       }
-
-      setLoading(false)
     }
+    setLoading(false)
   }
 
   if (loading) {
