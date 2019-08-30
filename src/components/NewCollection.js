@@ -1,66 +1,50 @@
-import React from 'react'
-import { addCollection } from '../firebase/collectionFunctions'
-import { v4 } from 'node-uuid'
-import { COLLECTION_COLOR } from '../constants/constants'
+import React, { useState, useRef } from 'react'
+import { useDispatch } from 'react-redux'
+import uuid from 'uuid'
+import { COLOR_CHOICES } from '../constants/constants'
 import { toggleModalStatus } from '../actions/actionCreator'
-import { connect } from 'react-redux'
+import { addCollection } from '../firebase/collectionFunctions'
+import PropTypes from 'prop-types'
 
-// uid is passed in as a prop
-class NewCollection extends React.Component {
-  state = {
-    collectionId: null
-  }
-
-  setCollectionId (collectionId) {
-    this.setState({
-      collectionId
-    })
-    this.props.toggleModalStatus(collectionId)
-  }
-
-  render () {
-    let input
-    let collectionId
-    let title
-    return (
+const NewCollection = ({ uid }) => {
+  const dispatch = useDispatch()
+  const inputRef = useRef(null)
+  const [collectionId, setCollectionId] = useState(uuid.v4())
+  return (
+    <header className='App-header'>
       <div>
         <h1 className='title'>HAVE</h1>
         <label className='descrip'>a collection of lists</label>
-        <form
-          onSubmit={e => {
-            e.preventDefault()
-            if (!input.value.trim()) {
-              input.value = ' '
+
+        <input
+          className='addCollection'
+          type='text'
+          ref={inputRef}
+          placeholder='name your list'
+          onKeyDown={async e => {
+            // if you hit the escape key, reset the text box
+            if (e.key === 'Escape') {
+              inputRef.current.value = ''
             }
-            title = input.value
-            collectionId = v4()
-            addCollection(
-              this.props.uid,
-              collectionId,
-              title,
-              COLLECTION_COLOR
-            ).then(() => {
-              this.setCollectionId(collectionId)
-            })
-            input.value = ''
-          }}>
-          <input
-            className='addCollection'
-            type='text'
-            ref={node => (input = node)}
-            autoFocus={true}
-            placeholder='name your list' />
-        </form>
+            // if you hit the enter key, create a new collection, reset the text box and open up the modal
+            if (e.key === 'Enter') {
+              const text = inputRef.current.value.trim()
+              if (text) {
+                setCollectionId(uuid.v4())
+                await addCollection(uid, collectionId, text, COLOR_CHOICES[0])
+                dispatch(toggleModalStatus(collectionId))
+              }
+              inputRef.current.value = ''
+            }
+          }}
+          autoFocus />
       </div>
-    )
-  }
+    </header>
+  )
 }
 
-const mapDispatchToProps = {
-  toggleModalStatus
+NewCollection.propTypes = {
+  uid: PropTypes.string.isRequired
 }
 
-export default connect(
-  null,
-  mapDispatchToProps
-)(NewCollection)
+export default NewCollection
