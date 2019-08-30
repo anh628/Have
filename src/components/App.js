@@ -9,7 +9,10 @@ import NewCollection from './NewCollection'
 import List from './List'
 import SingleCollectionView from './SingleCollectionView'
 import ModalView from './ModalView'
+<<<<<<< HEAD
 import AutofillAPI from './AutofillAPI'
+=======
+>>>>>>> master1
 
 const App = () => {
   const open = useSelector(
@@ -63,7 +66,10 @@ const App = () => {
               <NewCollection uid={uid} />
             </Layout.Header>
             <Layout.Content>
+<<<<<<< HEAD
               <AutofillAPI uid={uid} />
+=======
+>>>>>>> master1
               {loading ? (
                 <Spin
                   size='large'

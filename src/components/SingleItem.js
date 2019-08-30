@@ -4,13 +4,20 @@ import {
   deleteItem,
   toggleItem
 } from '../firebase/collectionFunctions'
+<<<<<<< HEAD
 import useToggle from '../hooks/useToggle'
+=======
+>>>>>>> master1
 import { Icon } from 'antd'
 
 // Display items in the modal view (single collection)
 const SingleItem = ({ uid, collectionId, itemId, text, isComplete }) => {
   const [newText, updateText] = useState(text)
+<<<<<<< HEAD
   const [isEditing, toggleEdit] = useToggle(false)
+=======
+  const [isEditing, toggleEdit] = useState(false)
+>>>>>>> master1
 
   const handleBlur = () => {
     updateText(newText.trim())
@@ -19,7 +26,11 @@ const SingleItem = ({ uid, collectionId, itemId, text, isComplete }) => {
     } else {
       deleteItem(uid, collectionId, itemId)
     }
+<<<<<<< HEAD
     toggleEdit()
+=======
+    toggleEdit(false)
+>>>>>>> master1
   }
 
   let editItemDisplay = (
@@ -49,7 +60,11 @@ const SingleItem = ({ uid, collectionId, itemId, text, isComplete }) => {
       )}
       <p
         className='collection-list-item'
+<<<<<<< HEAD
         onClick={toggleEdit}
+=======
+        onClick={() => toggleEdit(true)}
+>>>>>>> master1
         style={{
           textDecoration: isComplete ? 'line-through' : 'none'
         }}>

@@ -347,6 +347,7 @@ i:focus {
   background-color: inherit;
   border: 0;
 }
+<<<<<<< HEAD:src/style/index.css
 
 #notfound {
   height: 100vh;
@@ -450,3 +451,5 @@ i:focus {
 
 .example {
 }
+=======
+>>>>>>> master1:src/App.css
