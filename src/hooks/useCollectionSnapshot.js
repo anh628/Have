@@ -58,10 +58,10 @@ const useCollectionSnapshot = uid => {
                 dispatch({ type: 'removed', collectionInfo })
               }
             })
+            setLoading(false)
           },
           error => setError(error)
         )
-      setLoading(false)
 
       return () => {
         unsubscribe()
