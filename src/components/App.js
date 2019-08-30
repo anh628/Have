@@ -10,7 +10,6 @@ import List from './List'
 import SingleCollectionView from './SingleCollectionView'
 import ModalView from './ModalView'
 import AutofillAPI from './AutofillAPI'
-
 const App = () => {
   const open = useSelector(
     state =>
