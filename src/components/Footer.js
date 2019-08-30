@@ -1,8 +1,4 @@
-<<<<<<< HEAD
 import React from 'react'
-=======
-import React, { useState } from 'react'
->>>>>>> master1
 import { useDispatch } from 'react-redux'
 import { uploadFile, deleteFile } from '../firebase/storageFunctions'
 import {
@@ -12,10 +8,7 @@ import {
   setAllItemsCompleteness
 } from '../firebase/collectionFunctions'
 import { toggleModalStatus } from '../actions/actionCreator'
-<<<<<<< HEAD
 import useToggle from '../hooks/useToggle'
-=======
->>>>>>> master1
 import { Icon, Tooltip } from 'antd'
 import Color from './Color'
 import NewCatButton from './NewCatButton'
@@ -28,16 +21,10 @@ const Footer = ({
   image,
   uid,
   uncheckedItems,
-<<<<<<< HEAD
   modalView = false,
   itemIds
 }) => {
   const [showMenu, toggle] = useToggle(false)
-=======
-  modalView = false
-}) => {
-  const [showMenu, toggleMenu] = useState(false)
->>>>>>> master1
   const dispatch = useDispatch()
 
   const collectionImageInputId = modalView
@@ -64,11 +51,7 @@ const Footer = ({
             name='files'
             accept='image/*'
             style={{ display: 'none' }} />
-<<<<<<< HEAD
           <Icon type='picture' onClick={toggle} />
-=======
-          <Icon type='picture' />
->>>>>>> master1
         </label>
       </Tooltip>
     </div>
@@ -81,21 +64,13 @@ const Footer = ({
   Delete checked items
   */
   const moreButton = (
-<<<<<<< HEAD
     <div className='footer-button' onClick={toggle}>
-=======
-    <div className='footer-button' onClick={() => toggleMenu(!showMenu)}>
->>>>>>> master1
       <Tooltip title='More' placement='top'>
         <Icon type='menu' className='dropdown' id='more' />
         <div
           className={`dropdown-content-more  ${showMenu ? 'show' : ''}`}
           id={`more-dropdown ${collectionId}`}
-<<<<<<< HEAD
           onClick={toggle}>
-=======
-          onClick={() => toggleMenu(false)}>
->>>>>>> master1
           <label onClick={() => deleteCollection(uid, collectionId)}>
             Delete list
           </label>
@@ -134,11 +109,7 @@ const Footer = ({
   )
 
   const changeColorButton = (
-<<<<<<< HEAD
     <div className='footer-button' onClick={toggle}>
-=======
-    <div className='footer-button'>
->>>>>>> master1
       <Color uid={uid} collectionId={collectionId} />
     </div>
   )
@@ -158,10 +129,7 @@ const Footer = ({
       style={{ backgroundColor: collectionColor }}>
       {changeColorButton}
       {imageButton}
-<<<<<<< HEAD
       <NewCatButton uid={uid} collectionId={collectionId} itemIds={itemIds} />
-=======
->>>>>>> master1
       {moreButton}
       {modalView && doneButton}
     </div>

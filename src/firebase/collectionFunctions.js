@@ -1,8 +1,5 @@
 import { usersCollectionRef, db, firebase } from './firebase'
-<<<<<<< HEAD
 import { COLOR_CHOICES } from '../utils/constants'
-=======
->>>>>>> master1
 
 export const getItemCollectionRef = (uid, collectionId) => {
   return usersCollectionRef.doc(`${uid}/itemCollections/${collectionId}`)

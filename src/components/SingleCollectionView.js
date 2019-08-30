@@ -34,23 +34,13 @@ const SingleCollectionView = ({
       ) : (
         <div>
           <img src={image} alt='cover-art' />
-<<<<<<< HEAD
           <Icon
             type='delete'
-=======
-          <label
->>>>>>> master1
             className='deleteImage'
             onClick={() => {
               deleteFile(image)
               deleteImage(uid, collectionId)
-<<<<<<< HEAD
             }} />
-=======
-            }}>
-            <Icon type='delete' />
-          </label>
->>>>>>> master1
         </div>
       )}
     </div>
@@ -78,10 +68,7 @@ const SingleCollectionView = ({
     items && items.filter(item => !item.isComplete).length > 0
 
   const checkItems = items && items.filter(item => item.isComplete).length > 0
-<<<<<<< HEAD
   const itemIds = items.map(x => x.itemId)
-=======
->>>>>>> master1
 
   return (
     <Card
@@ -99,12 +86,8 @@ const SingleCollectionView = ({
           uncheckedItems={uncheckedItems}
           checkItems={checkItems}
           collectionColor={collectionColor}
-<<<<<<< HEAD
           modalView={true}
           itemIds={itemIds} />
-=======
-          modalView={true} />
->>>>>>> master1
       ]}>
       <Card.Meta
         title={

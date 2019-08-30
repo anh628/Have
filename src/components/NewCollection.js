@@ -1,10 +1,6 @@
 import React, { useState, useRef } from 'react'
 import { useDispatch } from 'react-redux'
 import uuid from 'uuid'
-<<<<<<< HEAD
-=======
-import { COLOR_CHOICES } from '../constants/constants'
->>>>>>> master1
 import { toggleModalStatus } from '../actions/actionCreator'
 import { addCollection } from '../firebase/collectionFunctions'
 import PropTypes from 'prop-types'
@@ -34,11 +30,7 @@ const NewCollection = ({ uid }) => {
               const text = inputRef.current.value.trim()
               if (text) {
                 setCollectionId(uuid.v4())
-<<<<<<< HEAD
                 await addCollection(uid, collectionId, text)
-=======
-                await addCollection(uid, collectionId, text, COLOR_CHOICES[0])
->>>>>>> master1
                 dispatch(toggleModalStatus(collectionId))
               }
               inputRef.current.value = ''
