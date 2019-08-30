@@ -1,69 +1,42 @@
-import React from 'react'
-import reactCSS from 'reactcss'
-import { GithubPicker } from 'react-color'
+import React, { useState } from 'react'
 import { editColor } from '../firebase/collectionFunctions'
 import { COLOR_CHOICES } from '../constants/constants'
-import { Icon } from 'antd'
-class Color extends React.Component {
-  state = {
-    displayColorPicker: false
-  }
+import { Icon, Tooltip, Radio } from 'antd'
 
-  handleClick = () => {
-    // when the color picker is clicked, change the value of displayColorPicker so that the color palette opens up
-    this.setState({ displayColorPicker: !this.state.displayColorPicker })
-  }
+const Color = ({ uid, collectionId, collectionColor }) => {
+  const [displayColorPicker, toggleDisplayColorPicker] = useState(false)
 
-  handleClose = () => {
-    // after the color is selected from the color palette, make displayColorPicker false again
-    this.setState({ displayColorPicker: false })
-  }
+  const colorButtons = (
+    <Radio.Group
+      style={{ display: 'inline-flex' }}
+      onChange={e => {
+        editColor(uid, collectionId, e.target.value)
+        toggleDisplayColorPicker(false)
+      }}
+      defaultValue={collectionColor}>
+      {COLOR_CHOICES.map(color => (
+        <Radio.Button
+          key={`${collectionId}${color}`}
+          value={color}
+          style={{
+            backgroundColor: color,
+            border: '1px solid #484646'
+          }}
+          disabled={collectionColor === color} />
+      ))}
+    </Radio.Group>
+  )
 
-  handleChange = color => {
-    editColor(this.props.uid, this.props.collectionId, color.hex)
-  }
-
-  render () {
-    const styles = reactCSS({
-      default: {
-        color: {
-          width: '15px',
-          height: '15px',
-          borderRadius: '1px',
-          background: `${this.props.color}`
-        },
-        popover: {
-          position: 'absolute',
-          zIndex: '2'
-        },
-        cover: {
-          position: 'fixed',
-          top: '0px',
-          right: '0px',
-          bottom: '0px',
-          left: '0px'
-        }
-      }
-    })
-
-    return (
-      <div className='colorPickerPosition '>
-        <div style={styles.swatch} onClick={this.handleClick}>
+  return (
+    <div className='colorPickerPosition '>
+      <Tooltip title='Change list color' placement='top'>
+        <div onClick={() => toggleDisplayColorPicker(!displayColorPicker)}>
           <Icon type='bg-colors' />
         </div>
-        {this.state.displayColorPicker ? (
-          <div style={styles.popover}>
-            <div style={styles.cover} onClick={this.handleClose} />
-            <GithubPicker
-              colors={COLOR_CHOICES}
-              width='140px'
-              color={this.props.collectionColor}
-              onChange={this.handleChange} />
-          </div>
-        ) : null}
-      </div>
-    )
-  }
+      </Tooltip>
+      <div>{displayColorPicker && colorButtons}</div>
+    </div>
+  )
 }
 
 export default Color

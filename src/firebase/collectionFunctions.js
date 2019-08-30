@@ -1,11 +1,9 @@
 import { usersCollectionRef, db, firebase } from './firebase'
-import { v4 } from 'node-uuid'
-import { addModalId, deleteModalId } from '../actions/actionCreator'
 
-const getItemCollectionRef = (uid, collectionId) => {
+export const getItemCollectionRef = (uid, collectionId) => {
   return usersCollectionRef.doc(`${uid}/itemCollections/${collectionId}`)
 }
-const getItemRef = (uid, collectionId, itemId) => {
+export const getItemRef = (uid, collectionId, itemId) => {
   return usersCollectionRef.doc(
     `${uid}/itemCollections/${collectionId}/items/${itemId}`
   )
@@ -43,7 +41,7 @@ export const deleteTitle = (uid, collectionId) => {
 }
 
 export const addItem = (uid, collectionId, text) => {
-  let itemId = v4()
+  let itemId = Date.now()
   const itemInfo = {
     itemId,
     text,
@@ -138,7 +136,7 @@ export const setAllItemsCompleteness = (
 // add and edit color are basically the same thing since we already have a default set to null
 export const editColor = (uid, collectionId, collectionColor) => {
   const itemCollectionRef = getItemCollectionRef(uid, collectionId)
-  console.log('editing color')
+
   return itemCollectionRef
     .update({ collectionColor })
     .catch(error => console.log(error))
@@ -166,21 +164,3 @@ export const removeCollaborator = (uid, collectionId, collabUID) => {
     .catch(error => console.log(error))
 }
 */
-
-export const fetchCollectionIds = uid => dispatch => {
-  return usersCollectionRef
-    .doc(uid)
-    .collection('itemCollections')
-    .onSnapshot(querySnapshot => {
-      querySnapshot.docChanges().forEach(change => {
-        const collectionId = change.doc.id
-
-        if (change.type === 'added') {
-          dispatch(addModalId(collectionId))
-        }
-        if (change.type === 'removed') {
-          dispatch(deleteModalId(collectionId))
-        }
-      })
-    })
-}

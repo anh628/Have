@@ -1,13 +1,12 @@
 import React from 'react'
 import ReactDOM from 'react-dom'
-import './index.css'
-import * as serviceWorker from './serviceWorker'
-import { store } from './store'
-// import PropPrint from './components/DummyPropsPrinter/PropPrint'
-import App from './App'
 import { Provider } from 'react-redux'
+
 import { firebase } from './firebase/firebase'
-import { fetchCollectionIds } from './firebase/collectionFunctions'
+import App from './components/App'
+import { store } from './store/store'
+import * as serviceWorker from './serviceWorker'
+import './style/index.css'
 
 ReactDOM.render(
   <Provider store={store}>
@@ -21,13 +20,6 @@ ReactDOM.render(
 // Learn more about service workers: https://bit.ly/CRA-PWA
 serviceWorker.unregister()
 
-// need to sign in anonymously so that guest can create lists without app crashing
-firebase.auth().onAuthStateChanged(user => {
-  if (user) {
-    store.dispatch(fetchCollectionIds(user.uid))
-  } else {
-    firebase.auth().signInAnonymously()
-  }
-})
+firebase.auth().signInAnonymously()
 
 firebase.auth().setPersistence(firebase.auth.Auth.Persistence.LOCAL)

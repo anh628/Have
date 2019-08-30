@@ -1,47 +1,70 @@
-import React from 'react'
-import PropTypes from 'prop-types'
-import { connect } from 'react-redux'
-import { compose } from 'redux'
-import { withFirebase, isLoaded } from 'react-redux-firebase'
+import React, { useState } from 'react'
+import useAuthState from '../hooks/useAuthState'
+import { login, logout } from '../firebase/auth'
+import { Avatar, Icon, Tooltip, message, Button } from 'antd'
 
-function AuthenticationButton ({ firebase, auth, isAnonymous }) {
-  function loginWithGoogle () {
-    return firebase.login({ provider: 'google', type: 'popup' })
-  }
-  function logout () {
-    return firebase.logout()
-  }
-  return (
-    <div>
-      {!isLoaded(auth) ? (
-        <span>Loading...</span>
-      ) : isAnonymous ? (
-        <button onClick={loginWithGoogle}>Login With Google</button>
-      ) : (
-        <div>
-          <button style={{ width: '20rem' }} onClick={logout}>
-            {' '}
-            Logout
-          </button>
-        </div>
-      )}
-    </div>
+const AuthenticationButton = () => {
+  const [user, loading, error] = useAuthState()
+  const { isAnonymous, displayName, photoURL } = user
+  const [click, toggleClick] = useState(false)
+
+  const profilePic = photoURL ? (
+    <Avatar
+      src={photoURL}
+      onClick={() => toggleClick(!click)}
+      style={{
+        position: 'absolute',
+        top: '0',
+        right: '20px'
+      }} />
+  ) : (
+    <Avatar
+      style={{
+        color: '#f56a00',
+        backgroundColor: '#fde3cf',
+        position: 'absolute',
+        top: '0',
+        right: '20px'
+      }}
+      onClick={() => toggleClick(!click)}>
+      {displayName ? displayName[0] : ''}
+    </Avatar>
   )
+
+  if (error) {
+    message.error('Error signing in.')
+  }
+  if (loading) {
+    return (
+      <div className='authentication'>
+        <Icon
+          type='loading'
+          style={{
+            color: 'white',
+            fontSize: '20px'
+          }} />
+      </div>
+    )
+  } else {
+    return (
+      <div className='authentication'>
+        {isAnonymous ? (
+          <Button onClick={login}>Login With Google</Button>
+        ) : (
+          <div style={{ width: '54px', height: '30px' }}>
+            <Tooltip title={displayName} placement='leftBottom'>
+              <div className='profile'>{profilePic}</div>
+            </Tooltip>
+            <Button
+              className={`logout${click ? '-visible' : ''}`}
+              onClick={logout}>
+              Logout
+            </Button>
+          </div>
+        )}
+      </div>
+    )
+  }
 }
 
-AuthenticationButton.propTypes = {
-  firebase: PropTypes.shape({
-    login: PropTypes.func.isRequired
-  }),
-  auth: PropTypes.object
-}
-
-export default compose(
-  withFirebase,
-  connect(state => {
-    return {
-      auth: state.firebase.auth, // auth passed as props.auth
-      isAnonymous: state.firebase.auth.isAnonymous
-    }
-  })
-)(AuthenticationButton)
+export default AuthenticationButton
