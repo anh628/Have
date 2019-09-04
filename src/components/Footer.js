@@ -22,9 +22,11 @@ const Footer = ({
   uid,
   uncheckedItems,
   modalView = false,
-  itemIds
+  itemIds,
+  toggleLoadingImage
 }) => {
   const [showMenu, toggle] = useToggle(false)
+
   const dispatch = useDispatch()
 
   const collectionImageInputId = modalView
@@ -39,19 +41,20 @@ const Footer = ({
             type='file'
             onChange={async () => {
               if (image) await deleteFile(image)
-              editImage(uid, collectionId, 'loading')
+              toggleLoadingImage()
               const url = await uploadFile(
                 collectionImageInputId,
                 uid,
                 collectionId
               )
               editImage(uid, collectionId, url)
+              toggleLoadingImage()
             }}
             id={collectionImageInputId}
             name='files'
             accept='image/*'
             style={{ display: 'none' }} />
-          <Icon type='picture' onClick={toggle} />
+          <Icon type='picture' onClick={showMenu ? toggle : null} />
         </label>
       </Tooltip>
     </div>

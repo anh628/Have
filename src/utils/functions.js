@@ -7,9 +7,9 @@ export const catData = data => {
   }
 }
 
-export const fetchData = (url, option, setData, setError) => {
-  return fetch(url, option)
-    .then(res => res.json())
-    .then(setData)
-    .catch(setError)
+export const fetchData = async (url, option) => {
+  let error
+  const response = await fetch(url, option).catch(e => (error = e))
+  const json = await response.json()
+  return [json, error]
 }

@@ -8,13 +8,15 @@ const useFetch = (url, limit, option) => {
 
   const apiURL = `${url}${limit}`
 
-  const handleData = useCallback(() => {
-    fetchData(apiURL, option, setData)
+  const handleData = useCallback(async () => {
+    const [_data, _error] = await fetchData(apiURL, option)
+    setData(_data)
+    setError(_error)
   }, [apiURL, option])
 
   useEffect(() => {
     setLoading(true)
-    fetchData(apiURL, option, setData, setError)
+    handleData()
     setLoading(false)
   }, [])
 

@@ -29,17 +29,15 @@ const NewCatButton = ({ uid, collectionId, itemIds }) => {
       const { picture, title, description, temperament } = catData(data[0])
       const { question, answer } = jeopardyData[0]
 
-      editTitle(uid, collectionId, title || 'kitty')
-
-      editImage(uid, collectionId, 'loading')
-      editImage(uid, collectionId, picture)
-
       deleteItems()
+
+      editTitle(uid, collectionId, title || 'kitty')
+      editImage(uid, collectionId, picture)
       if (description) await addItem(uid, collectionId, description)
       if (temperament) await addItem(uid, collectionId, temperament)
       if (!description && !temperament) {
-        await addItem(uid, collectionId, question)
-        addItem(uid, collectionId, `What is ${answer}?`)
+        if (question.trim()) await addItem(uid, collectionId, question)
+        if (answer.trim()) addItem(uid, collectionId, `What is ${answer}?`)
       }
     }
     setLoading(false)
