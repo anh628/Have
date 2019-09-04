@@ -1,14 +1,3 @@
-import uuid from 'uuid'
-import { CAT_API, CAT_API_OPTION, JEOPARDY_API } from './constants'
-import useFetch from '../hooks/useFetch'
-import {
-  addCollection,
-  editImage,
-  addItem,
-  deleteItem,
-  editTitle
-} from '../firebase/collectionFunctions'
-
 export const catData = data => {
   return {
     picture: data.url,
