@@ -2,45 +2,80 @@ import React from 'react'
 import uuid from 'uuid'
 import {
   addCollection,
+  deleteItem,
+  editTitle,
   editImage,
   addItem
 } from '../firebase/collectionFunctions'
 import { CAT_API, CAT_API_OPTION, JEOPARDY_API } from '../utils/constants'
 import { catData } from '../utils/functions'
 import useFetch from '../hooks/useFetch'
-import { Button, Spin } from 'antd'
+import { cat } from '../utils/cat'
+import { Button, Spin, Tooltip, Icon } from 'antd'
 
-const AutofillAPI = ({ uid }) => {
-  const [data, loading, error, getData] = useFetch(CAT_API, 2, CAT_API_OPTION)
+const AutofillAPI = ({ uid, count, collectionId = null, itemIds }) => {
+  const [data, catLoading, catError, getData] = useFetch(
+    CAT_API,
+    count,
+    CAT_API_OPTION
+  )
 
-  const [jeopardyData, , , getText] = useFetch(JEOPARDY_API, 2, {})
-
+  const [jeopardyData, jeopardyLoading, jeopardyError, getText] = useFetch(
+    JEOPARDY_API,
+    count,
+    {}
+  )
   const autofill = async () => {
-    getData()
-    getText()
-    if (data) {
-      for (let i = 0; i < data.length; i++) {
-        const collectionId = uuid.v4()
-        const { picture, title, description, temperament } = catData(data[i])
-        const { question, answer } = jeopardyData[i]
+    await Promise.all([getData(), getText()])
 
-        addCollection(uid, collectionId, title || 'cat')
+    for (let i = 0; i < data.length; i++) {
+      let collectionID = collectionId || uuid.v4()
+      const { picture, title, description, temperament } = catData(data[i])
+      const { question, answer } = jeopardyData[i]
 
-        editImage(uid, collectionId, 'loading')
-        editImage(uid, collectionId, picture)
+      if (itemIds) {
+        itemIds.map(id => deleteItem(uid, collectionID, id))
+        editTitle(uid, collectionID, title || 'kitty')
+      } else {
+        addCollection(uid, collectionID, title || 'cat')
+      }
 
-        if (description) await addItem(uid, collectionId, description)
-        if (temperament) await addItem(uid, collectionId, temperament)
-        if (!description && !temperament) {
-          if (question) await addItem(uid, collectionId, question)
-          addItem(uid, collectionId, `What is ${answer}?`)
-        }
+      editImage(uid, collectionID, picture)
+      if (description) await addItem(uid, collectionID, description)
+      if (temperament) await addItem(uid, collectionID, temperament)
+      if (!description && !temperament) {
+        if (question.trim()) await addItem(uid, collectionID, question)
+        if (answer.trim()) addItem(uid, collectionID, `What is ${answer}?`)
       }
     }
   }
+  const loading = catLoading || jeopardyLoading
+  const error = catError || jeopardyError
 
-  if (loading) return <Spin size='large' />
+  if (loading) {
+    return (
+      <Spin
+        size='large'
+        style={{
+          position: 'absolute',
+          top: '-90px',
+          left: 'calc(50 %)'
+        }} />
+    )
+  }
   if (error) return <p>Error</p>
+
+  if (itemIds) {
+    return (
+      <Tooltip title='Get new info' placement='top'>
+        <Icon
+          className='footer-button'
+          component={cat}
+          onClick={autofill}
+          style={{ margin: '5px' }} />
+      </Tooltip>
+    )
+  }
 
   return (
     <Button onClick={autofill} className='Example' style={{ margin: '5px' }}>

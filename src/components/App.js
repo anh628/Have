@@ -62,7 +62,7 @@ const App = () => {
               <NewCollection uid={uid} />
             </Layout.Header>
             <Layout.Content>
-              <AutofillAPI uid={uid} />
+              <AutofillAPI uid={uid} count={2} />
               {loading ? (
                 <Spin
                   size='large'

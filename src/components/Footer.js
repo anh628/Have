@@ -11,7 +11,7 @@ import { toggleModalStatus } from '../actions/actionCreator'
 import useToggle from '../hooks/useToggle'
 import { Icon, Tooltip } from 'antd'
 import Color from './Color'
-import NewCatButton from './NewCatButton'
+import AutofillAPI from './AutofillAPI'
 
 const Footer = ({
   collectionColor,
@@ -132,7 +132,11 @@ const Footer = ({
       style={{ backgroundColor: collectionColor }}>
       {changeColorButton}
       {imageButton}
-      <NewCatButton uid={uid} collectionId={collectionId} itemIds={itemIds} />
+      <AutofillAPI
+        uid={uid}
+        collectionId={collectionId}
+        itemIds={itemIds}
+        count={1} />
       {moreButton}
       {modalView && doneButton}
     </div>
