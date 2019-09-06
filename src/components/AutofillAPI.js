@@ -10,6 +10,7 @@ import {
 import { CAT_API, CAT_API_OPTION, JEOPARDY_API } from '../utils/constants'
 import { catData } from '../utils/functions'
 import useFetch from '../hooks/useFetch'
+import useToggle from '../hooks/useToggle'
 import { cat } from '../utils/cat'
 import { Button, Spin, Tooltip, Icon } from 'antd'
 
@@ -25,62 +26,86 @@ const AutofillAPI = ({ uid, count, collectionId = null, itemIds }) => {
     count,
     {}
   )
-  const autofill = async () => {
-    await Promise.all([getData(), getText()])
-
-    for (let i = 0; i < data.length; i++) {
-      let collectionID = collectionId || uuid.v4()
-      const { picture, title, description, temperament } = catData(data[i])
-      const { question, answer } = jeopardyData[i]
-
-      if (itemIds) {
-        itemIds.map(id => deleteItem(uid, collectionID, id))
-        editTitle(uid, collectionID, title || 'kitty')
-      } else {
-        addCollection(uid, collectionID, title || 'cat')
-      }
-
-      editImage(uid, collectionID, picture)
-      if (description) await addItem(uid, collectionID, description)
-      if (temperament) await addItem(uid, collectionID, temperament)
-      if (!description && !temperament) {
-        if (question.trim()) await addItem(uid, collectionID, question)
-        if (answer.trim()) addItem(uid, collectionID, `What is ${answer}?`)
-      }
-    }
-  }
-  const loading = catLoading || jeopardyLoading
+  const [loading, toggleLoading] = useToggle(catLoading || jeopardyLoading)
   const error = catError || jeopardyError
 
-  if (loading) {
-    return (
-      <Spin
-        size='large'
-        style={{
-          position: 'absolute',
-          top: '-90px',
-          left: 'calc(50 %)'
-        }} />
-    )
+  const autofill = async () => {
+    if (loading) return null
+    toggleLoading()
+    await Promise.all([getData(), getText()])
+
+    if (data && jeopardyData) {
+      for (let i = 0; i < data.length; i++) {
+        let collectionID = collectionId || uuid.v4()
+        const { picture, title, description, temperament } = catData(data[i])
+        const { question, answer } = jeopardyData[i]
+
+        if (itemIds) {
+          itemIds.map(id => deleteItem(uid, collectionID, id))
+          editTitle(uid, collectionID, title || 'kitty')
+        } else {
+          addCollection(uid, collectionID, title || 'cat')
+        }
+
+        editImage(uid, collectionID, picture)
+        if (description) await addItem(uid, collectionID, description)
+        if (temperament) await addItem(uid, collectionID, temperament)
+        if (!description && !temperament) {
+          if (question && question.trim()) {
+            await addItem(uid, collectionID, question)
+          }
+          if (answer && answer.trim()) {
+            addItem(uid, collectionID, `What is ${answer}?`)
+          }
+        }
+      }
+    }
+    toggleLoading()
   }
+
+  const spinner = (
+    <Spin
+      size='large'
+      style={{
+        position: 'absolute',
+        top: '-90px',
+        left: 'calc(50 %)'
+      }} />
+  )
+
   if (error) return <p>Error</p>
 
   if (itemIds) {
     return (
-      <Tooltip title='Get new info' placement='top'>
-        <Icon
-          className='footer-button'
-          component={cat}
-          onClick={autofill}
-          style={{ margin: '5px' }} />
-      </Tooltip>
+      <div>
+        {loading && spinner}
+        <Tooltip title='Get new info' placement='top'>
+          <Icon
+            className='footer-button'
+            component={cat}
+            onClick={autofill}
+            style={{
+              margin: '5px',
+              cursor: `${loading ? 'not-allowed' : 'pointer'}`
+            }} />
+        </Tooltip>
+      </div>
     )
   }
 
   return (
-    <Button onClick={autofill} className='Example' style={{ margin: '5px' }}>
-      Example
-    </Button>
+    <div>
+      {loading && spinner}
+      <Button
+        onClick={autofill}
+        className='Example'
+        style={{
+          margin: '5px',
+          cursor: `${loading ? 'not-allowed' : 'pointer'}`
+        }}>
+        Example
+      </Button>
+    </div>
   )
 }
 export default AutofillAPI

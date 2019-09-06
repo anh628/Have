@@ -19,7 +19,7 @@ export const uploadFile = (collectionImageInputId, uid, collectionId) => {
 }
 
 export const deleteFile = imageUrl => {
-  if (imageUrl.includes('firebasestorage')) {
+  if (imageUrl.indexOf('https://firebasestorage.googleapis.com/') === 0) {
     const httpsRef = storage.refFromURL(imageUrl)
     return httpsRef.delete().catch(error => console.log(error))
   } else return null
