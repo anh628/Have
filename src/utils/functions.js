@@ -10,6 +10,7 @@ export const catData = data => {
 export const fetchData = async (url, option) => {
   let error
   const response = await fetch(url, option).catch(e => (error = e))
+  if (error) return [null, error]
   const json = await response.json()
   return [json, error]
 }

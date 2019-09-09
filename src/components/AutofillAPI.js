@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { useEffect } from 'react'
 import uuid from 'uuid'
 import {
   addCollection,
@@ -15,38 +15,25 @@ import { cat } from '../utils/cat'
 import { Button, Spin, Tooltip, Icon } from 'antd'
 
 const AutofillAPI = ({ uid, count, collectionId = null, itemIds }) => {
-  const [data, catLoading, catError, getData] = useFetch(
-    CAT_API,
+  const [data, _loading, error, getData] = useFetch(
+    [CAT_API, JEOPARDY_API],
     count,
-    CAT_API_OPTION
+    [CAT_API_OPTION, null]
   )
+  const [loading, toggleLoading] = useToggle(_loading)
 
-  const [jeopardyData, jeopardyLoading, jeopardyError, getText] = useFetch(
-    JEOPARDY_API,
-    count,
-    {}
-  )
-  const [loading, toggleLoading] = useToggle(catLoading || jeopardyLoading)
-  const error = catError || jeopardyError
-
-  const autofill = async () => {
-    if (loading) return null
-    toggleLoading()
-    await Promise.all([getData(), getText()])
-
-    if (data && jeopardyData) {
-      for (let i = 0; i < data.length; i++) {
+  useEffect(() => {
+    const addInfo = async () => {
+      for (let j = 0; j < count; j++) {
         let collectionID = collectionId || uuid.v4()
-        const { picture, title, description, temperament } = catData(data[i])
-        const { question, answer } = jeopardyData[i]
-
+        const { picture, title, description, temperament } = catData(data[0][j])
+        const { question, answer } = data[1][j]
         if (itemIds) {
           itemIds.map(id => deleteItem(uid, collectionID, id))
           editTitle(uid, collectionID, title || 'kitty')
         } else {
           addCollection(uid, collectionID, title || 'cat')
         }
-
         editImage(uid, collectionID, picture)
         if (description) await addItem(uid, collectionID, description)
         if (temperament) await addItem(uid, collectionID, temperament)
@@ -60,7 +47,16 @@ const AutofillAPI = ({ uid, count, collectionId = null, itemIds }) => {
         }
       }
     }
+    if (data.length === 2) {
+      if (loading) toggleLoading()
+      addInfo()
+    }
+  }, [data])
+
+  const autofill = async () => {
+    if (loading) return null
     toggleLoading()
+    await getData()
   }
 
   const spinner = (
