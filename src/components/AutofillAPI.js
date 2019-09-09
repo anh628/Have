@@ -15,17 +15,21 @@ import { cat } from '../utils/cat'
 import { Button, Spin, Tooltip, Icon } from 'antd'
 
 const AutofillAPI = ({ uid, count, collectionId = null, itemIds }) => {
-  const APIs = [CAT_API, JEOPARDY_API]
-  const options = [CAT_API_OPTION, null]
-  const [data, _loading, error, getData] = useFetch(APIs, count, options)
+  const APIs = [
+    { api: CAT_API, option: CAT_API_OPTION },
+    { api: JEOPARDY_API, option: null }
+  ]
+  const [data, _loading, error, getData] = useFetch(APIs, count)
   const [loading, toggleLoading] = useToggle(_loading)
 
   useEffect(() => {
     const addInfo = async () => {
       for (let j = 0; j < count; j++) {
         let collectionID = collectionId || uuid.v4()
-        const { picture, title, description, temperament } = catData(data[0][j])
-        const { question, answer } = data[1][j]
+        const { picture, title, description, temperament } = catData(
+          data[APIs[0].api][j]
+        )
+        const { question, answer } = data[APIs[1].api][j]
         if (itemIds) {
           itemIds.map(id => deleteItem(uid, collectionID, id))
           editTitle(uid, collectionID, title || 'kitty')
@@ -45,7 +49,7 @@ const AutofillAPI = ({ uid, count, collectionId = null, itemIds }) => {
         }
       }
     }
-    if (data.length === APIs.length) {
+    if (Object.keys(data).length === APIs.length) {
       addInfo()
       if (loading) toggleLoading()
     }

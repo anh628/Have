@@ -2,25 +2,27 @@ import { useState, useReducer, useCallback } from 'react'
 import { fetchData } from '../utils/functions'
 import useToggle from './useToggle'
 
-const useFetch = (url, limit, option) => {
+const useFetch = (APIs, limit) => {
   const [loading, toggleLoading] = useToggle(false)
   const [error, setError] = useState(null)
   const [data, dispatchData] = useReducer((state, action) => {
-    const data = state && state.length < url.length ? [...state] : []
-    data.push(action)
+    const data =
+      state && Object.keys(state).length < APIs.length ? { ...state } : {}
+    data[action.index] = [...action.data]
+
     return data
-  }, [])
+  }, {})
 
   const handleData = useCallback(async () => {
     toggleLoading()
-    for (let i = 0; i < url.length; i++) {
-      const [_data, _error] = await fetchData(`${url[i]}${limit}`, option[i])
-      dispatchData(_data)
-      setError(_error)
-    }
 
+    APIs.map(async function (API) {
+      const [_data, _error] = await fetchData(`${API.api}${limit}`, API.option)
+      dispatchData({ data: _data, index: API.api })
+      if (!error) setError(_error)
+    })
     toggleLoading()
-  }, [url, limit, option])
+  }, [APIs, limit])
 
   return [data, loading, error, handleData]
 }
