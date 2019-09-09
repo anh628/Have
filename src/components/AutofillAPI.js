@@ -15,11 +15,9 @@ import { cat } from '../utils/cat'
 import { Button, Spin, Tooltip, Icon } from 'antd'
 
 const AutofillAPI = ({ uid, count, collectionId = null, itemIds }) => {
-  const [data, _loading, error, getData] = useFetch(
-    [CAT_API, JEOPARDY_API],
-    count,
-    [CAT_API_OPTION, null]
-  )
+  const APIs = [CAT_API, JEOPARDY_API]
+  const options = [CAT_API_OPTION, null]
+  const [data, _loading, error, getData] = useFetch(APIs, count, options)
   const [loading, toggleLoading] = useToggle(_loading)
 
   useEffect(() => {
@@ -47,9 +45,9 @@ const AutofillAPI = ({ uid, count, collectionId = null, itemIds }) => {
         }
       }
     }
-    if (data.length === 2) {
-      if (loading) toggleLoading()
+    if (data.length === APIs.length) {
       addInfo()
+      if (loading) toggleLoading()
     }
   }, [data])
 

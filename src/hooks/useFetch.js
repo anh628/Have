@@ -6,7 +6,7 @@ const useFetch = (url, limit, option) => {
   const [loading, toggleLoading] = useToggle(false)
   const [error, setError] = useState(null)
   const [data, dispatchData] = useReducer((state, action) => {
-    const data = state && state.length < 2 ? [...state] : []
+    const data = state && state.length < url.length ? [...state] : []
     data.push(action)
     return data
   }, [])
