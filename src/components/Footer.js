@@ -35,7 +35,7 @@ const Footer = ({
 
   const imageButton = (
     <div className='footer-button'>
-      <Tooltip title={`${image ? 'Change' : 'Add'} cover art.`} placement='top'>
+      <Tooltip title={`${image ? 'Change' : 'Add'} cover art`} placement='top'>
         <label>
           <input
             type='file'
@@ -112,7 +112,7 @@ const Footer = ({
   )
 
   const changeColorButton = (
-    <div className='footer-button' onClick={toggle}>
+    <div className='footer-button'>
       <Color uid={uid} collectionId={collectionId} />
     </div>
   )
@@ -124,6 +124,13 @@ const Footer = ({
       </label>
     </div>
   )
+  const catButton = (
+    <AutofillAPI
+      uid={uid}
+      collectionId={collectionId}
+      itemIds={itemIds}
+      count={1} />
+  )
 
   return (
     <div
@@ -132,11 +139,7 @@ const Footer = ({
       style={{ backgroundColor: collectionColor }}>
       {changeColorButton}
       {imageButton}
-      <AutofillAPI
-        uid={uid}
-        collectionId={collectionId}
-        itemIds={itemIds}
-        count={1} />
+      {catButton}
       {moreButton}
       {modalView && doneButton}
     </div>

@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react'
+import React, { useEffect, useState } from 'react'
 import uuid from 'uuid'
 import {
   addCollection,
@@ -12,7 +12,7 @@ import { catData } from '../utils/functions'
 import useFetch from '../hooks/useFetch'
 import useToggle from '../hooks/useToggle'
 import { cat } from '../utils/cat'
-import { Button, Spin, Tooltip, Icon } from 'antd'
+import { Button, Spin, Tooltip, Icon, Popconfirm } from 'antd'
 
 const AutofillAPI = ({ uid, count, collectionId = null, itemIds }) => {
   const APIs = [
@@ -21,6 +21,7 @@ const AutofillAPI = ({ uid, count, collectionId = null, itemIds }) => {
   ]
   const [data, _loading, error, getData] = useFetch(APIs, count)
   const [loading, toggleLoading] = useToggle(_loading)
+  const [oldData, setOldData] = useState(data);
 
   useEffect(() => {
     const addInfo = async () => {
@@ -61,6 +62,8 @@ const AutofillAPI = ({ uid, count, collectionId = null, itemIds }) => {
     await getData()
   }
 
+
+
   const spinner = (
     <Spin
       size='large'
@@ -75,17 +78,23 @@ const AutofillAPI = ({ uid, count, collectionId = null, itemIds }) => {
 
   if (itemIds) {
     return (
-      <div>
+      <div className='footer-button'>
         {loading && spinner}
         <Tooltip title='Get new info' placement='top'>
-          <Icon
-            className='footer-button'
-            component={cat}
-            onClick={autofill}
-            style={{
-              margin: '5px',
-              cursor: `${loading ? 'not-allowed' : 'pointer'}`
-            }} />
+          <Popconfirm
+            title='Are you sure? List will be overwritten.'
+            placement='topLeft' onConfirm={()=>autofill()}
+            okText="Yes"
+            cancelText="No"
+          >
+            <Icon
+              className='footer-button'
+              component={cat}
+              style={{
+                margin: '5px',
+                cursor: `${loading ? 'not-allowed' : 'pointer'}`
+              }} />
+          </Popconfirm>
         </Tooltip>
       </div>
     )

@@ -1,4 +1,4 @@
-import React from 'react'
+import React , {useEffect} from 'react'
 import useAuthState from '../hooks/useAuthState'
 import useToggle from '../hooks/useToggle'
 import { login, logout } from '../firebase/auth'
@@ -6,8 +6,14 @@ import { Avatar, Icon, Tooltip, message, Button } from 'antd'
 
 const AuthenticationButton = () => {
   const [user, loading, error] = useAuthState()
-  const { isAnonymous, displayName, photoURL } = user
+  let { isAnonymous, displayName, photoURL } = user
   const [click, toggle] = useToggle(false)
+
+  useEffect(()=>{
+     isAnonymous = user.isAnonymous
+     displayName = user.displayName
+     photoURL = user.photoURL
+  }, [user])
 
   const profilePic = photoURL ? (
     <Avatar
@@ -28,7 +34,8 @@ const AuthenticationButton = () => {
         right: '20px'
       }}
       onClick={toggle}>
-      {displayName ? displayName[0] : ''}
+
+    {displayName ? displayName[0] : ''}
     </Avatar>
   )
 

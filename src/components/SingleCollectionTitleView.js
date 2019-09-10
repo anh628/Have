@@ -1,4 +1,4 @@
-import React, { useState } from 'react'
+import React, { useState, useEffect } from 'react'
 import { message } from 'antd'
 import { editTitle } from '../firebase/collectionFunctions'
 import useToggle from '../hooks/useToggle'
@@ -10,6 +10,11 @@ const EditCollectionTitle = ({ uid, collectionId, title }) => {
   const error = () => {
     message.error('You must name your list.')
   }
+
+  useEffect(() => {
+    updateTitle(title)
+  }, [title])
+
   const handleBlur = () => {
     updateTitle(newTitle.trim())
     if (newTitle) {

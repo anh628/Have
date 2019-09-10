@@ -62,9 +62,8 @@ code {
 .footer-bar .footer-button {
   text-align: center;
   color: white;
-  float: left;
+
   width: 20%;
-  padding: 12px 0;
 }
 
 .footer-bar .footer-button:hover .description {
