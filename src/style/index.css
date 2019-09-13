@@ -135,10 +135,10 @@ div.show {
 .item-collection {
   width: 25%;
   border: gray;
-  display: inline-block;
+  display: flex;
   margin: 8px;
   vertical-align: top;
-
+  flex-direction: column;
   color: white;
 }
 

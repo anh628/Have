@@ -16,12 +16,19 @@ export const addCollection = (uid, collectionId, title) => {
     title,
     collectionColor: COLOR_CHOICES[0],
     image: null,
-    timeStamp: firebase.firestore.FieldValue.serverTimestamp()
+    timeStamp: firebase.firestore.FieldValue.serverTimestamp(),
+    index: Date.now()
   }
 
   const itemCollectionRef = getItemCollectionRef(uid, collectionId)
   return itemCollectionRef // this will pick amongst collections that an individual user will have
     .set(collectionInfo) // will be the fields above
+    .catch(error => console.log(error))
+}
+
+export const editCollectionIndex = (uid, collectionId, newIndex) => {
+  return getItemCollectionRef(uid, collectionId)
+    .update({ index: newIndex })
     .catch(error => console.log(error))
 }
 
@@ -141,26 +148,3 @@ export const editColor = (uid, collectionId, collectionColor) => {
     .update({ collectionColor })
     .catch(error => console.log(error))
 }
-/*
-export const addCollaborator = (uid, collectionId, collabUID) => {
-  const itemCollectionRef = getItemCollectionRef(uid, collectionId)
-
-  const collaborators = itemCollectionRef.doc().collaborators
-  collaborators.push(collabUID)
-
-  return itemCollectionRef
-    .update({ collaborators })
-    .catch(error => console.log(error))
-}
-
-export const removeCollaborator = (uid, collectionId, collabUID) => {
-  const itemCollectionRef = getItemCollectionRef(uid, collectionId)
-
-  const collaborators = itemCollectionRef
-    .doc()
-    .collaborators.filter(id => id !== collabUID)
-  return itemCollectionRef
-    .update({ collaborators })
-    .catch(error => console.log(error))
-}
-*/

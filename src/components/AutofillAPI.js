@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react'
+import React, { useEffect } from 'react'
 import uuid from 'uuid'
 import {
   addCollection,
@@ -21,7 +21,6 @@ const AutofillAPI = ({ uid, count, collectionId = null, itemIds }) => {
   ]
   const [data, _loading, error, getData] = useFetch(APIs, count)
   const [loading, toggleLoading] = useToggle(_loading)
-  const [oldData, setOldData] = useState(data);
 
   useEffect(() => {
     const addInfo = async () => {
@@ -62,8 +61,6 @@ const AutofillAPI = ({ uid, count, collectionId = null, itemIds }) => {
     await getData()
   }
 
-
-
   const spinner = (
     <Spin
       size='large'
@@ -83,10 +80,10 @@ const AutofillAPI = ({ uid, count, collectionId = null, itemIds }) => {
         <Tooltip title='Get new info' placement='top'>
           <Popconfirm
             title='Are you sure? List will be overwritten.'
-            placement='topLeft' onConfirm={()=>autofill()}
-            okText="Yes"
-            cancelText="No"
-          >
+            placement='topLeft'
+            onConfirm={() => autofill()}
+            okText='Yes'
+            cancelText='No'>
             <Icon
               className='footer-button'
               component={cat}

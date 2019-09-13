@@ -6,6 +6,7 @@ import {
   deleteModalId,
   clearModalId
 } from '../actions/actionCreator'
+import { reorder } from '../utils/functions'
 
 // grab list of user's item collections
 const useCollectionSnapshot = uid => {
@@ -22,11 +23,13 @@ const useCollectionSnapshot = uid => {
         dispatchRedux(addModalId(action.collectionInfo.id))
         return items
       case 'modified':
-        return items.map(item =>
+        const newList = items.map(item =>
           item.id === action.collectionInfo.id
             ? { ...action.collectionInfo }
             : item
         )
+
+        return reorder(newList, action.oldIndex, action.newIndex)
       case 'removed':
         dispatchRedux(deleteModalId(action.collectionInfo.id))
         return items.filter(item => item.id !== action.collectionInfo.id)
@@ -42,7 +45,7 @@ const useCollectionSnapshot = uid => {
       const unsubscribe = usersCollectionRef
         .doc(uid)
         .collection('itemCollections')
-        .orderBy('timeStamp')
+        .orderBy('index')
         .onSnapshot(
           querySnapshot => {
             querySnapshot.docChanges().forEach(change => {
@@ -52,7 +55,12 @@ const useCollectionSnapshot = uid => {
                 dispatch({ type: 'added', collectionInfo })
               }
               if (change.type === 'modified') {
-                dispatch({ type: 'modified', collectionInfo })
+                dispatch({
+                  type: 'modified',
+                  collectionInfo,
+                  oldIndex: change.oldIndex,
+                  newIndex: change.newIndex
+                })
               }
               if (change.type === 'removed') {
                 dispatch({ type: 'removed', collectionInfo })
