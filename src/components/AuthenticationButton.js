@@ -6,14 +6,8 @@ import { Avatar, Icon, Tooltip, message, Button } from 'antd'
 
 const AuthenticationButton = () => {
   const [user, loading, error] = useAuthState()
-  let { isAnonymous, displayName, photoURL } = user
+  const { isAnonymous, displayName, photoURL } = user
   const [click, toggle] = useToggle(false)
-
-  useEffect(() => {
-    isAnonymous = user.isAnonymous
-    displayName = user.displayName
-    photoURL = user.photoURL
-  }, [user])
 
   const profilePic = photoURL ? (
     <Avatar
