@@ -1,4 +1,4 @@
-import { useState, useEffect, useReducer } from 'react'
+import { useState, useEffect, useReducer, useCallback } from 'react'
 import { useDispatch } from 'react-redux'
 import { usersCollectionRef } from '../firebase/firebase'
 import {
@@ -12,33 +12,39 @@ import { reorder } from '../utils/functions'
 const useCollectionSnapshot = uid => {
   const [loading, setLoading] = useState(true)
   const [error, setError] = useState(null)
-
   const dispatchRedux = useDispatch()
-  const [collections, dispatch] = useReducer((state, action) => {
-    const items = state.length > 0 ? [...state] : []
 
-    switch (action.type) {
-      case 'added':
-        items.push(action.collectionInfo)
-        dispatchRedux(addModalId(action.collectionInfo.id))
-        return items
-      case 'modified':
-        const newList = items.map(item =>
-          item.id === action.collectionInfo.id
-            ? { ...action.collectionInfo }
-            : item
-        )
+  const createReducer = () => {
+    return (state, action) => {
+      const items = state.length > 0 ? [...state] : []
 
-        return reorder(newList, action.oldIndex, action.newIndex)
-      case 'removed':
-        dispatchRedux(deleteModalId(action.collectionInfo.id))
-        return items.filter(item => item.id !== action.collectionInfo.id)
-      case 'clear_all':
-        dispatchRedux(clearModalId())
-        return []
-      default:
+      switch (action.type) {
+        case 'added':
+          items.push(action.collectionInfo)
+          dispatchRedux(addModalId(action.collectionInfo.id))
+          return items
+        case 'modified':
+          const newList = items.map(item =>
+            item.id === action.collectionInfo.id
+              ? { ...action.collectionInfo }
+              : item
+          )
+
+          return reorder(newList, action.oldIndex, action.newIndex)
+        case 'removed':
+          dispatchRedux(deleteModalId(action.collectionInfo.id))
+          return items.filter(item => item.id !== action.collectionInfo.id)
+        case 'clear_all':
+          dispatchRedux(clearModalId())
+          return []
+        default:
+      }
     }
-  }, [])
+  }
+
+  const memoizedReducer = useCallback(createReducer(), [])
+
+  const [collections, dispatch] = useReducer(memoizedReducer, [])
 
   useEffect(() => {
     if (uid) {
