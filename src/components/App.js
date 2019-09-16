@@ -29,6 +29,7 @@ const App = () => {
         state.modal.filter(modal => modal.open)[0].modalId) ||
       null
   )
+
   const dispatch = useDispatch()
   const [user] = useAuthState()
   const { uid, isAnonymous } = user

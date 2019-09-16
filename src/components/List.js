@@ -4,15 +4,16 @@ import React from 'react'
 
 const List = ({ uid, collectionList }) => {
   return (
-    <Droppable droppableId={uid} type='LIST'>
+    <Droppable droppableId={uid} type='LIST' direction='horizontal'>
       {(provided, snapshot) => (
         <div
           ref={provided.innerRef}
           {...provided.droppableProps}
           style={{
             display: 'flex',
+            overflow: 'auto',
             justifyContent: 'center',
-            flexDirection: 'column',
+            flexDirection: 'row',
             flexWrap: 'wrap'
           }}>
           {collectionList &&
