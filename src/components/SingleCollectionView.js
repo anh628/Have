@@ -7,6 +7,7 @@ import SingleItem from './SingleItem'
 import NewItem from './NewItem'
 import Footer from './Footer'
 import useSubCollectionSnapshot from '../hooks/useSubCollectionSnapshot'
+import useToggle from '../hooks/useToggle'
 
 const SingleCollectionView = ({
   uid,
@@ -16,7 +17,7 @@ const SingleCollectionView = ({
   title
 }) => {
   const [items, loading] = useSubCollectionSnapshot(uid, collectionId)
-
+  const [loadingImage, toggleLoadingImage] = useToggle(false)
   const listItem =
     items &&
     items.map(item => (
@@ -29,19 +30,18 @@ const SingleCollectionView = ({
 
   const displayImage = image && (
     <div className='coverart'>
-      {image === 'loading' ? (
+      {loadingImage ? (
         <Icon type='loading' />
       ) : (
         <div>
           <img src={image} alt='cover-art' />
-          <label
+          <Icon
+            type='delete'
             className='deleteImage'
             onClick={() => {
               deleteFile(image)
               deleteImage(uid, collectionId)
-            }}>
-            <Icon type='delete' />
-          </label>
+            }} />
         </div>
       )}
     </div>
@@ -69,6 +69,7 @@ const SingleCollectionView = ({
     items && items.filter(item => !item.isComplete).length > 0
 
   const checkItems = items && items.filter(item => item.isComplete).length > 0
+  const itemIds = items.map(x => x.itemId)
 
   return (
     <Card
@@ -86,7 +87,9 @@ const SingleCollectionView = ({
           uncheckedItems={uncheckedItems}
           checkItems={checkItems}
           collectionColor={collectionColor}
-          modalView={true} />
+          modalView={true}
+          itemIds={itemIds}
+          toggleLoadingImage={toggleLoadingImage} />
       ]}>
       <Card.Meta
         title={

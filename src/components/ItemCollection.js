@@ -5,6 +5,7 @@ import Footer from './Footer'
 import { toggleModalStatus } from '../actions/actionCreator'
 import { Icon, Card } from 'antd'
 import useSubCollectionSnapshot from '../hooks/useSubCollectionSnapshot'
+import useToggle from '../hooks/useToggle'
 
 const ItemCollection = ({
   uid,
@@ -14,6 +15,7 @@ const ItemCollection = ({
   title
 }) => {
   const [items, loading] = useSubCollectionSnapshot(uid, collectionId)
+  const [loadingImage, toggleLoadingImage] = useToggle(false)
   const dispatch = useDispatch()
   const open = useSelector(
     state =>
@@ -39,7 +41,7 @@ const ItemCollection = ({
 
   const displayImage = image && (
     <div className='coverart'>
-      {image === 'loading' ? (
+      {loadingImage ? (
         <Icon type='loading' />
       ) : (
         <img
@@ -57,8 +59,10 @@ const ItemCollection = ({
     ? items.filter(item => item.isComplete).length > 0
     : null
 
+  const itemIds = items.map(x => x.itemId)
   // collection won't display in list if it's open
   if (open) return null
+
   return (
     <Card
       className='item-collection'
@@ -74,7 +78,9 @@ const ItemCollection = ({
           areItems={items.length > 0}
           uncheckedItems={uncheckedItems}
           checkItems={checkItems}
-          collectionColor={collectionColor} />
+          collectionColor={collectionColor}
+          itemIds={itemIds}
+          toggleLoadingImage={toggleLoadingImage} />
       ]}>
       <Card.Meta
         title={

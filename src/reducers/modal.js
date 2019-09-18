@@ -3,7 +3,7 @@ import {
   ADD_MODAL_ID,
   DELETE_MODAL_ID,
   CLEAR_MODAL_ID
-} from '../constants/constants'
+} from '../utils/constants'
 
 const modal = (state = [], action) => {
   let modals

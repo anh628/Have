@@ -1,4 +1,4 @@
-import React, { useState } from 'react'
+import React from 'react'
 import { useDispatch } from 'react-redux'
 import { uploadFile, deleteFile } from '../firebase/storageFunctions'
 import {
@@ -8,8 +8,10 @@ import {
   setAllItemsCompleteness
 } from '../firebase/collectionFunctions'
 import { toggleModalStatus } from '../actions/actionCreator'
+import useToggle from '../hooks/useToggle'
 import { Icon, Tooltip } from 'antd'
 import Color from './Color'
+import AutofillAPI from './AutofillAPI'
 
 const Footer = ({
   collectionColor,
@@ -19,9 +21,12 @@ const Footer = ({
   image,
   uid,
   uncheckedItems,
-  modalView = false
+  modalView = false,
+  itemIds,
+  toggleLoadingImage
 }) => {
-  const [showMenu, toggleMenu] = useState(false)
+  const [showMenu, toggle] = useToggle(false)
+
   const dispatch = useDispatch()
 
   const collectionImageInputId = modalView
@@ -30,25 +35,26 @@ const Footer = ({
 
   const imageButton = (
     <div className='footer-button'>
-      <Tooltip title={`${image ? 'Change' : 'Add'} cover art.`} placement='top'>
+      <Tooltip title={`${image ? 'Change' : 'Add'} cover art`} placement='top'>
         <label>
           <input
             type='file'
             onChange={async () => {
               if (image) await deleteFile(image)
-              editImage(uid, collectionId, 'loading')
+              toggleLoadingImage()
               const url = await uploadFile(
                 collectionImageInputId,
                 uid,
                 collectionId
               )
               editImage(uid, collectionId, url)
+              toggleLoadingImage()
             }}
             id={collectionImageInputId}
             name='files'
             accept='image/*'
             style={{ display: 'none' }} />
-          <Icon type='picture' />
+          <Icon type='picture' onClick={showMenu ? toggle : null} />
         </label>
       </Tooltip>
     </div>
@@ -61,13 +67,13 @@ const Footer = ({
   Delete checked items
   */
   const moreButton = (
-    <div className='footer-button' onClick={() => toggleMenu(!showMenu)}>
+    <div className='footer-button' onClick={toggle}>
       <Tooltip title='More' placement='top'>
         <Icon type='menu' className='dropdown' id='more' />
         <div
           className={`dropdown-content-more  ${showMenu ? 'show' : ''}`}
           id={`more-dropdown ${collectionId}`}
-          onClick={() => toggleMenu(false)}>
+          onClick={toggle}>
           <label onClick={() => deleteCollection(uid, collectionId)}>
             Delete list
           </label>
@@ -118,6 +124,13 @@ const Footer = ({
       </label>
     </div>
   )
+  const catButton = (
+    <AutofillAPI
+      uid={uid}
+      collectionId={collectionId}
+      itemIds={itemIds}
+      count={1} />
+  )
 
   return (
     <div
@@ -126,6 +139,7 @@ const Footer = ({
       style={{ backgroundColor: collectionColor }}>
       {changeColorButton}
       {imageButton}
+      {catButton}
       {moreButton}
       {modalView && doneButton}
     </div>
