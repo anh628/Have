@@ -3,7 +3,7 @@ import {
   ADD_MODAL_ID,
   DELETE_MODAL_ID,
   CLEAR_MODAL_ID
-} from '../constants/constants'
+} from '../utils/constants'
 
 export const toggleModalStatus = modalId => ({
   type: TOGGLE_MODAL_STATUS,

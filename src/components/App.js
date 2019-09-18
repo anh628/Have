@@ -9,7 +9,7 @@ import NewCollection from './NewCollection'
 import List from './List'
 import SingleCollectionView from './SingleCollectionView'
 import ModalView from './ModalView'
-
+import AutofillAPI from './AutofillAPI'
 const App = () => {
   const open = useSelector(
     state =>
@@ -62,6 +62,7 @@ const App = () => {
               <NewCollection uid={uid} />
             </Layout.Header>
             <Layout.Content>
+              <AutofillAPI uid={uid} count={2} />
               {loading ? (
                 <Spin
                   size='large'
