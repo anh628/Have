@@ -4,7 +4,7 @@ import { editTitle } from '../firebase/collectionFunctions'
 import useToggle from '../hooks/useToggle'
 
 const EditCollectionTitle = ({ uid, collectionId, title }) => {
-  const [newTitle, updateTitle] = useState(title)
+  const [titleInput, editTitleInput] = useState(title)
   const [edit, toggleEdit] = useToggle(false)
 
   const error = () => {
@@ -12,13 +12,13 @@ const EditCollectionTitle = ({ uid, collectionId, title }) => {
   }
 
   useEffect(() => {
-    updateTitle(title)
-  }, [title])
+    if (edit) editTitleInput(title)
+  }, [edit])
 
   const handleBlur = () => {
-    updateTitle(newTitle.trim())
-    if (newTitle) {
-      editTitle(uid, collectionId, newTitle)
+    editTitleInput(titleInput.trim())
+    if (titleInput) {
+      editTitle(uid, collectionId, titleInput)
       toggleEdit()
     } else {
       error()
@@ -31,13 +31,13 @@ const EditCollectionTitle = ({ uid, collectionId, title }) => {
         <input
           className='titleCollectionView-editing'
           type='input'
-          value={newTitle}
+          value={titleInput}
           onBlur={handleBlur}
           onChange={e => {
-            updateTitle(e.currentTarget.value)
+            editTitleInput(e.currentTarget.value)
           }}
           onKeyDown={e => {
-            if (e.key === 'Escape') updateTitle(title)
+            if (e.key === 'Escape') editTitleInput(title)
             if (e.key === 'Enter') handleBlur()
           }}
           autoFocus />
@@ -46,7 +46,7 @@ const EditCollectionTitle = ({ uid, collectionId, title }) => {
   } else {
     return (
       <h1 className='titleCollectionView' onClick={toggleEdit}>
-        {newTitle}
+        {title}
       </h1>
     )
   }
