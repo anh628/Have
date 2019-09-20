@@ -1,18 +1,15 @@
 import useCollectionSnapshot from '../hooks/useCollectionSnapshot'
 import { toggleModalStatus } from '../actions/actionCreator'
-import AuthenticationButton from './AuthenticationButton'
 import SingleCollectionView from './SingleCollectionView'
+import AuthenticationButton from './AuthenticationButton'
 import { useSelector, useDispatch } from 'react-redux'
-import { DragDropContext } from 'react-beautiful-dnd'
-import React, { useEffect, useCallback } from 'react'
 import { Spin, notification, Layout } from 'antd'
 import useAuthState from '../hooks/useAuthState'
-// import { reorder } from '../utils/functions'
 import NewCollection from './NewCollection'
+import React, { useEffect } from 'react'
 import AutofillAPI from './AutofillAPI'
 import ModalView from './ModalView'
 import List from './List'
-import { editCollectionIndex } from '../firebase/collectionFunctions'
 
 const App = () => {
   const open = useSelector(
@@ -35,29 +32,6 @@ const App = () => {
   const { uid, isAnonymous } = user
 
   const [collectionList, loading] = useCollectionSnapshot(uid)
-
-  const onDragEnd = useCallback(e => {
-    const { reason, destination, source, type } = e
-    if (reason === 'DROP' && destination) {
-      if (type === 'LIST') {
-        const destinationIndex = collectionList[destination.index].index
-        const sourceIndex = collectionList[source.index].index
-        editCollectionIndex(
-          uid,
-          collectionList[source.index].id,
-          destinationIndex
-        )
-        editCollectionIndex(
-          uid,
-          collectionList[destination.index].id,
-          sourceIndex
-        )
-      }
-      // return setOrderedLessons(
-      //   handleDrop(lessons, source, destination, draggableId)
-      // )
-    }
-  })
 
   useEffect(() => {
     if (isAnonymous) {
@@ -90,24 +64,21 @@ const App = () => {
             </Layout.Header>
             <Layout.Content>
               <AutofillAPI uid={uid} count={2} />
-              <DragDropContext onDragEnd={onDragEnd}>
-                {loading ? (
-                  <Spin
-                    size='large'
-                    style={{
-                      fontSize: '20px',
-                      position: 'absolute',
-                      left: '50%',
-                      top: '30%'
-                    }} />
-                ) : (
-                  <List
-                    uid={uid}
-                    isAnonymous={isAnonymous}
-                    collectionList={collectionList} />
-                )}
-                {displayModal}
-              </DragDropContext>
+              {loading ? (
+                <Spin
+                  size='large'
+                  style={{
+                    fontSize: '20px',
+                    position: 'absolute',
+                    left: '50%'
+                  }} />
+              ) : (
+                <List
+                  uid={uid}
+                  isAnonymous={isAnonymous}
+                  collectionList={collectionList} />
+              )}
+              {displayModal}
             </Layout.Content>
           </Layout>
         </div>
@@ -117,8 +88,7 @@ const App = () => {
           style={{
             fontSize: '20px',
             position: 'absolute',
-            left: '50%',
-            top: '30%'
+            left: '50%'
           }} />
       )}
     </div>

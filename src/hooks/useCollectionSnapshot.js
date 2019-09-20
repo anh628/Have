@@ -6,7 +6,7 @@ import {
   deleteModalId,
   clearModalId
 } from '../actions/actionCreator'
-import { reorder } from '../utils/functions'
+import { orderBy } from 'lodash'
 
 // grab list of user's item collections
 const useCollectionSnapshot = uid => {
@@ -29,8 +29,7 @@ const useCollectionSnapshot = uid => {
               ? { ...action.collectionInfo }
               : item
           )
-
-          return reorder(newList, action.oldIndex, action.newIndex)
+          return orderBy(newList, 'index', 'asc')
         case 'removed':
           dispatchRedux(deleteModalId(action.collectionInfo.id))
           return items.filter(item => item.id !== action.collectionInfo.id)
@@ -63,9 +62,7 @@ const useCollectionSnapshot = uid => {
               if (change.type === 'modified') {
                 dispatch({
                   type: 'modified',
-                  collectionInfo,
-                  oldIndex: change.oldIndex,
-                  newIndex: change.newIndex
+                  collectionInfo
                 })
               }
               if (change.type === 'removed') {
