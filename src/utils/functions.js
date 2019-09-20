@@ -15,6 +15,7 @@ export const fetchData = async (url, option) => {
   return [json, error]
 }
 
+
 // startIndex = starting position
 // endIndex = ending position
 export const reorder = (list, startIndex, endIndex) => {
@@ -25,3 +26,4 @@ export const reorder = (list, startIndex, endIndex) => {
   result.splice(endIndex, 0, removed)
   return result
 }
+
