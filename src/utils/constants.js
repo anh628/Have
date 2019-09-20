@@ -6,7 +6,7 @@ export const CLEAR_MODAL_ID = 'CLEAR_MODAL_ID'
 export const COLOR_CHOICES = ['#ffcbcb', '#ffb5b5', '#bcb9c4', '#407088']
 
 export const CAT_API = 'https://api.thecatapi.com/v1/images/search?limit='
-export const JEOPARDY_API = 'http://jservice.io/api/random?count='
+export const JOKE_API = 'https://official-joke-api.appspot.com/jokes/ten?limit='
 
 export const CAT_API_OPTION = {
   method: 'GET',
