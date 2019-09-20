@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react'
+import React from 'react'
 import useAuthState from '../hooks/useAuthState'
 import useToggle from '../hooks/useToggle'
 import { login, logout } from '../firebase/auth'

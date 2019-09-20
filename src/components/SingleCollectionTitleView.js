@@ -13,7 +13,7 @@ const EditCollectionTitle = ({ uid, collectionId, title }) => {
 
   useEffect(() => {
     if (edit) editTitleInput(title)
-  }, [edit])
+  }, [edit, title])
 
   const handleBlur = () => {
     editTitleInput(titleInput.trim())

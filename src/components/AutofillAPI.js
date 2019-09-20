@@ -53,6 +53,7 @@ const AutofillAPI = ({ uid, count, collectionId = null, itemIds }) => {
       addInfo()
       if (loading) toggleLoading()
     }
+    // eslint-disable-next-line
   }, [data])
 
   const autofill = async () => {
