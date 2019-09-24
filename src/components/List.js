@@ -1,11 +1,10 @@
-import { editCollectionIndex } from '../firebase/collectionFunctions'
+import { updateCollectionIndexes } from '../firebase/collectionFunctions'
 import { ListManager } from 'react-beautiful-dnd-grid'
 import React, { useCallback, useState } from 'react'
 import ItemCollection from './ItemCollection'
 import { reorder } from '../utils/functions'
 import { Spin } from 'antd'
 
-// TODO find a way to change max items in a row dynamically according to window size
 const List = ({ uid, collectionList }) => {
   const [dragLoading, setDragLoading] = useState(false)
 
@@ -15,11 +14,7 @@ const List = ({ uid, collectionList }) => {
 
     const newList = reorder(collectionList, sourceIndex, destinationIndex)
 
-    for (let i = 0; i < collectionList.length; i++) {
-      if (newList[i].id !== collectionList[i].id) {
-        await editCollectionIndex(uid, newList[i].id, collectionList[i].index)
-      }
-    }
+    await updateCollectionIndexes(uid, collectionList, newList)
     setDragLoading(false)
   })
 

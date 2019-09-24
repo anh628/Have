@@ -26,10 +26,20 @@ export const addCollection = (uid, collectionId, title) => {
     .catch(error => console.log(error))
 }
 
-export const editCollectionIndex = (uid, collectionId, newIndex) => {
-  return getItemCollectionRef(uid, collectionId)
-    .update({ index: newIndex })
-    .catch(error => console.log(error))
+export const updateCollectionIndexes = (
+  uid,
+  oldCollectionList,
+  newCollectionList
+) => {
+  const batch = db.batch()
+  for (let i = 0; i < oldCollectionList.length; i++) {
+    if (newCollectionList[i].id !== oldCollectionList[i].id) {
+      batch.update(getItemCollectionRef(uid, newCollectionList[i].id), {
+        index: oldCollectionList[i].index
+      })
+    }
+  }
+  return batch.commit().catch(error => console.log(error))
 }
 
 export const deleteCollection = (uid, collectionId) => {
