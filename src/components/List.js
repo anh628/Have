@@ -8,15 +8,18 @@ import { Spin } from 'antd'
 const List = ({ uid, collectionList }) => {
   const [dragLoading, setDragLoading] = useState(false)
 
-  const onDragEnd = useCallback(async (sourceIndex, destinationIndex) => {
-    if (sourceIndex === destinationIndex) return
-    setDragLoading(true)
+  const onDragEnd = useCallback(
+    async (sourceIndex, destinationIndex) => {
+      if (sourceIndex === destinationIndex) return
+      setDragLoading(true)
 
-    const newList = reorder(collectionList, sourceIndex, destinationIndex)
+      const newList = reorder(collectionList, sourceIndex, destinationIndex)
 
-    await updateCollectionIndexes(uid, collectionList, newList)
-    setDragLoading(false)
-  })
+      await updateCollectionIndexes(uid, collectionList, newList)
+      setDragLoading(false)
+    },
+    [collectionList, uid]
+  )
 
   if (dragLoading) {
     return (
@@ -25,7 +28,8 @@ const List = ({ uid, collectionList }) => {
         style={{
           fontSize: '20px',
           position: 'absolute',
-          left: '50%'
+          left: '50%',
+          color: 'red'
         }} />
     )
   }
@@ -41,7 +45,7 @@ const List = ({ uid, collectionList }) => {
         <ListManager
           items={collectionList}
           direction='horizontal'
-          maxItems={3}
+          maxItems={4}
           render={collection => (
             <ItemCollection key={collection.id} uid={uid} {...collection} />
           )}
