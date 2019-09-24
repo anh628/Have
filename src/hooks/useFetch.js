@@ -15,13 +15,13 @@ const useFetch = (APIs, limit) => {
 
   const handleData = useCallback(async () => {
     toggleLoading()
-
     APIs.map(async function (API) {
       const [_data, _error] = await fetchData(`${API.api}${limit}`, API.option)
       dispatchData({ data: _data, index: API.api })
       if (!error) setError(_error)
     })
     toggleLoading()
+    // eslint-disable-next-line
   }, [APIs, limit])
 
   return [data, loading, error, handleData]

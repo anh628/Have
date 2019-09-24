@@ -7,7 +7,7 @@ import {
   editImage,
   addItem
 } from '../firebase/collectionFunctions'
-import { CAT_API, CAT_API_OPTION, JEOPARDY_API } from '../utils/constants'
+import { CAT_API, CAT_API_OPTION, JOKE_API } from '../utils/constants'
 import { catData } from '../utils/functions'
 import useFetch from '../hooks/useFetch'
 import useToggle from '../hooks/useToggle'
@@ -17,7 +17,7 @@ import { Button, Spin, Tooltip, Icon, Popconfirm } from 'antd'
 const AutofillAPI = ({ uid, count, collectionId = null, itemIds }) => {
   const APIs = [
     { api: CAT_API, option: CAT_API_OPTION },
-    { api: JEOPARDY_API, option: null }
+    { api: JOKE_API, option: null }
   ]
   const [data, _loading, error, getData] = useFetch(APIs, count)
   const [loading, toggleLoading] = useToggle(_loading)
@@ -29,7 +29,7 @@ const AutofillAPI = ({ uid, count, collectionId = null, itemIds }) => {
         const { picture, title, description, temperament } = catData(
           data[APIs[0].api][j]
         )
-        const { question, answer } = data[APIs[1].api][j]
+        const { setup, punchline } = data[APIs[1].api][j]
         if (itemIds) {
           itemIds.map(id => deleteItem(uid, collectionID, id))
           editTitle(uid, collectionID, title || 'kitty')
@@ -40,11 +40,11 @@ const AutofillAPI = ({ uid, count, collectionId = null, itemIds }) => {
         if (description) await addItem(uid, collectionID, description)
         if (temperament) await addItem(uid, collectionID, temperament)
         if (!description && !temperament) {
-          if (question && question.trim()) {
-            await addItem(uid, collectionID, question)
+          if (setup && setup.trim()) {
+            await addItem(uid, collectionID, setup)
           }
-          if (answer && answer.trim()) {
-            addItem(uid, collectionID, `What is ${answer}?`)
+          if (punchline && punchline.trim()) {
+            addItem(uid, collectionID, punchline)
           }
         }
       }
@@ -53,6 +53,7 @@ const AutofillAPI = ({ uid, count, collectionId = null, itemIds }) => {
       addInfo()
       if (loading) toggleLoading()
     }
+    // eslint-disable-next-line
   }, [data])
 
   const autofill = async () => {
