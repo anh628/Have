@@ -1,18 +1,11 @@
 import { useState, useEffect, useReducer, useCallback } from 'react'
-import { useDispatch } from 'react-redux'
 import { usersCollectionRef } from '../firebase/firebase'
-import {
-  addModalId,
-  deleteModalId,
-  clearModalId
-} from '../actions/actionCreator'
 import { orderBy } from 'lodash'
 
 // grab list of user's item collections
 const useCollectionSnapshot = uid => {
   const [loading, setLoading] = useState(true)
   const [error, setError] = useState(null)
-  const dispatchRedux = useDispatch()
 
   const createReducer = () => {
     return (state, action) => {
@@ -21,7 +14,6 @@ const useCollectionSnapshot = uid => {
       switch (action.type) {
         case 'added':
           items.push(action.collectionInfo)
-          dispatchRedux(addModalId(action.collectionInfo.id))
           return items
         case 'modified':
           const newList = items.map(item =>
@@ -31,10 +23,8 @@ const useCollectionSnapshot = uid => {
           )
           return orderBy(newList, 'index', 'asc')
         case 'removed':
-          dispatchRedux(deleteModalId(action.collectionInfo.id))
           return items.filter(item => item.id !== action.collectionInfo.id)
         case 'clear_all':
-          dispatchRedux(clearModalId())
           return []
         default:
       }

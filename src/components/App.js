@@ -1,5 +1,5 @@
 import useCollectionSnapshot from '../hooks/useCollectionSnapshot'
-import { toggleModalStatus } from '../actions/actionCreator'
+import { toggleModalStatus, setModalIds } from '../actions/actionCreator'
 import SingleCollectionView from './SingleCollectionView'
 import AuthenticationButton from './AuthenticationButton'
 import { useSelector, useDispatch } from 'react-redux'
@@ -41,6 +41,11 @@ const App = () => {
       })
     }
   }, [isAnonymous])
+
+  useEffect(() => {
+    dispatch(setModalIds(collectionList.map(collection => collection.id)))
+    // eslint-disable-next-line
+  }, [collectionList])
 
   const displayModal = open && (
     <ModalView

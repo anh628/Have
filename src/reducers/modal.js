@@ -1,23 +1,16 @@
-import {
-  TOGGLE_MODAL_STATUS,
-  ADD_MODAL_ID,
-  DELETE_MODAL_ID,
-  CLEAR_MODAL_ID
-} from '../utils/constants'
+import { TOGGLE_MODAL_STATUS, SET_MODAL_IDS } from '../utils/constants'
 
 const modal = (state = [], action) => {
   let modals
   switch (action.type) {
-    case ADD_MODAL_ID:
+    case SET_MODAL_IDS:
       modals = [...state]
-      modals.push({ modalId: action.modalId, open: false })
+      modals = action.modalIds.map((modalId, i) =>
+        modals[i] && modals[i].modalId === modalId
+          ? { ...modals[i] }
+          : { modalId, open: false }
+      )
       return modals
-    case DELETE_MODAL_ID:
-      modals = [...state]
-      modals = modals.filter(modal => modal.modalId !== action.modalId)
-      return modals
-    case CLEAR_MODAL_ID:
-      return []
     case TOGGLE_MODAL_STATUS:
       modals = [...state]
       modals = modals.map(modal =>
