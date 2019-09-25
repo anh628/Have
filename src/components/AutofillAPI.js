@@ -106,10 +106,7 @@ const AutofillAPI = ({ uid, count, collectionId = null, itemIds }) => {
         className='Example'
         style={{
           margin: '5px',
-          cursor: `${loading ? 'not-allowed' : 'pointer'}`,
-          position: 'absolute',
-          top: '-90px',
-          left: '46vw'
+          cursor: `${loading ? 'not-allowed' : 'pointer'}`
         }}>
         Example
       </Button>
