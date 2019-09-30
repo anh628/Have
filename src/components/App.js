@@ -1,15 +1,16 @@
-import React, { useEffect } from 'react'
-import { useSelector, useDispatch } from 'react-redux'
-import useAuthState from '../hooks/useAuthState'
 import useCollectionSnapshot from '../hooks/useCollectionSnapshot'
-import { toggleModalStatus } from '../actions/actionCreator'
-import { Spin, notification, Layout } from 'antd'
-import AuthenticationButton from './AuthenticationButton'
-import NewCollection from './NewCollection'
-import List from './List'
+import { toggleModalStatus, setModalIds } from '../actions/actionCreator'
 import SingleCollectionView from './SingleCollectionView'
-import ModalView from './ModalView'
+import AuthenticationButton from './AuthenticationButton'
+import { useSelector, useDispatch } from 'react-redux'
+import { Spin, notification, Layout } from 'antd'
+import useAuthState from '../hooks/useAuthState'
+import NewCollection from './NewCollection'
+import React, { useEffect } from 'react'
 import AutofillAPI from './AutofillAPI'
+import ModalView from './ModalView'
+import List from './List'
+
 const App = () => {
   const open = useSelector(
     state =>
@@ -25,6 +26,7 @@ const App = () => {
         state.modal.filter(modal => modal.open)[0].modalId) ||
       null
   )
+
   const dispatch = useDispatch()
   const [user] = useAuthState()
   const { uid, isAnonymous } = user
@@ -40,6 +42,11 @@ const App = () => {
     }
   }, [isAnonymous])
 
+  useEffect(() => {
+    dispatch(setModalIds(collectionList.map(collection => collection.id)))
+    // eslint-disable-next-line
+  }, [collectionList])
+
   const displayModal = open && (
     <ModalView
       collectionId={modalId}
@@ -51,7 +58,6 @@ const App = () => {
           {...collectionList.filter(list => list.id === modalId)[0]} />
       } />
   )
-
   return (
     <div className='App'>
       {uid ? (
@@ -69,8 +75,7 @@ const App = () => {
                   style={{
                     fontSize: '20px',
                     position: 'absolute',
-                    left: '50%',
-                    top: '30%'
+                    left: '50%'
                   }} />
               ) : (
                 <List
@@ -88,8 +93,7 @@ const App = () => {
           style={{
             fontSize: '20px',
             position: 'absolute',
-            left: '50%',
-            top: '30%'
+            left: '50%'
           }} />
       )}
     </div>

@@ -1,5 +1,3 @@
-/* @import '~antd/dist/antd.css'; */
-
 body {
   margin: 0;
   font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen',
@@ -315,6 +313,7 @@ i:focus {
   display: flex;
   flex-direction: row;
   align-items: center;
+  flex-wrap: wrap;
 }
 #list-view.collection-list-item {
   width: 90%;

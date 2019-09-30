@@ -1,13 +1,56 @@
-import React from 'react'
+import { updateCollectionIndexes } from '../firebase/collectionFunctions'
+import { ListManager } from 'react-beautiful-dnd-grid'
+import React, { useCallback, useState } from 'react'
 import ItemCollection from './ItemCollection'
+import { reorder } from '../utils/functions'
+import { Spin } from 'antd'
 
 const List = ({ uid, collectionList }) => {
+  const [dragLoading, setDragLoading] = useState(false)
+
+  const onDragEnd = useCallback(
+    async (sourceIndex, destinationIndex) => {
+      if (sourceIndex === destinationIndex) return
+      setDragLoading(true)
+
+      const newList = reorder(collectionList, sourceIndex, destinationIndex)
+
+      await updateCollectionIndexes(uid, collectionList, newList)
+      setDragLoading(false)
+    },
+    [collectionList, uid]
+  )
+
+  if (dragLoading) {
+    return (
+      <Spin
+        size='large'
+        style={{
+          fontSize: '20px',
+          position: 'absolute',
+          left: '50%',
+          color: 'red'
+        }} />
+    )
+  }
+
   return (
-    <div>
-      {collectionList &&
-        collectionList.map(collection => (
-          <ItemCollection key={collection.id} uid={uid} {...collection} />
-        ))}
+    <div
+      style={{
+        justifyContent: 'center',
+        display: 'flex',
+        flexWrap: 'wrap'
+      }}>
+      {collectionList && (
+        <ListManager
+          items={collectionList}
+          direction='horizontal'
+          maxItems={4}
+          render={collection => (
+            <ItemCollection key={collection.id} uid={uid} {...collection} />
+          )}
+          onDragEnd={onDragEnd} />
+      )}
     </div>
   )
 }
