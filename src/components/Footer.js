@@ -23,7 +23,8 @@ const Footer = ({
   uncheckedItems,
   modalView = false,
   itemIds,
-  toggleLoadingImage
+  toggleLoadingImage,
+  syncWithFirestore
 }) => {
   const [showMenu, toggle] = useToggle(false)
 
@@ -119,7 +120,11 @@ const Footer = ({
 
   const doneButton = (
     <div className='footer-button'>
-      <label onClick={() => dispatch(toggleModalStatus(collectionId))}>
+      <label
+        onClick={() => {
+          dispatch(toggleModalStatus(collectionId))
+          syncWithFirestore()
+        }}>
         Done
       </label>
     </div>
