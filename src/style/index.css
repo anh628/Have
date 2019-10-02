@@ -295,10 +295,10 @@ i:focus {
 
 .collection-list-item {
   overflow-wrap: break-word;
-  float: left;
   margin: 0px;
-  left: 40px;
+  left: 36px;
   width: 100%;
+  position: absolute;
 }
 
 .item-row:last-child {
