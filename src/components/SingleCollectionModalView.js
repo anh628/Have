@@ -16,8 +16,11 @@ const SingleCollectionModalView = ({
   const [items, loading] = useSubCollectionSnapshot(uid, collectionId)
   const [orderedItems, updateOrderedItems] = useState([])
 
-  const syncWithFirestore = () => {
-    updateItemIndexes(uid, collectionId, items, orderedItems)
+  const onClose = async () => {
+    dispatch(toggleModalStatus(collectionId))
+    console.log('items', items)
+    console.log('order', orderedItems)
+    await updateItemIndexes(uid, collectionId, items, orderedItems)
   }
 
   return (
@@ -31,10 +34,7 @@ const SingleCollectionModalView = ({
           backgroundColor: 'transparent'
         }
       }}
-      onClose={async () => {
-        dispatch(toggleModalStatus(collectionId))
-        await syncWithFirestore()
-      }}
+      onClose={onClose}
       showCloseIcon={false}
       focusTrapped={true}
       focusTrapOptions={{ returnFocusOnDeactivate: true }}>
@@ -46,7 +46,7 @@ const SingleCollectionModalView = ({
         orderedItems={orderedItems}
         updateOrderedItems={updateOrderedItems}
         {...restProps}
-        syncWithFirestore={syncWithFirestore} />
+        onClose={onClose} />
     </Modal>
   )
 }

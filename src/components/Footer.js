@@ -1,5 +1,4 @@
 import React from 'react'
-import { useDispatch } from 'react-redux'
 import { uploadFile, deleteFile } from '../firebase/storageFunctions'
 import {
   editImage,
@@ -7,7 +6,6 @@ import {
   deleteAllCompleted,
   setAllItemsCompleteness
 } from '../firebase/collectionFunctions'
-import { toggleModalStatus } from '../actions/actionCreator'
 import useToggle from '../hooks/useToggle'
 import { Icon, Tooltip } from 'antd'
 import Color from './Color'
@@ -24,11 +22,9 @@ const Footer = ({
   modalView = false,
   itemIds,
   toggleLoadingImage,
-  syncWithFirestore
+  onClose
 }) => {
   const [showMenu, toggle] = useToggle(false)
-
-  const dispatch = useDispatch()
 
   const collectionImageInputId = modalView
     ? `${collectionId}-imageMV`
@@ -120,13 +116,7 @@ const Footer = ({
 
   const doneButton = (
     <div className='footer-button'>
-      <label
-        onClick={() => {
-          dispatch(toggleModalStatus(collectionId))
-          syncWithFirestore()
-        }}>
-        Done
-      </label>
+      <label onClick={() => onClose()}>Done</label>
     </div>
   )
   const catButton = (

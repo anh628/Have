@@ -1,5 +1,5 @@
-import { DragDropContext, Droppable, Draggable } from 'react-beautiful-dnd'
 import SingleCollectionTitleView from './SingleCollectionTitleView'
+import { DragDropContext, Droppable } from 'react-beautiful-dnd'
 import { deleteImage } from '../firebase/collectionFunctions'
 import { deleteFile } from '../firebase/storageFunctions'
 import React, { useEffect, useCallback } from 'react'
@@ -21,7 +21,7 @@ const SingleCollectionView = ({
   loading,
   orderedItems,
   updateOrderedItems,
-  syncWithFirestore
+  onClose
 }) => {
   const [loadingImage, toggleLoadingImage] = useToggle(false)
   const uncheckedItems =
@@ -29,19 +29,29 @@ const SingleCollectionView = ({
 
   const checkItems = items && items.filter(item => item.isComplete).length > 0
   const itemIds = items.map(x => x.itemId)
-
   useEffect(() => {
-    if (!loading) {
+    // make sure changes are reflected
+    if (orderedItems.length === items.length) {
       const newList = items.map(item => omit(item, 'index'))
-      orderedItems.length === 0
-        ? updateOrderedItems(items)
-        : updateOrderedItems(
-          orderedItems.map(item => ({
-            index: item.index,
-            ...newList[itemIds.indexOf(item.itemId)]
-          }))
-        )
+      updateOrderedItems(
+        orderedItems.map(item => ({
+          index: item.index,
+          ...newList[itemIds.indexOf(item.itemId)]
+        }))
+      )
     }
+    // if you add an item
+    if (items.length > orderedItems.length) {
+      updateOrderedItems([...orderedItems, items[items.length - 1]])
+    }
+    // if you delete an item
+    if (items.length < orderedItems.length) {
+      updateOrderedItems(
+        orderedItems.filter(item => itemIds.includes(item.itemIds))
+      )
+    }
+    // initial load
+    if (!loading) updateOrderedItems(items)
     // eslint-disable-next-line
   }, [loading, items])
 
@@ -67,23 +77,12 @@ const SingleCollectionView = ({
         {provided => (
           <div ref={provided.innerRef}>
             {orderedItems.map((item, index) => (
-              <Draggable
+              <SingleItem
+                dragIndex={index}
                 key={item.itemId}
-                draggableId={item.itemId}
-                index={index}>
-                {provided => (
-                  <div
-                    ref={provided.innerRef}
-                    {...provided.draggableProps}
-                    {...provided.dragHandleProps}>
-                    <SingleItem
-                      key={item.itemId}
-                      uid={uid}
-                      collectionId={collectionId}
-                      {...item} />
-                  </div>
-                )}
-              </Draggable>
+                uid={uid}
+                collectionId={collectionId}
+                {...item} />
             ))}
             {provided.placeholder}
           </div>
@@ -148,7 +147,7 @@ const SingleCollectionView = ({
           modalView={true}
           itemIds={itemIds}
           toggleLoadingImage={toggleLoadingImage}
-          syncWithFirestore={syncWithFirestore} />
+          onClose={onClose} />
       ]}>
       <Card.Meta
         title={
