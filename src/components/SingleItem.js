@@ -70,6 +70,7 @@ const SingleItem = ({
                 style={{ position: 'absolute', left: '15px' }} />
             )}
             <p
+              id='single'
               className='collection-list-item'
               onClick={toggleEdit}
               style={{
@@ -82,7 +83,7 @@ const SingleItem = ({
               onClick={() => deleteItem(uid, collectionId, itemId)}>
               <Icon
                 type='delete'
-                style={{ position: 'absolute', right: '0' }} />
+                style={{ position: 'absolute', right: '0', top: '5px' }} />
             </label>
           </div>
         </div>

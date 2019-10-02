@@ -115,7 +115,7 @@ const Footer = ({
   )
 
   const doneButton = (
-    <div className='footer-button'>
+    <div className='footer-button' style={{ cursor: 'default' }}>
       <label onClick={() => onClose()}>Done</label>
     </div>
   )

@@ -300,6 +300,9 @@ i:focus {
   width: 100%;
   position: absolute;
 }
+#single {
+  cursor: text;
+}
 
 .item-row:last-child {
   border: none;

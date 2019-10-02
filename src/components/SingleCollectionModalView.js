@@ -16,11 +16,10 @@ const SingleCollectionModalView = ({
   const [items, loading] = useSubCollectionSnapshot(uid, collectionId)
   const [orderedItems, updateOrderedItems] = useState([])
 
-  const onClose = async () => {
-    dispatch(toggleModalStatus(collectionId))
-    console.log('items', items)
-    console.log('order', orderedItems)
-    await updateItemIndexes(uid, collectionId, items, orderedItems)
+  const onClose = () => {
+    return updateItemIndexes(uid, collectionId, items, orderedItems).then(() =>
+      dispatch(toggleModalStatus(collectionId))
+    )
   }
 
   return (
@@ -34,7 +33,8 @@ const SingleCollectionModalView = ({
           backgroundColor: 'transparent'
         }
       }}
-      onClose={onClose}
+      // escape button
+      onClose={() => onClose()}
       showCloseIcon={false}
       focusTrapped={true}
       focusTrapOptions={{ returnFocusOnDeactivate: true }}>

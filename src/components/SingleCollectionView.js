@@ -29,6 +29,7 @@ const SingleCollectionView = ({
 
   const checkItems = items && items.filter(item => item.isComplete).length > 0
   const itemIds = items.map(x => x.itemId)
+
   useEffect(() => {
     // make sure changes are reflected
     if (orderedItems.length === items.length) {
@@ -52,6 +53,7 @@ const SingleCollectionView = ({
     }
     // initial load
     if (!loading) updateOrderedItems(items)
+
     // eslint-disable-next-line
   }, [loading, items])
 
