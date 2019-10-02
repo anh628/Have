@@ -115,8 +115,10 @@ const Footer = ({
   )
 
   const doneButton = (
-    <div className='footer-button' style={{ cursor: 'default' }}>
-      <label onClick={() => onClose()}>Done</label>
+    <div className='footer-button' style={{ cursor: 'pointer' }}>
+      <label onClick={() => onClose()} style={{ cursor: 'pointer' }}>
+        Done
+      </label>
     </div>
   )
   const catButton = (

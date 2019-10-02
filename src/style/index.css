@@ -298,10 +298,10 @@ i:focus {
   margin: 0px;
   left: 36px;
   width: 100%;
-  position: absolute;
 }
 #single {
   cursor: text;
+  position: absolute;
 }
 
 .item-row:last-child {

@@ -44,50 +44,54 @@ const SingleItem = ({
   )
   let itemDisplay = (
     <Draggable key={itemId} draggableId={itemId} index={dragIndex}>
-      {provided => (
-        <div ref={provided.innerRef} {...provided.draggableProps}>
-          <div className='ItemCollectionView' id='flex'>
-            <Tooltip title='Click to drag item' placement='top'>
-              <Icon
-                type='pause'
-                {...provided.dragHandleProps}
+      {(provided, snapshot) => {
+        const dragHandleStyle = {
+          cursor: snapshot.isDragging ? 'grabbing' : 'grab',
+          paddingRight: '5px',
+          position: 'absolute',
+          left: '0',
+          ...provided.dragHandleProps.style
+        }
+        return (
+          <div ref={provided.innerRef} {...provided.draggableProps}>
+            <div className='ItemCollectionView' id='flex'>
+              <Tooltip title='Click to drag item' placement='top'>
+                <Icon
+                  type='pause'
+                  {...provided.dragHandleProps}
+                  style={dragHandleStyle} />
+              </Tooltip>
+              {isComplete ? (
+                <Icon
+                  type='check-square'
+                  onClick={() => toggleItem(uid, collectionId, itemId)}
+                  style={{ position: 'absolute', left: '15px' }} />
+              ) : (
+                <Icon
+                  type='border'
+                  onClick={() => toggleItem(uid, collectionId, itemId)}
+                  style={{ position: 'absolute', left: '15px' }} />
+              )}
+              <p
+                id='single'
+                className='collection-list-item'
+                onClick={toggleEdit}
                 style={{
-                  paddingRight: '5px',
-                  position: 'absolute',
-                  left: '0',
-                  cursor: 'grab'
-                }} />
-            </Tooltip>
-            {isComplete ? (
-              <Icon
-                type='check-square'
-                onClick={() => toggleItem(uid, collectionId, itemId)}
-                style={{ position: 'absolute', left: '15px' }} />
-            ) : (
-              <Icon
-                type='border'
-                onClick={() => toggleItem(uid, collectionId, itemId)}
-                style={{ position: 'absolute', left: '15px' }} />
-            )}
-            <p
-              id='single'
-              className='collection-list-item'
-              onClick={toggleEdit}
-              style={{
-                textDecoration: isComplete ? 'line-through' : 'none'
-              }}>
-              {newText}
-            </p>
-            <label
-              className='deleteButton'
-              onClick={() => deleteItem(uid, collectionId, itemId)}>
-              <Icon
-                type='delete'
-                style={{ position: 'absolute', right: '0', top: '5px' }} />
-            </label>
+                  textDecoration: isComplete ? 'line-through' : 'none'
+                }}>
+                {newText}
+              </p>
+              <label
+                className='deleteButton'
+                onClick={() => deleteItem(uid, collectionId, itemId)}>
+                <Icon
+                  type='delete'
+                  style={{ position: 'absolute', right: '0', top: '5px' }} />
+              </label>
+            </div>
           </div>
-        </div>
-      )}
+        )
+      }}
     </Draggable>
   )
 
