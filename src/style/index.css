@@ -296,12 +296,12 @@ i:focus {
 .collection-list-item {
   overflow-wrap: break-word;
   margin: 0px;
-  left: 36px;
+  left: 15px;
   width: 100%;
 }
 #single {
   cursor: text;
-  position: absolute;
+  position: inherit;
 }
 
 .item-row:last-child {
