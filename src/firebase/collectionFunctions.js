@@ -57,13 +57,14 @@ export const deleteTitle = (uid, collectionId) => {
   return editTitle(uid, collectionId, null)
 }
 
-export const addItem = (uid, collectionId, text) => {
+export const addItem = (uid, collectionId, text, index) => {
   let itemId = Date.now()
   const itemInfo = {
     itemId,
     text,
     isComplete: false,
-    timeStamp: firebase.firestore.FieldValue.serverTimestamp()
+    timeStamp: firebase.firestore.FieldValue.serverTimestamp(),
+    index
   }
 
   const itemRef = getItemRef(uid, collectionId, itemId)
@@ -101,6 +102,18 @@ export const deleteAllCompleted = (uid, collectionId) => {
       })
       return batch.commit()
     })
+}
+
+export const updateItemIndexes = (uid, collectionId, orderedItems) => {
+  const batch = db.batch()
+
+  orderedItems.map((item, index) =>
+    batch.update(getItemRef(uid, collectionId, item.itemId), {
+      index
+    })
+  )
+
+  return batch.commit().catch(error => console.log(error))
 }
 
 // don't have an add image because we are really just editing the default value we already set for image

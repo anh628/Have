@@ -1,8 +1,8 @@
-import React from 'react'
 import { toggleItem } from '../firebase/collectionFunctions'
-import { useDispatch } from 'react-redux'
 import { toggleModalStatus } from '../actions/actionCreator'
+import { useDispatch } from 'react-redux'
 import { Icon } from 'antd'
+import React from 'react'
 
 const Item = ({ uid, collectionId, itemId, text, isComplete }) => {
   const dispatch = useDispatch()

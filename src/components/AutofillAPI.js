@@ -1,5 +1,3 @@
-import React, { useEffect } from 'react'
-import uuid from 'uuid'
 import {
   addCollection,
   deleteItem,
@@ -8,11 +6,13 @@ import {
   addItem
 } from '../firebase/collectionFunctions'
 import { CAT_API, CAT_API_OPTION, JOKE_API } from '../utils/constants'
-import { catData } from '../utils/functions'
-import useFetch from '../hooks/useFetch'
-import useToggle from '../hooks/useToggle'
-import { cat } from '../utils/cat'
 import { Button, Spin, Tooltip, Icon, Popconfirm } from 'antd'
+import { catData } from '../utils/functions'
+import useToggle from '../hooks/useToggle'
+import useFetch from '../hooks/useFetch'
+import React, { useEffect } from 'react'
+import { cat } from '../utils/cat'
+import uuid from 'uuid'
 
 const AutofillAPI = ({ uid, count, collectionId = null, itemIds }) => {
   const APIs = [
@@ -37,14 +37,14 @@ const AutofillAPI = ({ uid, count, collectionId = null, itemIds }) => {
           addCollection(uid, collectionID, title || 'cat')
         }
         editImage(uid, collectionID, picture)
-        if (description) await addItem(uid, collectionID, description)
-        if (temperament) await addItem(uid, collectionID, temperament)
+        if (description) await addItem(uid, collectionID, description, 0)
+        if (temperament) await addItem(uid, collectionID, temperament, 1)
         if (!description && !temperament) {
           if (setup && setup.trim()) {
-            await addItem(uid, collectionID, setup)
+            await addItem(uid, collectionID, setup, 0)
           }
           if (punchline && punchline.trim()) {
-            addItem(uid, collectionID, punchline)
+            addItem(uid, collectionID, punchline, 1)
           }
         }
       }

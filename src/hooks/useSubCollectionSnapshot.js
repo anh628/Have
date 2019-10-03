@@ -1,5 +1,6 @@
-import { useState, useEffect, useReducer } from 'react'
 import { usersCollectionRef } from '../firebase/firebase'
+import { useState, useEffect, useReducer } from 'react'
+import { orderBy } from 'lodash'
 
 // grab list of a single collection's items
 const useSubCollectionSnapshot = (uid, collectionId) => {
@@ -14,9 +15,10 @@ const useSubCollectionSnapshot = (uid, collectionId) => {
         items.push(action.listInfo)
         return items
       case 'modified':
-        return items.map(item =>
+        const newItems = items.map(item =>
           item.itemId === action.listInfo.itemId ? { ...action.listInfo } : item
         )
+        return orderBy(newItems, 'index', 'asc')
       case 'removed':
         return items.filter(item => item.itemId !== action.listInfo.itemId)
       default:
@@ -30,7 +32,7 @@ const useSubCollectionSnapshot = (uid, collectionId) => {
         .collection('itemCollections')
         .doc(collectionId)
         .collection('items')
-        .orderBy('timeStamp')
+        .orderBy('index')
         .onSnapshot(
           querySnapshot => {
             querySnapshot.docChanges().forEach(change => {
@@ -40,7 +42,10 @@ const useSubCollectionSnapshot = (uid, collectionId) => {
                 dispatch({ type: 'added', listInfo })
               }
               if (change.type === 'modified') {
-                dispatch({ type: 'modified', listInfo })
+                dispatch({
+                  type: 'modified',
+                  listInfo
+                })
               }
               if (change.type === 'removed') {
                 dispatch({ type: 'removed', listInfo })

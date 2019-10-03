@@ -1,14 +1,21 @@
-import React, { useState } from 'react'
 import {
   editItem,
   deleteItem,
   toggleItem
 } from '../firebase/collectionFunctions'
+import { Draggable } from 'react-beautiful-dnd'
 import useToggle from '../hooks/useToggle'
-import { Icon } from 'antd'
-
+import React, { useState } from 'react'
+import { Icon, Tooltip } from 'antd'
 // Display items in the modal view (single collection)
-const SingleItem = ({ uid, collectionId, itemId, text, isComplete }) => {
+const SingleItem = ({
+  uid,
+  collectionId,
+  itemId,
+  text,
+  isComplete,
+  dragIndex
+}) => {
   const [newText, updateText] = useState(text)
   const [isEditing, toggleEdit] = useToggle(false)
 
@@ -35,32 +42,55 @@ const SingleItem = ({ uid, collectionId, itemId, text, isComplete }) => {
       autoFocus />
   )
   let itemDisplay = (
-    <div className='ItemCollectionView' id='flex'>
-      {isComplete ? (
-        <Icon
-          type='check-square'
-          onClick={() => toggleItem(uid, collectionId, itemId)}
-          style={{ paddingRight: '5px', position: 'absolute', left: '0' }} />
-      ) : (
-        <Icon
-          type='border'
-          onClick={() => toggleItem(uid, collectionId, itemId)}
-          style={{ paddingRight: '5px', position: 'absolute', left: '0' }} />
-      )}
-      <p
-        className='collection-list-item'
-        onClick={toggleEdit}
-        style={{
-          textDecoration: isComplete ? 'line-through' : 'none'
-        }}>
-        {newText}
-      </p>
-      <label
-        className='deleteButton'
-        onClick={() => deleteItem(uid, collectionId, itemId)}>
-        <Icon type='delete' style={{ position: 'absolute', right: '0' }} />
-      </label>
-    </div>
+    <Draggable key={itemId} draggableId={itemId} index={dragIndex}>
+      {(provided, snapshot) => {
+        const dragHandleStyle = {
+          cursor: snapshot.isDragging ? 'grabbing' : 'grab',
+          paddingRight: '5px',
+          position: 'absolute',
+          left: '0',
+          ...provided.dragHandleProps.style
+        }
+        return (
+          <div ref={provided.innerRef} {...provided.draggableProps}>
+            <div className='ItemCollectionView' id='flex'>
+              <Tooltip title='Click to drag item' placement='top'>
+                <div {...provided.dragHandleProps} style={dragHandleStyle}>
+                  ↕︎
+                </div>
+              </Tooltip>
+              {isComplete ? (
+                <Icon
+                  type='check-square'
+                  onClick={() => toggleItem(uid, collectionId, itemId)}
+                  style={{ position: 'absolute', left: '15px' }} />
+              ) : (
+                <Icon
+                  type='border'
+                  onClick={() => toggleItem(uid, collectionId, itemId)}
+                  style={{ position: 'absolute', left: '15px' }} />
+              )}
+              <p
+                id='single'
+                className='collection-list-item'
+                onClick={toggleEdit}
+                style={{
+                  textDecoration: isComplete ? 'line-through' : 'none'
+                }}>
+                {newText}
+              </p>
+              <label
+                className='deleteButton'
+                onClick={() => deleteItem(uid, collectionId, itemId)}>
+                <Icon
+                  type='delete'
+                  style={{ position: 'absolute', right: '0' }} />
+              </label>
+            </div>
+          </div>
+        )
+      }}
+    </Draggable>
   )
 
   if (isEditing) return editItemDisplay

@@ -1,7 +1,7 @@
-import React, { useState, useEffect } from 'react'
-import { message } from 'antd'
 import { editTitle } from '../firebase/collectionFunctions'
 import useToggle from '../hooks/useToggle'
+import React, { useState, useEffect } from 'react'
+import { message } from 'antd'
 
 const EditCollectionTitle = ({ uid, collectionId, title }) => {
   const [titleInput, editTitleInput] = useState(title)
