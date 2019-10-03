@@ -17,9 +17,8 @@ const SingleCollectionModalView = ({
   const [orderedItems, updateOrderedItems] = useState([])
 
   const onClose = () => {
-    return updateItemIndexes(uid, collectionId, items, orderedItems).then(() =>
-      dispatch(toggleModalStatus(collectionId))
-    )
+    dispatch(toggleModalStatus(collectionId))
+    return updateItemIndexes(uid, collectionId, orderedItems)
   }
 
   return (

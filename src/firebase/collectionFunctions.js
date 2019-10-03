@@ -57,14 +57,14 @@ export const deleteTitle = (uid, collectionId) => {
   return editTitle(uid, collectionId, null)
 }
 
-export const addItem = (uid, collectionId, text) => {
+export const addItem = (uid, collectionId, text, index) => {
   let itemId = Date.now()
   const itemInfo = {
     itemId,
     text,
     isComplete: false,
     timeStamp: firebase.firestore.FieldValue.serverTimestamp(),
-    index: itemId
+    index
   }
 
   const itemRef = getItemRef(uid, collectionId, itemId)
@@ -104,15 +104,15 @@ export const deleteAllCompleted = (uid, collectionId) => {
     })
 }
 
-export const updateItemIndexes = (uid, collectionId, oldItems, newItems) => {
+export const updateItemIndexes = (uid, collectionId, orderedItems) => {
   const batch = db.batch()
-  for (let i = 0; i < oldItems.length; i++) {
-    if (newItems[i].itemId !== oldItems[i].itemId) {
-      batch.update(getItemRef(uid, collectionId, oldItems[i].itemId), {
-        index: newItems[i].index
-      })
-    }
-  }
+
+  orderedItems.map((item, index) =>
+    batch.update(getItemRef(uid, collectionId, item.itemId), {
+      index
+    })
+  )
+
   return batch.commit().catch(error => console.log(error))
 }
 

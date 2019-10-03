@@ -126,7 +126,7 @@ const SingleCollectionView = ({
       ) : (
         listItem
       )}
-      <NewItem collectionId={collectionId} uid={uid} />
+      <NewItem collectionId={collectionId} uid={uid} length={items.length} />
     </div>
   )
 

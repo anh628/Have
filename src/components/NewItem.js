@@ -1,12 +1,12 @@
 import React, { useState } from 'react'
 import { addItem } from '../firebase/collectionFunctions'
 
-const NewItem = ({ uid, collectionId }) => {
+const NewItem = ({ uid, collectionId, length }) => {
   const [text, updateText] = useState('')
 
   const handleBlur = () => {
     const item = text.trim()
-    if (item) addItem(uid, collectionId, item)
+    if (item) addItem(uid, collectionId, item, length)
     updateText('')
   }
 

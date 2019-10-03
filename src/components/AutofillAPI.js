@@ -37,14 +37,14 @@ const AutofillAPI = ({ uid, count, collectionId = null, itemIds }) => {
           addCollection(uid, collectionID, title || 'cat')
         }
         editImage(uid, collectionID, picture)
-        if (description) await addItem(uid, collectionID, description)
-        if (temperament) await addItem(uid, collectionID, temperament)
+        if (description) await addItem(uid, collectionID, description, 0)
+        if (temperament) await addItem(uid, collectionID, temperament, 1)
         if (!description && !temperament) {
           if (setup && setup.trim()) {
-            await addItem(uid, collectionID, setup)
+            await addItem(uid, collectionID, setup, 2)
           }
           if (punchline && punchline.trim()) {
-            addItem(uid, collectionID, punchline)
+            addItem(uid, collectionID, punchline, 3)
           }
         }
       }
