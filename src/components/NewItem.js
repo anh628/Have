@@ -1,5 +1,5 @@
-import React, { useState } from 'react'
 import { addItem } from '../firebase/collectionFunctions'
+import React, { useState } from 'react'
 
 const NewItem = ({ uid, collectionId, length }) => {
   const [text, updateText] = useState('')

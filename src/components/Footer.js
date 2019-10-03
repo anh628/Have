@@ -1,15 +1,15 @@
-import React from 'react'
-import { uploadFile, deleteFile } from '../firebase/storageFunctions'
 import {
   editImage,
   deleteCollection,
   deleteAllCompleted,
   setAllItemsCompleteness
 } from '../firebase/collectionFunctions'
+import { uploadFile, deleteFile } from '../firebase/storageFunctions'
 import useToggle from '../hooks/useToggle'
+import AutofillAPI from './AutofillAPI'
 import { Icon, Tooltip } from 'antd'
 import Color from './Color'
-import AutofillAPI from './AutofillAPI'
+import React from 'react'
 
 const Footer = ({
   collectionColor,

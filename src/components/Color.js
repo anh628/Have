@@ -1,8 +1,8 @@
-import React from 'react'
 import { editColor } from '../firebase/collectionFunctions'
 import { COLOR_CHOICES } from '../utils/constants'
-import useToggle from '../hooks/useToggle'
 import { Icon, Tooltip, Radio } from 'antd'
+import useToggle from '../hooks/useToggle'
+import React from 'react'
 
 const Color = ({ uid, collectionId, collectionColor }) => {
   const [displayColorPicker, toggle] = useToggle(false)

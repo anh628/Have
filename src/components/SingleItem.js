@@ -1,13 +1,12 @@
-import React, { useState } from 'react'
 import {
   editItem,
   deleteItem,
   toggleItem
 } from '../firebase/collectionFunctions'
-import useToggle from '../hooks/useToggle'
-import { Icon, Tooltip } from 'antd'
 import { Draggable } from 'react-beautiful-dnd'
-
+import useToggle from '../hooks/useToggle'
+import React, { useState } from 'react'
+import { Icon, Tooltip } from 'antd'
 // Display items in the modal view (single collection)
 const SingleItem = ({
   uid,
@@ -56,10 +55,9 @@ const SingleItem = ({
           <div ref={provided.innerRef} {...provided.draggableProps}>
             <div className='ItemCollectionView' id='flex'>
               <Tooltip title='Click to drag item' placement='top'>
-                <Icon
-                  type='pause'
-                  {...provided.dragHandleProps}
-                  style={dragHandleStyle} />
+                <div {...provided.dragHandleProps} style={dragHandleStyle}>
+                  ↕︎
+                </div>
               </Tooltip>
               {isComplete ? (
                 <Icon
@@ -86,7 +84,7 @@ const SingleItem = ({
                 onClick={() => deleteItem(uid, collectionId, itemId)}>
                 <Icon
                   type='delete'
-                  style={{ position: 'absolute', right: '0', top: '5px' }} />
+                  style={{ position: 'absolute', right: '0' }} />
               </label>
             </div>
           </div>
