@@ -1,38 +1,58 @@
 import { updateCollectionIndexes } from '../firebase/collectionFunctions'
+import React, { useCallback, useState, useEffect } from 'react'
 import { ListManager } from 'react-beautiful-dnd-grid'
-import React, { useCallback, useState } from 'react'
+import useDebounce from '../hooks/useDebounce'
 import ItemCollection from './ItemCollection'
 import { reorder } from '../utils/functions'
-import { Spin } from 'antd'
 
 const List = ({ uid, collectionList }) => {
-  const [dragLoading, setDragLoading] = useState(false)
+  const [orderCollection, updateOrderCollection] = useState(collectionList)
+
+  const debouncedOrderCollection = useDebounce(orderCollection, 5000)
+
+  useEffect(() => {
+    if (debouncedOrderCollection) {
+      updateCollectionIndexes(uid, orderCollection)
+    }
+    // eslint-disable-next-line
+  }, [debouncedOrderCollection])
+
+  // make sure any changes outside of order is being reflected
+  useEffect(() => {
+    const collectionIds = collectionList.map(collection => collection.id)
+    if (orderCollection.length === collectionList.length) {
+      const newList = orderCollection.map((collection, index) => ({
+        index,
+        ...collectionList[collectionIds.indexOf(collection.id)]
+      }))
+      updateOrderCollection(newList)
+    }
+    // if you add a new list
+    if (collectionList.length > orderCollection.length) {
+      updateOrderCollection([
+        ...orderCollection,
+        collectionList[collectionList.length - 1]
+      ])
+    }
+    // if you delete an item
+    if (collectionList.length < orderCollection.length) {
+      updateOrderCollection(
+        orderCollection.filter(collection =>
+          collectionIds.includes(collection.id)
+        )
+      )
+    }
+    // eslint-disable-next-line
+  }, [collectionList])
 
   const onDragEnd = useCallback(
     async (sourceIndex, destinationIndex) => {
       if (sourceIndex === destinationIndex) return
-      setDragLoading(true)
-
-      const newList = reorder(collectionList, sourceIndex, destinationIndex)
-
-      await updateCollectionIndexes(uid, collectionList, newList)
-      setDragLoading(false)
+      const newList = reorder(orderCollection, sourceIndex, destinationIndex)
+      updateOrderCollection(newList)
     },
-    [collectionList, uid]
+    [orderCollection]
   )
-
-  if (dragLoading) {
-    return (
-      <Spin
-        size='large'
-        style={{
-          fontSize: '20px',
-          position: 'absolute',
-          left: '50%',
-          color: 'red'
-        }} />
-    )
-  }
 
   return (
     <div
@@ -41,9 +61,9 @@ const List = ({ uid, collectionList }) => {
         display: 'flex',
         flexWrap: 'wrap'
       }}>
-      {collectionList && (
+      {orderCollection && (
         <ListManager
-          items={collectionList}
+          items={orderCollection}
           direction='horizontal'
           maxItems={4}
           render={collection => (
