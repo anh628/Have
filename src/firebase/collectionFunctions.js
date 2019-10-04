@@ -32,10 +32,7 @@ export const updateCollectionIndexes = (uid, orderCollectionList) => {
   orderCollectionList.map((collection, index) =>
     batch.update(getItemCollectionRef(uid, collection.id), { index })
   )
-  return batch
-    .commit()
-    .then(() => console.log('update success'))
-    .catch(error => console.log(error))
+  return batch.commit().catch(error => console.log(error))
 }
 
 export const deleteCollection = (uid, collectionId) => {
