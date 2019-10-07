@@ -1,8 +1,8 @@
-import React from 'react'
+import { Avatar, Icon, Tooltip, message, Button } from 'antd'
+import { login, logout } from '../firebase/auth'
 import useAuthState from '../hooks/useAuthState'
 import useToggle from '../hooks/useToggle'
-import { login, logout } from '../firebase/auth'
-import { Avatar, Icon, Tooltip, message, Button } from 'antd'
+import React from 'react'
 
 const AuthenticationButton = () => {
   const [user, loading, error] = useAuthState()

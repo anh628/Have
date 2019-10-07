@@ -1,11 +1,11 @@
+import useSubCollectionSnapshot from '../hooks/useSubCollectionSnapshot'
+import { toggleModalStatus } from '../actions/actionCreator'
+import { useDispatch, useSelector } from 'react-redux'
+import useToggle from '../hooks/useToggle'
+import { Icon, Card } from 'antd'
+import Footer from './Footer'
 import React from 'react'
 import Item from './Item'
-import { useDispatch, useSelector } from 'react-redux'
-import Footer from './Footer'
-import { toggleModalStatus } from '../actions/actionCreator'
-import { Icon, Card } from 'antd'
-import useSubCollectionSnapshot from '../hooks/useSubCollectionSnapshot'
-import useToggle from '../hooks/useToggle'
 
 const ItemCollection = ({
   uid,

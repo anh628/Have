@@ -1,9 +1,9 @@
+import { addCollection } from '../firebase/collectionFunctions'
+import { toggleModalStatus } from '../actions/actionCreator'
 import React, { useState, useRef } from 'react'
 import { useDispatch } from 'react-redux'
-import uuid from 'uuid'
-import { toggleModalStatus } from '../actions/actionCreator'
-import { addCollection } from '../firebase/collectionFunctions'
 import PropTypes from 'prop-types'
+import uuid from 'uuid'
 
 const NewCollection = ({ uid }) => {
   const dispatch = useDispatch()

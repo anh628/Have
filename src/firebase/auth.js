@@ -1,5 +1,5 @@
-import { firebase, usersCollectionRef } from './firebase'
 import { getItemCollectionRef, getItemRef } from './collectionFunctions'
+import { firebase, usersCollectionRef } from './firebase'
 
 // get user's information
 export const getUserInfo = user => {

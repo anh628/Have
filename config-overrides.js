@@ -13,7 +13,8 @@ module.exports = override(
       '@body-background': '#131519',
       '@component-background': '#a6a7ab',
       '@layout-body-background': '#131519',
-      '@layout-header-background': '#131519'
+      '@layout-header-background': '#131519',
+      '@modal-body-padding': '0px'
     }
   })
 )
