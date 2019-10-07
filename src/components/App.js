@@ -1,14 +1,13 @@
+import SingleCollectionModalView from './SingleCollectionModalView'
 import useCollectionSnapshot from '../hooks/useCollectionSnapshot'
-import { toggleModalStatus, setModalIds } from '../actions/actionCreator'
-import SingleCollectionView from './SingleCollectionView'
 import AuthenticationButton from './AuthenticationButton'
 import { useSelector, useDispatch } from 'react-redux'
+import { setModalIds } from '../actions/actionCreator'
 import { Spin, notification, Layout } from 'antd'
 import useAuthState from '../hooks/useAuthState'
 import NewCollection from './NewCollection'
 import React, { useEffect } from 'react'
 import AutofillAPI from './AutofillAPI'
-import ModalView from './ModalView'
 import List from './List'
 
 const App = () => {
@@ -48,15 +47,11 @@ const App = () => {
   }, [collectionList])
 
   const displayModal = open && (
-    <ModalView
+    <SingleCollectionModalView
+      open={open}
+      uid={uid}
       collectionId={modalId}
-      onClose={() => dispatch(toggleModalStatus(modalId))}
-      componentDisplay={
-        <SingleCollectionView
-          uid={uid}
-          collectionId={modalId}
-          {...collectionList.filter(list => list.id === modalId)[0]} />
-      } />
+      {...collectionList.filter(list => list.id === modalId)[0]} />
   )
   return (
     <div className='App'>

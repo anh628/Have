@@ -1,12 +1,8 @@
 import * as firebase from 'firebase/app'
 
-import 'firebase/auth'
 import 'firebase/firestore'
-// import 'firebase/functions'
-// import 'firebase/messaging'
 import 'firebase/storage'
-// import 'firebase/performance'
-// import 'firebase/database'
+import 'firebase/auth'
 
 const firebaseConfig = {
   apiKey: 'AIzaSyAs9kpiQU6OLVDohqA2ZUShtncXzO_JzCc',

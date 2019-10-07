@@ -1,17 +1,15 @@
-import React from 'react'
-import { useDispatch } from 'react-redux'
-import { uploadFile, deleteFile } from '../firebase/storageFunctions'
 import {
   editImage,
   deleteCollection,
   deleteAllCompleted,
   setAllItemsCompleteness
 } from '../firebase/collectionFunctions'
-import { toggleModalStatus } from '../actions/actionCreator'
+import { uploadFile, deleteFile } from '../firebase/storageFunctions'
 import useToggle from '../hooks/useToggle'
+import AutofillAPI from './AutofillAPI'
 import { Icon, Tooltip } from 'antd'
 import Color from './Color'
-import AutofillAPI from './AutofillAPI'
+import React from 'react'
 
 const Footer = ({
   collectionColor,
@@ -23,11 +21,10 @@ const Footer = ({
   uncheckedItems,
   modalView = false,
   itemIds,
-  toggleLoadingImage
+  toggleLoadingImage,
+  onClose
 }) => {
   const [showMenu, toggle] = useToggle(false)
-
-  const dispatch = useDispatch()
 
   const collectionImageInputId = modalView
     ? `${collectionId}-imageMV`
@@ -118,8 +115,8 @@ const Footer = ({
   )
 
   const doneButton = (
-    <div className='footer-button'>
-      <label onClick={() => dispatch(toggleModalStatus(collectionId))}>
+    <div className='footer-button' style={{ cursor: 'pointer' }}>
+      <label onClick={() => onClose()} style={{ cursor: 'pointer' }}>
         Done
       </label>
     </div>
