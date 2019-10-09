@@ -8,14 +8,13 @@ import { reorder } from '../utils/functions'
 const List = ({ uid, collectionList }) => {
   const [orderCollection, updateOrderCollection] = useState(collectionList)
 
-  const debouncedOrderCollection = useDebounce(orderCollection, 5000)
-
-  useEffect(() => {
-    if (debouncedOrderCollection) {
+  const debouncedOrderCollection = useDebounce(
+    orderCollection => {
       updateCollectionIndexes(uid, orderCollection)
-    }
-    // eslint-disable-next-line
-  }, [debouncedOrderCollection])
+    },
+    5000,
+    { maxWait: 10000, trailing: true }
+  )
 
   // make sure any changes outside of order is being reflected
   useEffect(() => {
@@ -50,8 +49,9 @@ const List = ({ uid, collectionList }) => {
       if (sourceIndex === destinationIndex) return
       const newList = reorder(orderCollection, sourceIndex, destinationIndex)
       updateOrderCollection(newList)
+      debouncedOrderCollection(newList)
     },
-    [orderCollection]
+    [orderCollection, debouncedOrderCollection]
   )
 
   return (
