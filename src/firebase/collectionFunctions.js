@@ -28,10 +28,10 @@ export const addCollection = (uid, collectionId, title) => {
 
 export const updateCollectionIndexes = (uid, orderCollectionList) => {
   const batch = db.batch()
-
-  orderCollectionList.map((collection, index) =>
+  orderCollectionList.forEach((collection, index) =>
     batch.update(getItemCollectionRef(uid, collection.id), { index })
   )
+
   return batch.commit().catch(error => console.log(error))
 }
 
