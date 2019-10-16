@@ -4,13 +4,16 @@ import { ListManager } from 'react-beautiful-dnd-grid'
 import useDebounce from '../hooks/useDebounce'
 import ItemCollection from './ItemCollection'
 import { reorder } from '../utils/functions'
+import { isEqual } from 'lodash'
 
 const List = ({ uid, collectionList }) => {
   const [orderCollection, updateOrderCollection] = useState(collectionList)
 
   const debouncedOrderCollection = useDebounce(
     orderCollection => {
-      updateCollectionIndexes(uid, orderCollection)
+      if (!isEqual(collectionList, orderCollection)) {
+        updateCollectionIndexes(uid, orderCollection)
+      }
     },
     5000,
     { maxWait: 10000, trailing: true }
@@ -18,11 +21,10 @@ const List = ({ uid, collectionList }) => {
 
   // make sure any changes outside of order is being reflected
   useEffect(() => {
-    const collectionIds = collectionList.map(collection => collection.id)
     if (orderCollection.length === collectionList.length) {
       const newList = orderCollection.map((collection, index) => ({
-        index,
-        ...collectionList[collectionIds.indexOf(collection.id)]
+        ...collectionList.find(list => list.id === collection.id),
+        index
       }))
       updateOrderCollection(newList)
     }
@@ -36,8 +38,9 @@ const List = ({ uid, collectionList }) => {
     // if you delete an item
     if (collectionList.length < orderCollection.length) {
       updateOrderCollection(
-        orderCollection.filter(collection =>
-          collectionIds.includes(collection.id)
+        orderCollection.filter(
+          collection =>
+            collectionList.findIndex(list => list.id === collection.id) !== -1
         )
       )
     }

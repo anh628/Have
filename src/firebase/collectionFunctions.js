@@ -100,7 +100,7 @@ export const deleteAllCompleted = (uid, collectionId) => {
 export const updateItemIndexes = (uid, collectionId, orderedItems) => {
   const batch = db.batch()
 
-  orderedItems.map((item, index) =>
+  orderedItems.forEach((item, index) =>
     batch.update(getItemRef(uid, collectionId, item.itemId), {
       index
     })
