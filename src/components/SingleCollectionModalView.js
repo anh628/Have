@@ -4,17 +4,18 @@ import { toggleModalStatus } from '../actions/actionCreator'
 import SingleCollectionView from './SingleCollectionView'
 import Modal from 'react-responsive-modal'
 import { useDispatch } from 'react-redux'
-import React, { useState } from 'react'
+import React from 'react'
 
 const SingleCollectionModalView = ({
   open,
   uid,
   collectionId,
+  orderedItems,
+  updateOrderedItems,
   ...restProps
 }) => {
   const dispatch = useDispatch()
   const [items, loading] = useSubCollectionSnapshot(uid, collectionId)
-  const [orderedItems, updateOrderedItems] = useState([])
 
   const onClose = () => {
     dispatch(toggleModalStatus(collectionId))
