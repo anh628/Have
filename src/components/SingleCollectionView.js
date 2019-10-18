@@ -2,13 +2,12 @@ import SingleCollectionTitleView from './SingleCollectionTitleView'
 import { Droppable } from 'react-beautiful-dnd'
 import { deleteImage } from '../firebase/collectionFunctions'
 import { deleteFile } from '../firebase/storageFunctions'
-import React, { useEffect } from 'react'
+import React from 'react'
 import useToggle from '../hooks/useToggle'
 import SingleItem from './SingleItem'
 import { Icon, Card } from 'antd'
 import NewItem from './NewItem'
 import Footer from './Footer'
-import { omit } from 'lodash'
 
 const SingleCollectionView = ({
   uid,
@@ -19,7 +18,6 @@ const SingleCollectionView = ({
   items,
   loading,
   orderedItems,
-  updateOrderedItems,
   onClose
 }) => {
   const [loadingImage, toggleLoadingImage] = useToggle(false)
@@ -29,33 +27,6 @@ const SingleCollectionView = ({
 
   const checkItems = items && items.filter(item => item.isComplete).length > 0
   const itemIds = items.map(x => x.itemId)
-
-  useEffect(() => {
-    // make sure changes are reflected
-    if (orderedItems.length === items.length) {
-      const newList = items.map(item => omit(item, 'index'))
-      updateOrderedItems(
-        orderedItems.map(item => ({
-          index: item.index,
-          ...newList[itemIds.indexOf(item.itemId)]
-        }))
-      )
-    }
-    // if you add an item
-    if (items.length > orderedItems.length) {
-      updateOrderedItems([...orderedItems, items[items.length - 1]])
-    }
-    // if you delete an item
-    if (items.length < orderedItems.length) {
-      updateOrderedItems(
-        orderedItems.filter(item => itemIds.includes(item.itemIds))
-      )
-    }
-    // initial load
-    if (!loading) updateOrderedItems(items)
-
-    // eslint-disable-next-line
-  }, [loading, items])
 
   const listItem = orderedItems && (
     <Droppable droppableId='droppable' type='list'>
