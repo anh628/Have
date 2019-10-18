@@ -1,5 +1,5 @@
 import { usersCollectionRef } from '../firebase/firebase'
-import { useState, useEffect, useReducer } from 'react'
+import { useState, useEffect, useReducer, useCallback } from 'react'
 import { orderBy } from 'lodash'
 
 // grab list of a single collection's items
@@ -7,23 +7,31 @@ const useSubCollectionSnapshot = (uid, collectionId) => {
   const [loading, setLoading] = useState(true)
   const [error, setError] = useState(null)
 
-  const [list, dispatch] = useReducer((state, action) => {
-    const items = state.length > 0 ? [...state] : []
+  const createReducer = () => {
+    return (state, action) => {
+      const items = state.length > 0 ? [...state] : []
 
-    switch (action.type) {
-      case 'added':
-        items.push(action.listInfo)
-        return items
-      case 'modified':
-        const newItems = items.map(item =>
-          item.itemId === action.listInfo.itemId ? { ...action.listInfo } : item
-        )
-        return orderBy(newItems, 'index', 'asc')
-      case 'removed':
-        return items.filter(item => item.itemId !== action.listInfo.itemId)
-      default:
+      switch (action.type) {
+        case 'added':
+          items.push(action.listInfo)
+          return items
+        case 'modified':
+          const newItems = items.map(item =>
+            item.itemId === action.listInfo.itemId
+              ? { ...action.listInfo }
+              : item
+          )
+          return orderBy(newItems, 'index', 'asc')
+        case 'removed':
+          return items.filter(item => item.itemId !== action.listInfo.itemId)
+        default:
+      }
     }
-  }, [])
+  }
+
+  const memoizedReducer = useCallback(createReducer(), [])
+
+  const [list, dispatch] = useReducer(memoizedReducer, [])
 
   useEffect(() => {
     if (uid) {
