@@ -43,15 +43,17 @@ const ItemCollection = ({
       ))
     )
 
-  const displayImage = image && (
+  const displayImage = (
     <div className='coverart'>
       {loadingImage ? (
         <Icon type='loading' />
       ) : (
-        <img
-          src={image}
-          alt='cover-art'
-          onClick={() => dispatch(toggleModalStatus(collectionId))} />
+        image && (
+          <img
+            src={image}
+            alt='cover-art'
+            onClick={() => dispatch(toggleModalStatus(collectionId))} />
+        )
       )}
     </div>
   )
@@ -64,8 +66,17 @@ const ItemCollection = ({
     : null
 
   const itemIds = items.map(x => x.itemId)
-  // collection won't display in list if it's open
-  if (open) return null
+
+  if (open) {
+    return (
+      <div
+        style={{
+          width: '316px',
+          height: '1px',
+          display: 'inline-block'
+        }}></div>
+    )
+  }
 
   return (
     <Draggable key={collectionId} draggableId={collectionId} index={dragIndex}>

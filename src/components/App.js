@@ -38,6 +38,7 @@ const App = () => {
 
   const [collectionList, loading] = useCollectionSnapshot(uid)
   const [orderCollection, updateOrderCollection] = useState([])
+  const arraySize = 3
 
   const [orderedItems, updateOrderedItems] = useState([])
 
@@ -70,20 +71,20 @@ const App = () => {
     if (orderCollectionLength < collectionList.length) {
       const list = flatten(orderCollection)
       list.push(collectionList[collectionList.length - 1])
-      updateOrderCollection(chunk(list, 3))
+      updateOrderCollection(chunk(list, arraySize))
     } else if (orderCollectionLength > collectionList.length) {
       const list = flatten(orderCollection).filter(
         collection =>
           collectionList.findIndex(list => list.id === collection.id) !== -1
       )
 
-      updateOrderCollection(chunk(list, 3))
+      updateOrderCollection(chunk(list, arraySize))
     } else if (orderCollectionLength === collectionList.length) {
       const list = flatten(orderCollection).map((collection, index) => ({
         ...collectionList.find(list => list.id === collection.id),
         index
       }))
-      updateOrderCollection(chunk(list, 3))
+      updateOrderCollection(chunk(list, arraySize))
     }
     // eslint-disable-next-line
   }, [collectionList, dispatch])
@@ -151,7 +152,7 @@ const App = () => {
                 : collection
           )
 
-          updateOrderCollection(chunk(flatten(newList), 3))
+          updateOrderCollection(chunk(flatten(newList), arraySize))
         }
         debouncedOrderCollection(orderCollection)
       }

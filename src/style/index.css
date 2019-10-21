@@ -221,20 +221,15 @@ img {
   border-radius: 2px;
   bottom: 5px;
   display: block;
-  opacity: 0.8;
+  opacity: 0.5;
   position: absolute;
   transition: opacity 0.218s linear;
   right: 5px;
-  background-color: #555;
 }
 
 .coverart {
   position: relative;
   text-align: center;
-}
-
-.coverart:hover .deleteImage {
-  opacity: 1;
 }
 
 .item-row {

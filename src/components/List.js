@@ -1,5 +1,6 @@
 import { Droppable } from 'react-beautiful-dnd'
 import ItemCollection from './ItemCollection'
+import { BackTop, Tooltip } from 'antd'
 import { omit } from 'lodash'
 import React from 'react'
 
@@ -7,9 +8,7 @@ const List = ({ uid, orderCollection }) => {
   return (
     <div
       style={{
-        justifyContent: 'center',
-        display: 'flex',
-        flexWrap: 'wrap'
+        justifyContent: 'center'
       }}>
       {orderCollection &&
         orderCollection.map((row, index) => {
@@ -34,6 +33,9 @@ const List = ({ uid, orderCollection }) => {
             </Droppable>
           )
         })}
+      <Tooltip title='Return to top of page' position='top'>
+        <BackTop />
+      </Tooltip>
     </div>
   )
 }

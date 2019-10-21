@@ -46,21 +46,24 @@ const SingleCollectionView = ({
     </Droppable>
   )
 
-  const displayImage = image && (
+  const displayImage = (
     <div className='coverart'>
       {loadingImage ? (
         <Icon type='loading' />
       ) : (
-        <div>
-          <img src={image} alt='cover-art' />
-          <Icon
-            type='delete'
-            className='deleteImage'
-            onClick={() => {
-              deleteFile(image)
-              deleteImage(uid, collectionId)
-            }} />
-        </div>
+        image && (
+          <div>
+            <img src={image} alt='cover-art' />
+            <Icon
+              type='delete'
+              className='deleteImage'
+              onClick={() => {
+                deleteFile(image)
+                deleteImage(uid, collectionId)
+              }}
+              style={{ backgroundColor: collectionColor }} />
+          </div>
+        )
       )}
     </div>
   )
