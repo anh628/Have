@@ -33,7 +33,7 @@ const List = ({ uid, orderCollection }) => {
             </Droppable>
           )
         })}
-      <Tooltip title='Return to top of page' position='top'>
+      <Tooltip title='Return to top' position='top'>
         <BackTop />
       </Tooltip>
     </div>
