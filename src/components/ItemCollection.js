@@ -120,4 +120,4 @@ const ItemCollection = ({
   )
 }
 
-export default React.memo(ItemCollection)
+export default ItemCollection
