@@ -31,7 +31,7 @@ const SingleCollectionModalView = ({
     } else if (orderedItems.length > items.length) {
       updateOrderedItems(
         orderedItems.filter(
-          _item => items.findIndex(item => _item.itemId === item.id) !== -1
+          _item => items.findIndex(item => _item.itemId === item.itemId) !== -1
         )
       )
     } else if (orderedItems.length === items.length) {
