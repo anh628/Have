@@ -42,7 +42,7 @@ const SingleCollectionModalView = ({
       updateOrderedItems(newItems)
     }
     // eslint-disable-next-line
-  }, [loading, items])
+  }, [items])
 
   return (
     <Modal
