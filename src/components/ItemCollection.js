@@ -1,6 +1,7 @@
 import useSubCollectionSnapshot from '../hooks/useSubCollectionSnapshot'
 import { toggleModalStatus } from '../actions/actionCreator'
 import { useDispatch, useSelector } from 'react-redux'
+import { Draggable } from 'react-beautiful-dnd'
 import useToggle from '../hooks/useToggle'
 import { Icon, Card } from 'antd'
 import Footer from './Footer'
@@ -12,9 +13,12 @@ const ItemCollection = ({
   id: collectionId,
   collectionColor,
   image,
-  title
+  title,
+  dragIndex
 }) => {
-  const [items, loading] = useSubCollectionSnapshot(uid, collectionId)
+  // move data fetching outside?
+  const [items, loading] = useSubCollectionSnapshot(uid, collectionId) // how to prevent this from rerendering
+
   const [loadingImage, toggleLoadingImage] = useToggle(false)
   const dispatch = useDispatch()
   const open = useSelector(
@@ -39,15 +43,17 @@ const ItemCollection = ({
       ))
     )
 
-  const displayImage = image && (
+  const displayImage = (
     <div className='coverart'>
       {loadingImage ? (
         <Icon type='loading' />
       ) : (
-        <img
-          src={image}
-          alt='cover-art'
-          onClick={() => dispatch(toggleModalStatus(collectionId))} />
+        image && (
+          <img
+            src={image}
+            alt='cover-art'
+            onClick={() => dispatch(toggleModalStatus(collectionId))} />
+        )
       )}
     </div>
   )
@@ -60,38 +66,57 @@ const ItemCollection = ({
     : null
 
   const itemIds = items.map(x => x.itemId)
-  // collection won't display in list if it's open
-  if (open) return null
+
+  if (open) {
+    return (
+      <div
+        style={{
+          width: '316px',
+          height: '1px',
+          display: 'inline-block'
+        }}></div>
+    )
+  }
 
   return (
-    <Card
-      className='item-collection'
-      hoverable
-      style={{ width: 300, backgroundColor: collectionColor }}
-      cover={displayImage}
-      actions={[
-        <Footer
-          key='footer'
-          image={image}
-          uid={uid}
-          collectionId={collectionId}
-          areItems={items.length > 0}
-          uncheckedItems={uncheckedItems}
-          checkItems={checkItems}
-          collectionColor={collectionColor}
-          itemIds={itemIds}
-          toggleLoadingImage={toggleLoadingImage} />
-      ]}>
-      <Card.Meta
-        title={
-          <h2
-            className='titleCollectionView'
-            onClick={() => dispatch(toggleModalStatus(collectionId))}>
-            {title}
-          </h2>
-        }
-        description={loading ? <Icon type='loading' /> : itemsList} />
-    </Card>
+    <Draggable key={collectionId} draggableId={collectionId} index={dragIndex}>
+      {(provided, snapshot) => (
+        <div
+          className='item-collection'
+          ref={provided.innerRef}
+          {...provided.draggableProps}
+          {...provided.dragHandleProps}>
+          <Card
+            className='item-collection'
+            hoverable
+            style={{ width: 300, backgroundColor: collectionColor }}
+            cover={displayImage}
+            actions={[
+              <Footer
+                key='footer'
+                image={image}
+                uid={uid}
+                collectionId={collectionId}
+                areItems={items.length > 0}
+                uncheckedItems={uncheckedItems}
+                checkItems={checkItems}
+                collectionColor={collectionColor}
+                itemIds={itemIds}
+                toggleLoadingImage={toggleLoadingImage} />
+            ]}>
+            <Card.Meta
+              title={
+                <h2
+                  className='titleCollectionView'
+                  onClick={() => dispatch(toggleModalStatus(collectionId))}>
+                  {title}
+                </h2>
+              }
+              description={loading ? <Icon type='loading' /> : itemsList} />
+          </Card>
+        </div>
+      )}
+    </Draggable>
   )
 }
 

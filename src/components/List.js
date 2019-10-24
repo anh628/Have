@@ -1,56 +1,41 @@
-import { updateCollectionIndexes } from '../firebase/collectionFunctions'
-import { ListManager } from 'react-beautiful-dnd-grid'
-import React, { useCallback, useState } from 'react'
+import { Droppable } from 'react-beautiful-dnd'
 import ItemCollection from './ItemCollection'
-import { reorder } from '../utils/functions'
-import { Spin } from 'antd'
+import { BackTop, Tooltip } from 'antd'
+import { omit } from 'lodash'
+import React from 'react'
 
-const List = ({ uid, collectionList }) => {
-  const [dragLoading, setDragLoading] = useState(false)
-
-  const onDragEnd = useCallback(
-    async (sourceIndex, destinationIndex) => {
-      if (sourceIndex === destinationIndex) return
-      setDragLoading(true)
-
-      const newList = reorder(collectionList, sourceIndex, destinationIndex)
-
-      await updateCollectionIndexes(uid, collectionList, newList)
-      setDragLoading(false)
-    },
-    [collectionList, uid]
-  )
-
-  if (dragLoading) {
-    return (
-      <Spin
-        size='large'
-        style={{
-          fontSize: '20px',
-          position: 'absolute',
-          left: '50%',
-          color: 'red'
-        }} />
-    )
-  }
-
+const List = ({ uid, orderCollection }) => {
   return (
     <div
       style={{
-        justifyContent: 'center',
-        display: 'flex',
-        flexWrap: 'wrap'
+        justifyContent: 'center'
       }}>
-      {collectionList && (
-        <ListManager
-          items={collectionList}
-          direction='horizontal'
-          maxItems={4}
-          render={collection => (
-            <ItemCollection key={collection.id} uid={uid} {...collection} />
-          )}
-          onDragEnd={onDragEnd} />
-      )}
+      {orderCollection &&
+        orderCollection.map((row, index) => {
+          return (
+            <Droppable
+              key={index}
+              droppableId={`droppable ${index}`}
+              type='overview'
+              direction='horizontal'>
+              {provided => (
+                <div ref={provided.innerRef}>
+                  {row.map((collection, index) => (
+                    <ItemCollection
+                      dragIndex={index}
+                      key={collection.id}
+                      uid={uid}
+                      {...omit(collection, ['index', 'timeStamp'])} />
+                  ))}
+                  {provided.placeholder}
+                </div>
+              )}
+            </Droppable>
+          )
+        })}
+      <Tooltip title='Return to top' position='top'>
+        <BackTop />
+      </Tooltip>
     </div>
   )
 }
