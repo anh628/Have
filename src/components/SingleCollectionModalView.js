@@ -4,22 +4,45 @@ import { toggleModalStatus } from '../actions/actionCreator'
 import SingleCollectionView from './SingleCollectionView'
 import Modal from 'react-responsive-modal'
 import { useDispatch } from 'react-redux'
-import React, { useState } from 'react'
+import React, { useEffect } from 'react'
 
 const SingleCollectionModalView = ({
   open,
   uid,
   collectionId,
+  orderedItems,
+  updateOrderedItems,
   ...restProps
 }) => {
   const dispatch = useDispatch()
   const [items, loading] = useSubCollectionSnapshot(uid, collectionId)
-  const [orderedItems, updateOrderedItems] = useState([])
 
   const onClose = () => {
     dispatch(toggleModalStatus(collectionId))
     return updateItemIndexes(uid, collectionId, orderedItems)
   }
+
+  // make sure changes are reflected
+  useEffect(() => {
+    if (orderedItems.length < items.length) {
+      const newItems = orderedItems
+      newItems.push(items[items.length - 1])
+      updateOrderedItems(newItems)
+    } else if (orderedItems.length > items.length) {
+      updateOrderedItems(
+        orderedItems.filter(
+          _item => items.findIndex(item => _item.itemId === item.itemId) !== -1
+        )
+      )
+    } else if (orderedItems.length === items.length) {
+      const newItems = orderedItems.map((item, index) => ({
+        ...items.find(_item => _item.itemId === item.itemId),
+        index
+      }))
+      updateOrderedItems(newItems)
+    }
+    // eslint-disable-next-line
+  }, [items])
 
   return (
     <Modal

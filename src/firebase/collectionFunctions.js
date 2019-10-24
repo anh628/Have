@@ -26,19 +26,12 @@ export const addCollection = (uid, collectionId, title) => {
     .catch(error => console.log(error))
 }
 
-export const updateCollectionIndexes = (
-  uid,
-  oldCollectionList,
-  newCollectionList
-) => {
+export const updateCollectionIndexes = (uid, orderCollectionList) => {
   const batch = db.batch()
-  for (let i = 0; i < oldCollectionList.length; i++) {
-    if (newCollectionList[i].id !== oldCollectionList[i].id) {
-      batch.update(getItemCollectionRef(uid, newCollectionList[i].id), {
-        index: oldCollectionList[i].index
-      })
-    }
-  }
+  orderCollectionList.forEach((collection, index) =>
+    batch.update(getItemCollectionRef(uid, collection.id), { index })
+  )
+
   return batch.commit().catch(error => console.log(error))
 }
 
@@ -107,7 +100,7 @@ export const deleteAllCompleted = (uid, collectionId) => {
 export const updateItemIndexes = (uid, collectionId, orderedItems) => {
   const batch = db.batch()
 
-  orderedItems.map((item, index) =>
+  orderedItems.forEach((item, index) =>
     batch.update(getItemRef(uid, collectionId, item.itemId), {
       index
     })

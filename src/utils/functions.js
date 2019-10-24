@@ -15,7 +15,6 @@ export const fetchData = async (url, option) => {
   return [json, error]
 }
 
-
 // startIndex = starting position
 // endIndex = ending position
 export const reorder = (list, startIndex, endIndex) => {
@@ -27,3 +26,24 @@ export const reorder = (list, startIndex, endIndex) => {
   return result
 }
 
+/**
+ * Moves an item from one list to another list.
+ */
+export const move = (
+  source,
+  destination,
+  droppableSource,
+  droppableDestination
+) => {
+  const sourceClone = Array.from(source)
+  const destinationClone = Array.from(destination)
+  const [removed] = sourceClone.splice(droppableSource.index, 1)
+
+  destinationClone.splice(droppableDestination.index, 0, removed)
+
+  const result = {}
+  result[0] = sourceClone
+  result[1] = destinationClone
+
+  return result
+}
